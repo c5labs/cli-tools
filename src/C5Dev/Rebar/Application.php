@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of Rebar.
+ *
+ * (c) Oliver Green <oliver@c5dev.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace C5Dev\Rebar;
 
 use Illuminate\Container\Container;
@@ -10,6 +19,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Application extends App
 {
+    /**
+     * Service Providers.
+     *
+     * @var array
+     */
     protected $providers = [
         \Illuminate\Bus\BusServiceProvider::class,
         \Illuminate\Filesystem\FilesystemServiceProvider::class,
@@ -17,23 +31,40 @@ class Application extends App
         \C5Dev\Rebar\FileExporter\FileExporterServiceProvider::class,
     ];
 
-    public function __construct($container = null)
+    /**
+     * Constructor.
+     *
+     * @return  void
+     */
+    public function __construct()
     {
-        if (! $container) {
-            $container = new Container();
-        }
-
-        $container['base_path'] = realpath(__DIR__.'/../../../');
-
-        $container->instance(\C5Dev\Rebar\Application::class, $this);
-
-        $this->container = $container;
+        $this->setContainer(new Container());
 
         parent::__construct('Rebar', '0.1.0');
 
         $this->registerProviders();
     }
 
+    /**
+     * Set the applications container instance.
+     *
+     * @param \Illuminate\Container\Container $container
+     * @return  void
+     */
+    public function setContainer(Container $container)
+    {
+        $container['base_path'] = realpath(__DIR__.'/../../../');
+
+        $container->instance(\C5Dev\Rebar\Application::class, $this);
+
+        $this->container = $container;
+    }
+
+    /**
+     * Register the applications service providers.
+     *
+     * @return void
+     */
     protected function registerProviders()
     {
         foreach ($this->providers as $provider) {
@@ -45,13 +76,11 @@ class Application extends App
         }
     }
 
-    public function run(InputInterface $input = null, OutputInterface $output = null)
-    {
-        $this->bootProviders();
-
-        return parent::run($input, $output);
-    }
-
+    /**
+     * Boot the applications service providers.
+     *
+     * @return void
+     */
     protected function bootProviders()
     {
         foreach ($this->providers as $provider) {
@@ -85,6 +114,25 @@ class Application extends App
         return new $provider($this);
     }
 
+    /**
+     * Runs the current application.
+     *
+     * {@inheritdoc}
+     */
+    public function run(InputInterface $input = null, OutputInterface $output = null)
+    {
+        $this->bootProviders();
+
+        return parent::run($input, $output);
+    }
+
+    /**
+     * Pass any unknown method calls to the container instance.
+     *
+     * @param  string $name
+     * @param  array $params
+     * @return mixed
+     */
     public function __call($name, $params)
     {
         return call_user_func_array([$this->container, $name], $params);

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of Rebar.
+ *
+ * (c) Oliver Green <oliver@c5dev.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace C5Dev\Rebar\Console;
 
 use InvalidArgumentException;
@@ -13,6 +22,11 @@ use Symfony\Component\Console\Question\Question;
 
 class MakePackageCommand extends Command
 {
+    /**
+     * Configure the command.
+     * 
+     * @return void
+     */
     protected function configure()
     {
         $this
@@ -28,6 +42,23 @@ class MakePackageCommand extends Command
         ->addOption('uses_providers', null, InputOption::VALUE_OPTIONAL, 'Package user composer', false);
     }
 
+    /**
+     * Executes the current command.
+     *
+     * This method is not abstract because you can use this class
+     * as a concrete class. In this case, instead of defining the
+     * execute() method, you set the code to execute by passing
+     * a Closure to the setCode() method.
+     *
+     * @param InputInterface  $input  An InputInterface instance
+     * @param OutputInterface $output An OutputInterface instance
+     *
+     * @return null|int null or 0 if everything went fine, or an error code
+     *
+     * @throws LogicException When this abstract method is not implemented
+     *
+     * @see setCode()
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $package_options = [];
@@ -110,6 +141,9 @@ class MakePackageCommand extends Command
             $package_options['uses_composer'] = $helper->ask($input, $output, $question);
         }
 
+        /*
+         * Dispatch the package creation command & send the result to the console. 
+         */
         $bus->dispatch(new \C5Dev\Rebar\Commands\CreatePackageCommand(
             $package_path, $package_handle, $package_name, $package_description, $package_author, $package_options
         ));
