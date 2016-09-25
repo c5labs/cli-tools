@@ -1,4 +1,5 @@
 <?php
+
 namespace C5Dev\Rebar\Console;
 
 use InvalidArgumentException;
@@ -48,7 +49,7 @@ class MakePackageCommand extends Command
         }
 
         // Check the package handle conforms
-        if (preg_replace("/[a-z_-]/i", '', $package_handle)) {
+        if (preg_replace('/[a-z_-]/i', '', $package_handle)) {
             throw new \RuntimeException(
                 'The package handle must only contain letters, underscores and hypens.'
             );

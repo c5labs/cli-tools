@@ -1,4 +1,5 @@
 <?php
+
 namespace C5Dev\Rebar;
 
 use Illuminate\Container\Container;
@@ -84,7 +85,6 @@ class Application extends App
         return new $provider($this);
     }
 
-    
     public function __call($name, $params)
     {
         return call_user_func_array([$this->container, $name], $params);

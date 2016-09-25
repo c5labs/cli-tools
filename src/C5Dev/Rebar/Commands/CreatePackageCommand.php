@@ -1,4 +1,5 @@
 <?php
+
 namespace C5Dev\Rebar\Commands;
 
 use Illuminate\Support\Str;
@@ -6,15 +7,15 @@ use Illuminate\Support\Str;
 class CreatePackageCommand
 {
     protected $handle;
-    
+
     protected $name;
-    
+
     protected $description;
-    
+
     protected $author;
-    
+
     protected $options;
-    
+
     protected $package_path;
 
     public function __construct($package_path, $handle, $name, $description, $author, $options = null)
@@ -48,14 +49,14 @@ class CreatePackageCommand
 
         if (! isset($this->options['uses_composer']) || false === $this->options['uses_composer']) {
             $exporter->setExclusions([
-                'controller.php' => [[119, 15],[155, 3]]
+                'controller.php' => [[119, 15], [155, 3]],
             ]);
         }
 
         if (! isset($this->options['uses_service_providers']) || false === $this->options['uses_service_providers']) {
             $exporter->setExclusion('src/Helpers/DemoHelper.php', true);
             $exporter->setExclusion('src/Providers/HelperServiceProvider.php', true);
-            $exporter->setExclusion('controller.php', [[109, 10],[134, 14],[158,3]]);
+            $exporter->setExclusion('controller.php', [[109, 10], [134, 14], [158, 3]]);
         }
 
         // Export the files

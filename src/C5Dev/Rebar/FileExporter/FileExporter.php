@@ -1,4 +1,5 @@
 <?php
+
 namespace C5Dev\Rebar\FileExporter;
 
 use InvalidArgumentException;
@@ -27,13 +28,9 @@ class FileExporter
     {
         if (! is_array($exclusions)) {
             $this->exclusions[$pathname] = true;
-        } 
-
-        elseif (isset($this->exclusions[$pathname]) && is_array($this->exclusions[$pathname])) {
+        } elseif (isset($this->exclusions[$pathname]) && is_array($this->exclusions[$pathname])) {
             $this->exclusions[$pathname] = $this->exclusions[$pathname] + $exclusions;
-        } 
-
-        else {
+        } else {
             $this->exclusions[$pathname] = $exclusions;
         }
     }
