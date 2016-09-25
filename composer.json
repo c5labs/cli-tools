@@ -1,0 +1,21 @@
+{
+    "name": "c5dev/rebar-console",
+    "description": "A package, theme & block scaffolder for concrete5.",
+    "require": {
+        "symfony/console": "~2.0",
+        "illuminate/bus": "^5.3",
+        "illuminate/container": "^5.3",
+        "illuminate/support": "^5.3",
+        "c5dev/rebar": "dev-master",
+        "illuminate/filesystem": "^5.3"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oliver Green",
+            "email": "oliver@c5dev.com"
+        }
+    ],
+    "autoload": { "psr-4": {"C5Dev\\Rebar\\": "src/C5Dev/Rebar"}},
+    "minimum-stability": "dev"
+}
