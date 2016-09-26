@@ -14,7 +14,9 @@ namespace C5Dev\Scaffolder;
 use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Console\Application as App;
+use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Application extends App
@@ -124,6 +126,35 @@ class Application extends App
         $this->bootProviders();
 
         return parent::run($input, $output);
+    }
+
+    /**
+     * Get the application banner.
+     *
+     * @return string
+     */
+    public function getBanner()
+    {
+        $help = '                __  __      _     _           '.PHP_EOL;
+        $help .= '               / _|/ _|    | |   | |          '.PHP_EOL;
+        $help .= ' ___  ___ __ _| |_| |_ ___ | | __| | ___ _ __ '.PHP_EOL;
+        $help .= '/ __|/ __/ _  |  _|  _/ _ \| |/ _  |/ _ \ \'__|'.PHP_EOL;
+        $help .= '\__ \ (_| (_| | | | || (_) | | (_| |  __/ |   '.PHP_EOL;
+        $help .= '|___/\___\__,_|_| |_| \___/|_|\__,_|\___|_|   '.PHP_EOL;
+        $help .= ''.PHP_EOL;
+        $help .= '<fg=green>'.$this->getLongVersion().'</>'.PHP_EOL;
+
+        return $help;
+    }
+
+    /**
+     * Get the application help text.
+     * 
+     * @return string
+     */
+    public function getHelp()
+    {
+        return $this->getBanner();
     }
 
     /**

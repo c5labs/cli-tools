@@ -33,13 +33,13 @@ class MakePackageCommand extends Command
         ->setName('make:package')
         ->setDescription('Creates a new package.')
         ->setHelp('This command allows you to create upackages.')
-        ->addArgument('path', InputArgument::REQUIRED, 'The path to create the package at.')
+        ->addArgument('path', InputArgument::OPTIONAL, 'The path to create the package at.')
         ->addOption('handle', null, InputOption::VALUE_OPTIONAL, 'Package Handle')
         ->addOption('name', null, InputOption::VALUE_OPTIONAL, 'Package Name')
         ->addOption('description', null, InputOption::VALUE_OPTIONAL, 'Package Description')
         ->addOption('author', null, InputOption::VALUE_OPTIONAL, 'Package Author')
-        ->addOption('uses_composer', null, InputOption::VALUE_OPTIONAL, 'Package user composer', false)
-        ->addOption('uses_providers', null, InputOption::VALUE_OPTIONAL, 'Package user composer', false);
+        ->addOption('uses-composer', null, InputOption::VALUE_OPTIONAL, 'Package user composer', false)
+        ->addOption('uses-providers', null, InputOption::VALUE_OPTIONAL, 'Package user composer', false);
     }
 
     /**
@@ -61,11 +61,21 @@ class MakePackageCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // Show the application banners.
+        $output->write($this->getApplication()->getHelp()."\n");
+
+        // Pipework
         $package_options = [];
-        $destination_path = realpath($input->getArgument('path'));
         $helper = $this->getHelper('question');
         $bus = $this->getApplication()->make(\Illuminate\Contracts\Bus\Dispatcher::class);
         $files = $this->getApplication()->make('files');
+
+        // Set the destination path
+        if (($path = $input->getArgument('path')) && ! empty($path)) {
+            $destination_path = realpath($path);
+        } else {
+            $destination_path = realpath($this->getApplication()->make('base_path'));
+        }
 
         if (! is_writable($destination_path)) {
             throw new InvalidArgumentException("The path [$destination_path] is not writable.");
@@ -128,7 +138,7 @@ class MakePackageCommand extends Command
         /*
          * Package Service Providers?
          */
-        if (! $package_options['uses_service_providers'] = $input->getOption('uses_providers')) {
+        if (! $package_options['uses_service_providers'] = $input->getOption('uses-providers')) {
             $question = new ConfirmationQuestion('Will this package expose any services via service providers to the core? [Y/N>]:', false);
             $package_options['uses_service_providers'] = $helper->ask($input, $output, $question);
         }
@@ -136,7 +146,7 @@ class MakePackageCommand extends Command
         /*
          * Composer compatibility?
          */
-        if (! $package_options['uses_composer'] = $input->getOption('uses_composer')) {
+        if (! $package_options['uses_composer'] = $input->getOption('uses-composer')) {
             $question = new ConfirmationQuestion('Will you use composer to manage this packages dependencies? [Y/N]:', false);
             $package_options['uses_composer'] = $helper->ask($input, $output, $question);
         }
@@ -150,9 +160,9 @@ class MakePackageCommand extends Command
 
         if (file_exists($package_path)) {
             $package_path = realpath($package_path);
-            $output->writeln("<fg=green>The package was created at $package_path.</>");
+            $output->writeln("\n<fg=green>The package was created at $package_path.</>\n");
         } else {
-            $output->writeln("<fg=red>The package could not be created at $package_path.</>");
+            $output->writeln("\n<fg=red>The package could not be created at $package_path.</>\n");
         }
     }
 }
