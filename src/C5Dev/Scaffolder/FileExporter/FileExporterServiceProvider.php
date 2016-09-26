@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Rebar.
+ * This file is part of Scaffolder.
  *
  * (c) Oliver Green <oliver@c5dev.com>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace C5Dev\Rebar\FileExporter;
+namespace C5Dev\Scaffolder\FileExporter;
 
 use Illuminate\Support\ServiceProvider;
 

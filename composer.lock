@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fbdd545c831daa72835ea715435ef8d5",
-    "content-hash": "2df84df198787cfd574df9b6775aa46f",
+    "hash": "02a9da2487fba7e62a5d7481d9d117db",
+    "content-hash": "d890d697d82ec239bf1a238a696ba8bd",
     "packages": [
         {
-            "name": "c5dev/rebar",
+            "name": "c5dev/package-boilerplate",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/c5labs/rebar.git",
-                "reference": "bc1b9a6f40bc3bdd99a91505a30a60cbf205cb2b"
+                "url": "https://github.com/c5labs/package-boilerplate.git",
+                "reference": "09dac9fb193ec7beffa7050221424dd4d0cb3e0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/rebar/zipball/bc1b9a6f40bc3bdd99a91505a30a60cbf205cb2b",
-                "reference": "bc1b9a6f40bc3bdd99a91505a30a60cbf205cb2b",
+                "url": "https://api.github.com/repos/c5labs/package-boilerplate/zipball/09dac9fb193ec7beffa7050221424dd4d0cb3e0e",
+                "reference": "09dac9fb193ec7beffa7050221424dd4d0cb3e0e",
                 "shasum": ""
             },
             "require": {
@@ -35,8 +35,8 @@
                     "email": "oliver@c5dev.com"
                 }
             ],
-            "description": "Rebar is a collection of boilerplate code which can be used as a base to begin building concrete5 blocks, themes & packages.",
-            "time": "2016-09-25 12:19:37"
+            "description": "A collection of boilerplate code which can be used as a base to begin building concrete5 packages.",
+            "time": "2016-09-26 21:40:02"
         },
         {
             "name": "composer/installers",
@@ -819,7 +819,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "c5dev/rebar": 20
+        "c5dev/package-boilerplate": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

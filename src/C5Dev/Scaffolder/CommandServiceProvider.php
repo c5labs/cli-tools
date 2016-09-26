@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Rebar.
+ * This file is part of Scaffolder.
  *
  * (c) Oliver Green <oliver@c5dev.com>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace C5Dev\Rebar;
+namespace C5Dev\Scaffolder;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +22,6 @@ class CommandServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->add(new \C5Dev\Rebar\Console\MakePackageCommand());
+        $this->app->add(new \C5Dev\Scaffolder\Console\MakePackageCommand());
     }
 }

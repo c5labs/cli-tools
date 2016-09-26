@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Rebar.
+ * This file is part of Scaffolder.
  *
  * (c) Oliver Green <oliver@c5dev.com>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace C5Dev\Rebar;
+namespace C5Dev\Scaffolder;
 
 use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
@@ -27,8 +27,8 @@ class Application extends App
     protected $providers = [
         \Illuminate\Bus\BusServiceProvider::class,
         \Illuminate\Filesystem\FilesystemServiceProvider::class,
-        \C5Dev\Rebar\CommandServiceProvider::class,
-        \C5Dev\Rebar\FileExporter\FileExporterServiceProvider::class,
+        \C5Dev\Scaffolder\CommandServiceProvider::class,
+        \C5Dev\Scaffolder\FileExporter\FileExporterServiceProvider::class,
     ];
 
     /**
@@ -40,7 +40,7 @@ class Application extends App
     {
         $this->setContainer(new Container());
 
-        parent::__construct('Rebar', '0.1.0');
+        parent::__construct('c5dev Scaffolder', '0.1.0');
 
         $this->registerProviders();
     }
@@ -55,7 +55,7 @@ class Application extends App
     {
         $container['base_path'] = realpath(__DIR__.'/../../../');
 
-        $container->instance(\C5Dev\Rebar\Application::class, $this);
+        $container->instance(\C5Dev\Scaffolder\Application::class, $this);
 
         $this->container = $container;
     }
