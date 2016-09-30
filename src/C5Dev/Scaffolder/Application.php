@@ -11,6 +11,7 @@
 
 namespace C5Dev\Scaffolder;
 
+use Phar;
 use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Console\Application as App;
@@ -29,6 +30,17 @@ class Application extends App
         \Illuminate\Filesystem\FilesystemServiceProvider::class,
         \C5Dev\Scaffolder\CommandServiceProvider::class,
         \C5Dev\Scaffolder\FileExporter\FileExporterServiceProvider::class,
+    ];
+
+    /**
+     * Default installation paths for objects.
+     * 
+     * @var array
+     */
+    protected $default_install_paths = [
+        'package' => 'packages',
+        'theme' => 'application/themes',
+        'block' => 'application/blocks',
     ];
 
     /**
@@ -53,11 +65,28 @@ class Application extends App
      */
     public function setContainer(Container $container)
     {
-        $container['base_path'] = realpath(__DIR__.'/../../../');
-
         $container->instance(\C5Dev\Scaffolder\Application::class, $this);
 
         $this->container = $container;
+
+        $this->setBasePaths();
+    }
+
+    /**
+     * Set the application base paths.
+     *
+     * @return  void
+     */
+    protected function setBasePaths()
+    {
+        $this->container['export_path']
+            = $this->container['base_path']
+            = realpath(__DIR__.'/../../../');
+
+        if (! empty(Phar::running())) {
+            $this->container['base_path'] = Phar::running();
+            $this->container['export_path'] = getcwd();
+        }
     }
 
     /**
@@ -127,6 +156,19 @@ class Application extends App
     }
 
     /**
+     * Get a default installation path for an object type.
+     * 
+     * @param  string $object_type [description]
+     * @return void|string
+     */
+    public function getDefaultInstallPath($object_type)
+    {
+        if (array_key_exists($object_type, $this->default_install_paths)) {
+            return $this->default_install_paths[$object_type];
+        }
+    }
+
+    /**
      * Get the application banner.
      *
      * @return string
@@ -164,6 +206,8 @@ class Application extends App
      */
     public function __call($name, $params)
     {
-        return call_user_func_array([$this->container, $name], $params);
+        if (method_exists($this->container, $name)) {
+            return call_user_func_array([$this->container, $name], $params);
+        }
     }
 }

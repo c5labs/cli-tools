@@ -75,7 +75,7 @@ class CreatePackageCommand extends AbstractBusCommand
         }
 
         // Export the files
-        $source = $this->makePath($app->make('base_path'), 'packages', 'package-boilerplate');
+        $source = $this->makePath([$app->make('base_path'), 'packages', 'package-boilerplate']);
         $exporter->setSubstitutions($substitutions);
         $exporter->export($source, $this->path);
 

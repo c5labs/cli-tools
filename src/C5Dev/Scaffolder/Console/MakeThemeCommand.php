@@ -75,7 +75,12 @@ class MakeThemeCommand extends AbstractConsoleCommand
          * Confirm destination overwrite
          */
         if (true === $vars['options']['package_theme']) {
-            $path = $vars['path'] = $vars['path'].'_package';
+            if (! $this->at_concrete_root) {
+                $path = $this->destination_path = $this->destination_path.'_package';
+            } else {
+                $package_install_path = $this->getApplication()->getDefaultInstallPath('package');
+                $path = $this->destination_path = $this->getApplication()->make('export_path').DIRECTORY_SEPARATOR.$package_install_path.DIRECTORY_SEPARATOR.$vars['handle'].'_package';
+            }
 
             if (file_exists($path)) {
                 $question = new ConfirmationQuestion(

@@ -37,6 +37,10 @@ class AbstractConsoleCommand extends Command
      */
     protected $command_name;
 
+    protected $destination_path;
+
+    protected $at_concrete_root = false;
+
     /**
      * Get the object name.
      *
@@ -124,18 +128,29 @@ class AbstractConsoleCommand extends Command
         // Pipework
         $options = [];
         $helper = $this->getHelper('question');
-        $bus = $this->getApplication()->make(\Illuminate\Contracts\Bus\Dispatcher::class);
-        $files = $this->getApplication()->make('files');
+        $app = $this->getApplication();
+        $bus = $app->make(\Illuminate\Contracts\Bus\Dispatcher::class);
 
         // Set the destination path
         if (($path = $input->getArgument('path')) && ! empty($path)) {
-            $destination_path = realpath($path);
+            $this->destination_path = realpath($path);
         } else {
-            $destination_path = realpath($this->getApplication()->make('base_path'));
+            $destination_path = $this->getApplication()->make('export_path');
+
+            // Determine whether we're in a concrete installation or not, if we are we can 
+            // put the object into the right location.
+            $default_install_path = $app->getDefaultInstallPath($this->getLowerCaseObjectName());
+
+            if (is_dir($destination_path.'/concrete') && ! empty($default_install_path)) {
+                $this->at_concrete_root = true;
+                $this->destination_path = $destination_path.DIRECTORY_SEPARATOR.$default_install_path;
+            } else {
+                $this->destination_path = realpath($destination_path);
+            }
         }
 
-        if (! is_writable($destination_path)) {
-            throw new InvalidArgumentException("The path [$destination_path] is not writable.");
+        if (! is_writable($this->destination_path)) {
+            throw new InvalidArgumentException("The path [$this->destination_path] is not writable.");
         }
 
         /*
@@ -158,19 +173,19 @@ class AbstractConsoleCommand extends Command
         }
 
         // Form the package path
-        $path = $destination_path.DIRECTORY_SEPARATOR.$handle;
+        $this->destination_path = $this->destination_path.DIRECTORY_SEPARATOR.$handle;
 
         /*
          * Confirm destination overwrite
          */
-        if (file_exists($path)) {
+        if (file_exists($this->destination_path)) {
             $question = new ConfirmationQuestion(
-                "The directory [$path] already exists, can we remove it to continue? [Y/N]:",
+                "The directory [$this->destination_path] already exists, can we remove it to continue? [Y/N]:",
                 false
             );
 
             if ($helper->ask($input, $output, $question)) {
-                $files->deleteDirectory(realpath($path));
+                $app->make('files')->deleteDirectory(realpath($this->destination_path));
             } else {
                 throw new \Exception('Cannot continue as output directory already exsits.');
             }
@@ -215,31 +230,28 @@ class AbstractConsoleCommand extends Command
         /*
          * Run any custom creation logic.
          */
-        $vars = compact(
-            'path', 'handle', 'name',
-            'description', 'author', 'options'
-        );
+        $vars = compact('handle', 'name', 'description', 'author', 'options');
         $vars = $this->askCustomQuestions($input, $output, $helper, $vars);
 
         /*
          * Dispatch the package creation command & send the result to the console.
          */
         $bus->dispatch(new $this->command_name(
-            $vars['path'], $vars['handle'], $vars['name'], $vars['description'],
-            $vars['author'], $vars['options']
+            $this->destination_path, $vars['handle'], $vars['name'],
+            $vars['description'], $vars['author'], $vars['options']
         ));
 
-        if (file_exists($vars['path'])) {
-            $path = realpath($vars['path']);
+        if (file_exists($this->destination_path)) {
+            $path = realpath($this->destination_path);
             $output->writeln(sprintf(
                 "\n<fg=green>The %s was created at %s.</>\n",
-                $this->getLowerCaseObjectName(), $vars['path']
+                $this->getLowerCaseObjectName(), $this->destination_path
             ));
         } else {
             $output->writeln(sprintf(
                 "\n<fg=red>The %s could not be created at %s.</>\n",
                 $this->getLowerCaseObjectName(),
-                $vars['path']
+                $this->destination_path
             ));
         }
     }

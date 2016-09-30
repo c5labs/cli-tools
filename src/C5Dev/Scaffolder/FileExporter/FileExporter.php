@@ -170,7 +170,6 @@ class FileExporter
             // File specific substitutions
             if (Str::is($key, $pathname)) {
                 foreach ($substitution as $file_substitution) {
-                    var_dump($file_substitution);
                     $contents = str_replace($file_substitution[0], $file_substitution[1], $contents);
                 }
             }

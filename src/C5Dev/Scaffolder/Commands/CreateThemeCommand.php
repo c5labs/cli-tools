@@ -22,7 +22,7 @@ class CreateThemeCommand extends AbstractBusCommand
      * 
      * @return string
      */
-    protected function createPackage()
+    protected function createPackage($app)
     {
         $package_handle = $this->handle.'_package';
         $package_name = $this->name.' Package';
@@ -65,8 +65,8 @@ class CreateThemeCommand extends AbstractBusCommand
         $theme_namespace = 'Concrete\\Theme\\'.Str::studly($this->handle);
 
         // Create a package for the theme if requested
-        if ($this->options['package_theme']) {
-            $package_handle = $this->createPackage();
+        if (true === $this->options['package_theme']) {
+            $package_handle = $this->createPackage($app);
             $this->path = $this->makePath([$this->path, 'themes', $this->handle]);
             $theme_namespace = 'Concrete\\Package\\'.Str::studly($package_handle).'\\Theme\\'.Str::studly($this->handle);
         }
