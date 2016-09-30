@@ -14,9 +14,7 @@ namespace C5Dev\Scaffolder;
 use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Console\Application as App;
-use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Application extends App

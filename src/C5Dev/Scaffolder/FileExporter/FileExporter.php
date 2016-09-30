@@ -11,8 +11,9 @@
 
 namespace C5Dev\Scaffolder\FileExporter;
 
-use InvalidArgumentException;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Symfony\Component\Finder\SplFileInfo;
 
 class FileExporter
@@ -164,8 +165,20 @@ class FileExporter
      */
     protected function substitute($pathname, $contents)
     {
-        foreach ($this->substitutions as $substitution) {
-            $contents = str_replace($substitution[0], $substitution[1], $contents);
+        foreach ($this->substitutions as $key => $substitution) {
+
+            // File specific substitutions
+            if (Str::is($key, $pathname)) {
+                foreach ($substitution as $file_substitution) {
+                    var_dump($file_substitution);
+                    $contents = str_replace($file_substitution[0], $file_substitution[1], $contents);
+                }
+            }
+
+            // Substituions to be performed on all files
+            else {
+                $contents = str_replace($substitution[0], $substitution[1], $contents);
+            }
         }
 
         return $contents;

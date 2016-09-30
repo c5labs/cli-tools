@@ -11,6 +11,7 @@
 
 namespace C5Dev\Scaffolder;
 
+use Phar;
 use Illuminate\Support\ServiceProvider;
 
 class CommandServiceProvider extends ServiceProvider
@@ -23,5 +24,11 @@ class CommandServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->add(new \C5Dev\Scaffolder\Console\MakePackageCommand());
+        $this->app->add(new \C5Dev\Scaffolder\Console\MakeThemeCommand());
+
+        // Add the pharize command if we're not already running as one.
+        if (empty(Phar::running())) {
+            $this->app->add(new \C5Dev\Scaffolder\Console\CompilePharCommand());
+        }
     }
 }

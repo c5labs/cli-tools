@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 
 /*
@@ -10,4 +9,8 @@
  * file that was distributed with this source code.
  */
 
-require 'bootstraps/start.php';
+require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../vendor/illuminate/support/helpers.php';
+
+$console = new \C5Dev\Scaffolder\Application();
+$console->run();
