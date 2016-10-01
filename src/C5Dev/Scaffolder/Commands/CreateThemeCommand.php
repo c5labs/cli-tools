@@ -30,7 +30,6 @@ class CreateThemeCommand extends AbstractBusCommand
 
         // Create a package for the theme if requested
         if (true === $this->options['package_object']) {
-
             $package_handle = $this->handle.'_package';
             $package_namespace = 'Concrete\\Package\\'.Str::studly($package_handle);
 

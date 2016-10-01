@@ -47,7 +47,7 @@ class AbstractConsoleCommand extends Command
 
     /**
      * Indicates whether we are operating within a concrete5 installation.
-     * @var boolean
+     * @var bool
      */
     protected $at_concrete_root = false;
 
@@ -123,7 +123,7 @@ class AbstractConsoleCommand extends Command
     }
 
     /**
-     * Asks whether to package the current object we are creating (for themes, block types, etc)
+     * Asks whether to package the current object we are creating (for themes, block types, etc).
      *
      * @param  InputInterface  $input
      * @param  OutputInterface $output

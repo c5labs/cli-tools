@@ -174,9 +174,8 @@ class Application extends App
      * @return string
      */
     public function getBanner()
-    {          
-
-        $help =  '<fg=yellow>        ______</>                   ________      __    __         '.PHP_EOL;
+    {
+        $help = '<fg=yellow>        ______</>                   ________      __    __         '.PHP_EOL;
         $help .=  '<fg=yellow>  _____/ ____/</>  ______________ _/ __/ __/___  / /___/ /__  _____'.PHP_EOL;
         $help .=  '<fg=yellow> / ___/___ \  </> / ___/ ___/ __  / /_/ /_/ __ \/ / __  / _ \/ ___/'.PHP_EOL;
         $help .=  '<fg=yellow>/ /______/ /  </>(__  ) /__/ /_/ / __/ __/ /_/ / / /_/ /  __/ /    '.PHP_EOL;

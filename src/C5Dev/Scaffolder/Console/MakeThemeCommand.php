@@ -16,7 +16,6 @@ use Symfony\Component\Console\Helper\QuestionHelper as Helper;
 use Symfony\Component\Console\Input\InputInterface as In;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface as Out;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class MakeThemeCommand extends AbstractConsoleCommand
 {
