@@ -11,28 +11,28 @@
 
 namespace C5Dev\Scaffolder\Console;
 
-use C5Dev\Scaffolder\Commands\CreateThemeCommand;
+use C5Dev\Scaffolder\Commands\CreateBlockTypeCommand;
 use Symfony\Component\Console\Helper\QuestionHelper as Helper;
 use Symfony\Component\Console\Input\InputInterface as In;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface as Out;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
-class MakeThemeCommand extends AbstractConsoleCommand
+class MakeBlockTypeCommand extends AbstractConsoleCommand
 {
     /**
      * The name of the object that we are scaffolding.
      *
      * @var string
      */
-    protected $object_name = 'Theme';
+    protected $object_name = 'Block Type';
 
     /**
      * The name of the command to dispatch to create the object.
      * 
      * @var string
      */
-    protected $command_name = CreateThemeCommand::class;
+    protected $command_name = CreateBlockTypeCommand::class;
 
     /**
      * Configure the command.
@@ -42,11 +42,11 @@ class MakeThemeCommand extends AbstractConsoleCommand
     protected function configure()
     {
         $this
-        ->setName('make:theme')
-        ->setDescription('Generates boilerplate theme code.')
-        ->setHelp('This command allows you to create themes.')
+        ->setName('make:block')
+        ->setDescription('Generates boilerplate block type code.')
+        ->setHelp('This command allows you to create block type.')
         ->addDefaultArguments()
-        ->addOption('package', null, InputOption::VALUE_OPTIONAL, 'Package the theme?', false);
+        ->addOption('package', null, InputOption::VALUE_OPTIONAL, 'Package the block type?', false);
     }
 
     /**

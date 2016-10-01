@@ -40,7 +40,7 @@ class Application extends App
     protected $default_install_paths = [
         'package' => 'packages',
         'theme' => 'application/themes',
-        'block' => 'application/blocks',
+        'block_type' => 'application/blocks',
     ];
 
     /**
@@ -52,7 +52,7 @@ class Application extends App
     {
         $this->setContainer(new Container());
 
-        parent::__construct('c5dev Scaffolder', '0.1.0');
+        parent::__construct('c5 Scaffolder', '0.1.0');
 
         $this->registerProviders();
     }
@@ -174,13 +174,13 @@ class Application extends App
      * @return string
      */
     public function getBanner()
-    {
-        $help = '                __  __      _     _           '.PHP_EOL;
-        $help .= '               / _|/ _|    | |   | |          '.PHP_EOL;
-        $help .= ' ___  ___ __ _| |_| |_ ___ | | __| | ___ _ __ '.PHP_EOL;
-        $help .= '/ __|/ __/ _  |  _|  _/ _ \| |/ _  |/ _ \ \'__|'.PHP_EOL;
-        $help .= '\__ \ (_| (_| | | | || (_) | | (_| |  __/ |   '.PHP_EOL;
-        $help .= '|___/\___\__,_|_| |_| \___/|_|\__,_|\___|_|   '.PHP_EOL;
+    {          
+
+        $help =  '<fg=yellow>        ______</>                   ________      __    __         '.PHP_EOL;
+        $help .=  '<fg=yellow>  _____/ ____/</>  ______________ _/ __/ __/___  / /___/ /__  _____'.PHP_EOL;
+        $help .=  '<fg=yellow> / ___/___ \  </> / ___/ ___/ __  / /_/ /_/ __ \/ / __  / _ \/ ___/'.PHP_EOL;
+        $help .=  '<fg=yellow>/ /______/ /  </>(__  ) /__/ /_/ / __/ __/ /_/ / / /_/ /  __/ /    '.PHP_EOL;
+        $help .=  '<fg=yellow>\___/_____/  </>/____/\___/\__,_/_/ /_/  \____/_/\__,_/\___/_/     '.PHP_EOL;
         $help .= ''.PHP_EOL;
         $help .= '<fg=green>'.$this->getLongVersion().'</>'.PHP_EOL;
 

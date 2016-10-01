@@ -95,6 +95,27 @@ abstract class AbstractBusCommand
     }
 
     /**
+     * Creates a package for our object and returns the handle.
+     *
+     * @param  Application $app
+     * @param  array $options
+     * @return string
+     */
+    protected function createPackage($app, $handle, array $options)
+    {
+        $package_name = $this->name.' Package';
+
+        $app->make(\Illuminate\Contracts\Bus\Dispatcher::class)->dispatch(
+            new CreatePackageCommand(
+                $this->path, $handle, $package_name,
+                $this->description, $this->author, $options
+            )
+        );
+
+        return $handle;
+    }
+
+    /**
      * Handle the command.
      * 
      * @param  Application $app      

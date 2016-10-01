@@ -4,21 +4,52 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0941458805f991cef3065caadff8d6aa",
-    "content-hash": "87dad734bcb81336023b37faafe0ea16",
+    "hash": "d8c838e9e483c00ed5d27064343acba7",
+    "content-hash": "09f65e63aaf57a7421e13f04d6deba8c",
     "packages": [
+        {
+            "name": "c5dev/block-boilerplate",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c5labs/block-boilerplate.git",
+                "reference": "26f66cf952bce2969d28598876330e715657e5ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c5labs/block-boilerplate/zipball/26f66cf952bce2969d28598876330e715657e5ec",
+                "reference": "26f66cf952bce2969d28598876330e715657e5ec",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "dev-concrete5-installation-path-updates"
+            },
+            "type": "concrete5-block",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Green",
+                    "email": "oliver@c5dev.com"
+                }
+            ],
+            "description": "A block boilerplate to start building from.",
+            "time": "2016-10-01 13:00:45"
+        },
         {
             "name": "c5dev/package-boilerplate",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c5labs/package-boilerplate.git",
-                "reference": "93f0901ce75906f6887060c91498fd3b4a45794c"
+                "reference": "cdc376dfe7cc9152b0186838d46a6bc8dcf232cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/package-boilerplate/zipball/93f0901ce75906f6887060c91498fd3b4a45794c",
-                "reference": "93f0901ce75906f6887060c91498fd3b4a45794c",
+                "url": "https://api.github.com/repos/c5labs/package-boilerplate/zipball/cdc376dfe7cc9152b0186838d46a6bc8dcf232cd",
+                "reference": "cdc376dfe7cc9152b0186838d46a6bc8dcf232cd",
                 "shasum": ""
             },
             "require": {
@@ -36,7 +67,7 @@
                 }
             ],
             "description": "A collection of boilerplate code which can be used as a base to begin building concrete5 packages.",
-            "time": "2016-09-30 14:05:56"
+            "time": "2016-10-01 12:44:37"
         },
         {
             "name": "c5dev/theme-boilerplate",
@@ -44,12 +75,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c5labs/theme-boilerplate.git",
-                "reference": "0e51a7eb25cfa802a28082b471f163ddf12b35e9"
+                "reference": "4e5164c357708bc5f491b50f55cbcd62b9c85314"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/theme-boilerplate/zipball/0e51a7eb25cfa802a28082b471f163ddf12b35e9",
-                "reference": "0e51a7eb25cfa802a28082b471f163ddf12b35e9",
+                "url": "https://api.github.com/repos/c5labs/theme-boilerplate/zipball/4e5164c357708bc5f491b50f55cbcd62b9c85314",
+                "reference": "4e5164c357708bc5f491b50f55cbcd62b9c85314",
                 "shasum": ""
             },
             "require": {
@@ -67,7 +98,7 @@
                 }
             ],
             "description": "A theme boilerplate to start building from.",
-            "time": "2016-09-30 14:21:42"
+            "time": "2016-09-30 14:40:39"
         },
         {
             "name": "composer/installers",
@@ -858,7 +889,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "c5dev/package-boilerplate": 20,
-        "c5dev/theme-boilerplate": 20
+        "c5dev/theme-boilerplate": 20,
+        "c5dev/block-boilerplate": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

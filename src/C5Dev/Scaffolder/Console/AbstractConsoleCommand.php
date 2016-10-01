@@ -11,6 +11,7 @@
 
 namespace C5Dev\Scaffolder\Console;
 
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper as Helper;
@@ -37,8 +38,17 @@ class AbstractConsoleCommand extends Command
      */
     protected $command_name;
 
+    /**
+     * The destination path for files created.
+     * 
+     * @var string
+     */
     protected $destination_path;
 
+    /**
+     * Indicates whether we are operating within a concrete5 installation.
+     * @var boolean
+     */
     protected $at_concrete_root = false;
 
     /**
@@ -59,6 +69,16 @@ class AbstractConsoleCommand extends Command
     protected function getLowerCaseObjectName()
     {
         return strtolower($this->object_name);
+    }
+
+    /**
+     * Get a snake_cased representation of the object name.
+     * 
+     * @return string
+     */
+    protected function getSnakeCaseObjectName()
+    {
+        return Str::snake($this->getObjectName());
     }
 
     /**
@@ -89,8 +109,7 @@ class AbstractConsoleCommand extends Command
     }
 
     /**
-     * Allows the implementation of custom questions for 
-     * the object type we are creating.
+     * Allows the implementation of custom questions for the object type we are creating.
      *
      * @param  InputInterface  $input
      * @param  OutputInterface $output
@@ -100,6 +119,57 @@ class AbstractConsoleCommand extends Command
      */
     protected function askCustomQuestions(In $input, Out $output, Helper $helper, array $vars)
     {
+        return $vars;
+    }
+
+    /**
+     * Asks whether to package the current object we are creating (for themes, block types, etc)
+     *
+     * @param  InputInterface  $input
+     * @param  OutputInterface $output
+     * @param  QuestionHelper  $helper
+     * @param  array           $vars
+     * @return array
+     */
+    protected function askWhetherToPackageObject(In $input, Out $output, Helper $helper, array $vars)
+    {
+        /*
+         * Should we package the object?
+         */
+        if (! $vars['options']['package_object'] = $input->getOption('package')) {
+            $question = new ConfirmationQuestion(
+                sprintf('Do you want to package the %s? [Y/N]:', $this->getLowerCaseObjectName()),
+                false
+            );
+            $vars['options']['package_object'] = $helper->ask($input, $output, $question);
+        }
+
+        /*
+         * Confirm destination overwrite
+         */
+        if (true === $vars['options']['package_object']) {
+            if (! $this->at_concrete_root) {
+                $path = $this->destination_path = $this->destination_path.'_package';
+            } else {
+                $package_install_path = $this->getApplication()->getDefaultInstallPath('package');
+                $path = $this->destination_path = $this->getApplication()->make('export_path').DIRECTORY_SEPARATOR.$package_install_path.DIRECTORY_SEPARATOR.$vars['handle'].'_package';
+            }
+
+            if (file_exists($path)) {
+                $question = new ConfirmationQuestion(
+                    "The directory [$path] already exists, can we remove it to continue? [Y/N]:",
+                    false
+                );
+
+                if ($helper->ask($input, $output, $question)) {
+                    $files = $this->getApplication()->make('files');
+                    $files->deleteDirectory(realpath($path));
+                } else {
+                    throw new \Exception('Cannot continue as output directory already exsits.');
+                }
+            }
+        }
+
         return $vars;
     }
 
@@ -139,7 +209,7 @@ class AbstractConsoleCommand extends Command
 
             // Determine whether we're in a concrete installation or not, if we are we can 
             // put the object into the right location.
-            $default_install_path = $app->getDefaultInstallPath($this->getLowerCaseObjectName());
+            $default_install_path = $app->getDefaultInstallPath($this->getSnakeCaseObjectName());
 
             if (is_dir($destination_path.'/concrete') && ! empty($default_install_path)) {
                 $this->at_concrete_root = true;
@@ -159,9 +229,9 @@ class AbstractConsoleCommand extends Command
         if (! $handle = $input->getOption('handle')) {
             $text = sprintf(
                 'Please enter the handle of the %s [<comment>my_%s_name</comment>]:',
-                $this->getLowerCaseObjectName(), $this->getLowerCaseObjectName()
+                $this->getLowerCaseObjectName(), $this->getSnakeCaseObjectName()
             );
-            $question = new Question($text, sprintf('my_%s_name', $this->getLowerCaseObjectName()));
+            $question = new Question($text, sprintf('my_%s_name', $this->getSnakeCaseObjectName()));
             $handle = $helper->ask($input, $output, $question);
         }
 
