@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5c9a094dc9bf89b2a36b5a17f6be0dbb",
-    "content-hash": "f67b08d4a32eed4c7f5e6868ecc8b0c3",
+    "hash": "cd124f4af1c1803deee4177cc575d3ac",
+    "content-hash": "bab90cfab9fe339985f86db78944a9e7",
     "packages": [
         {
             "name": "c5dev/block-boilerplate",

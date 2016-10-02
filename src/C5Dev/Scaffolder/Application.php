@@ -11,8 +11,8 @@
 
 namespace C5Dev\Scaffolder;
 
-use C5Dev\Scaffolder\ApplicationContract;
 use Illuminate\Container\Container;
+use Illuminate\Contracts\Console\Application as ApplicationContract;
 use Illuminate\Support\ServiceProvider;
 use Phar;
 use Symfony\Component\Console\Application as App;
@@ -66,7 +66,7 @@ class Application extends App implements ApplicationContract
      */
     public function setContainer(Container $container)
     {
-        $container->instance(\C5Dev\Scaffolder\ApplicationContract::class, $this);
+        $container->instance(\Illuminate\Contracts\Console\Application::class, $this);
 
         $this->container = $container;
 
@@ -129,7 +129,7 @@ class Application extends App implements ApplicationContract
     protected function bootProvider(ServiceProvider $provider)
     {
         if (method_exists($provider, 'boot')) {
-            return $this->call([$provider, 'boot']);
+            return $this->container->call([$provider, 'boot']);
         }
     }
 
@@ -195,6 +195,28 @@ class Application extends App implements ApplicationContract
     public function getHelp()
     {
         return $this->getBanner();
+    }
+
+    /**
+     * Call a console application command.
+     *
+     * @param  string  $command
+     * @param  array  $parameters
+     * @return int
+     */
+    public function call($command, array $parameters = [])
+    {
+        throw new \Exception('Not implemented');
+    }
+
+    /**
+     * Get the output from the last command.
+     *
+     * @return string
+     */
+    public function output()
+    {
+        throw new \Exception('Not implemented');
     }
 
     /**

@@ -11,7 +11,7 @@
 
 namespace C5Dev\Scaffolder\Commands;
 
-use C5Dev\Scaffolder\ApplicationContract as Application;
+use Illuminate\Contracts\Console\Application;
 use C5Dev\Scaffolder\FileExporter\FileExporter;
 use Illuminate\Support\Str;
 

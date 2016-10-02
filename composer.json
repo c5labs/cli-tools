@@ -9,7 +9,8 @@
         "illuminate/filesystem": "^5.3",
         "c5dev/package-boilerplate": "dev-master",
         "c5dev/theme-boilerplate": "dev-master",
-        "c5dev/block-boilerplate": "dev-master"
+        "c5dev/block-boilerplate": "dev-master",
+        "illuminate/contracts": "^5.3"
     },
     "license": "MIT",
     "authors": [
