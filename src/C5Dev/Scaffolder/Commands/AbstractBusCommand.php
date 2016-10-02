@@ -11,7 +11,7 @@
 
 namespace C5Dev\Scaffolder\Commands;
 
-use C5Dev\Scaffolder\Application;
+use C5Dev\Scaffolder\ApplicationContract as Application;
 use C5Dev\Scaffolder\FileExporter\FileExporter;
 
 abstract class AbstractBusCommand
@@ -101,7 +101,7 @@ abstract class AbstractBusCommand
      * @param  array $options
      * @return string
      */
-    protected function createPackage($app, $handle, array $options)
+    protected function createPackage(Application $app, $handle, array $options)
     {
         $package_name = $this->name.' Package';
 

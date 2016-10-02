@@ -11,14 +11,15 @@
 
 namespace C5Dev\Scaffolder;
 
-use Phar;
+use C5Dev\Scaffolder\ApplicationContract;
 use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
+use Phar;
 use Symfony\Component\Console\Application as App;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Application extends App
+class Application extends App implements ApplicationContract
 {
     /**
      * Service Providers.
@@ -65,7 +66,7 @@ class Application extends App
      */
     public function setContainer(Container $container)
     {
-        $container->instance(\C5Dev\Scaffolder\Application::class, $this);
+        $container->instance(\C5Dev\Scaffolder\ApplicationContract::class, $this);
 
         $this->container = $container;
 
