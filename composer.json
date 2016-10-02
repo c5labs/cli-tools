@@ -2,7 +2,7 @@
     "name": "c5dev/scaffolder",
     "description": "A package, theme & block scaffolder for concrete5.",
     "require": {
-        "symfony/console": "~2.0",
+        "symfony/console": "~3.0",
         "illuminate/bus": "^5.3",
         "illuminate/container": "^5.3",
         "illuminate/support": "^5.3",
