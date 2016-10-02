@@ -74,6 +74,16 @@ class Application extends App implements ApplicationContract
     }
 
     /**
+     * Gets the applications container.
+     * 
+     * @return \Illuminate\Container\Container
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
      * Set the application base paths.
      *
      * @return  void
