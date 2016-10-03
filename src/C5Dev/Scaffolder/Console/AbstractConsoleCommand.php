@@ -211,7 +211,9 @@ class AbstractConsoleCommand extends Command
             // put the object into the right location.
             $default_install_path = $app->getDefaultInstallPath($this->getSnakeCaseObjectName());
 
-            if (is_dir($destination_path.'/concrete') && ! empty($default_install_path)) {
+            $this->at_concrete_root = (is_dir($destination_path.'/concrete') || is_dir($destination_path.'/vendor/concrete5/concrete5'));
+
+            if ($this->at_concrete_root && ! empty($default_install_path)) {
                 $this->at_concrete_root = true;
                 $this->destination_path = $destination_path.DIRECTORY_SEPARATOR.$default_install_path;
             } else {
