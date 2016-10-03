@@ -71,7 +71,7 @@ class CreateThemeCommand extends AbstractBusCommand
                 'Concrete\\Theme\\ThemeBoilerplate',
                 $theme_namespace,
             ],
-            'otherNameInstances' => ['Package Boilerplate', $this->name],
+            'otherNameInstances' => ['Theme Boilerplate', $this->name],
             'otherDescriptionInstances' => [
                 'Start building standards complient concrete5 themes from me.',
                 $this->description,

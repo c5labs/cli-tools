@@ -46,7 +46,7 @@ class CreatePackageCommand extends AbstractBusCommand
             ],
             'otherNameInstances' => ['Package Boilerplate', $this->name],
             'otherDescriptionInstances' => [
-                'Start building standards complient concrete5 pacakges from me.',
+                'Start building standards complient concrete5 packages from me.',
                 $this->description,
             ],
         ];
