@@ -44,12 +44,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c5labs/package-boilerplate.git",
-                "reference": "cdc376dfe7cc9152b0186838d46a6bc8dcf232cd"
+                "reference": "375c995c37aa5305b62dcd9aa941d0395a9a36dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/package-boilerplate/zipball/cdc376dfe7cc9152b0186838d46a6bc8dcf232cd",
-                "reference": "cdc376dfe7cc9152b0186838d46a6bc8dcf232cd",
+                "url": "https://api.github.com/repos/c5labs/package-boilerplate/zipball/375c995c37aa5305b62dcd9aa941d0395a9a36dc",
+                "reference": "375c995c37aa5305b62dcd9aa941d0395a9a36dc",
                 "shasum": ""
             },
             "require": {
@@ -67,7 +67,7 @@
                 }
             ],
             "description": "A collection of boilerplate code which can be used as a base to begin building concrete5 packages.",
-            "time": "2016-10-01 12:44:37"
+            "time": "2016-10-03 11:24:28"
         },
         {
             "name": "c5dev/theme-boilerplate",
@@ -75,12 +75,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c5labs/theme-boilerplate.git",
-                "reference": "4e5164c357708bc5f491b50f55cbcd62b9c85314"
+                "reference": "d91b3103d122a2b13b1f7fe3ee7a1a2f8095a3f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/theme-boilerplate/zipball/4e5164c357708bc5f491b50f55cbcd62b9c85314",
-                "reference": "4e5164c357708bc5f491b50f55cbcd62b9c85314",
+                "url": "https://api.github.com/repos/c5labs/theme-boilerplate/zipball/d91b3103d122a2b13b1f7fe3ee7a1a2f8095a3f6",
+                "reference": "d91b3103d122a2b13b1f7fe3ee7a1a2f8095a3f6",
                 "shasum": ""
             },
             "require": {
@@ -98,7 +98,7 @@
                 }
             ],
             "description": "A theme boilerplate to start building from.",
-            "time": "2016-09-30 14:40:39"
+            "time": "2016-10-03 11:37:09"
         },
         {
             "name": "composer/installers",
