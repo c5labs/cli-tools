@@ -133,15 +133,19 @@ class AbstractConsoleCommand extends Command
      */
     protected function askWhetherToPackageObject(In $input, Out $output, Helper $helper, array $vars)
     {
+        global $argv;
+
         /*
          * Should we package the object?
          */
-        if (! $vars['options']['package_object'] = $input->getOption('package')) {
+        if (! in_array('--package', $argv)) {
             $question = new ConfirmationQuestion(
                 sprintf('Do you want to package the %s? [Y/N]:', $this->getLowerCaseObjectName()),
                 false
             );
             $vars['options']['package_object'] = $helper->ask($input, $output, $question);
+        } else {
+            $vars['options']['package_object'] = true;
         }
 
         /*
