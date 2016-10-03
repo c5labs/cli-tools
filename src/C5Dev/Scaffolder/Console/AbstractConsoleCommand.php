@@ -149,28 +149,14 @@ class AbstractConsoleCommand extends Command
         }
 
         /*
-         * Confirm destination overwrite
+         * Set the destrination path.
          */
         if (true === $vars['options']['package_object']) {
-            if (! $this->at_concrete_root) {
-                $path = $this->destination_path = $this->destination_path.'_package';
+            if (! $this->at_concrete_root || ($path = $input->getArgument('path')) && ! empty($path)) {
+                $this->destination_path = $this->destination_path.'_package';
             } else {
                 $package_install_path = $this->getApplication()->getDefaultInstallPath('package');
-                $path = $this->destination_path = $this->getApplication()->make('export_path').DIRECTORY_SEPARATOR.$package_install_path.DIRECTORY_SEPARATOR.$vars['handle'].'_package';
-            }
-
-            if (file_exists($path)) {
-                $question = new ConfirmationQuestion(
-                    "The directory [$path] already exists, can we remove it to continue? [Y/N]:",
-                    false
-                );
-
-                if ($helper->ask($input, $output, $question)) {
-                    $files = $this->getApplication()->make('files');
-                    $files->deleteDirectory(realpath($path));
-                } else {
-                    throw new \Exception('Cannot continue as output directory already exsits.');
-                }
+                $this->destination_path = $this->getApplication()->make('export_path').DIRECTORY_SEPARATOR.$package_install_path.DIRECTORY_SEPARATOR.$vars['handle'].'_package';
             }
         }
 
@@ -248,25 +234,6 @@ class AbstractConsoleCommand extends Command
             );
         }
 
-        // Form the package path
-        $this->destination_path = $this->destination_path.DIRECTORY_SEPARATOR.$handle;
-
-        /*
-         * Confirm destination overwrite
-         */
-        if (file_exists($this->destination_path)) {
-            $question = new ConfirmationQuestion(
-                "The directory [$this->destination_path] already exists, can we remove it to continue? [Y/N]:",
-                false
-            );
-
-            if ($helper->ask($input, $output, $question)) {
-                $app->make('files')->deleteDirectory(realpath($this->destination_path));
-            } else {
-                throw new \Exception('Cannot continue as output directory already exsits.');
-            }
-        }
-
         /*
          * Package Name
          */
@@ -303,11 +270,30 @@ class AbstractConsoleCommand extends Command
             $author = $helper->ask($input, $output, $question);
         }
 
+        // Form the package path
+        $this->destination_path = $this->destination_path.DIRECTORY_SEPARATOR.$handle;
+
         /*
          * Run any custom creation logic.
          */
         $vars = compact('handle', 'name', 'description', 'author', 'options');
         $vars = $this->askCustomQuestions($input, $output, $helper, $vars);
+
+        /*
+         * Confirm destination overwrite
+         */
+        if (file_exists($this->destination_path)) {
+            $question = new ConfirmationQuestion(
+                "The directory [$this->destination_path] already exists, can we remove it to continue? [Y/N]:",
+                false
+            );
+
+            if ($helper->ask($input, $output, $question)) {
+                $app->make('files')->deleteDirectory(realpath($this->destination_path));
+            } else {
+                throw new \Exception('Cannot continue as output directory already exsits.');
+            }
+        }
 
         /*
          * Dispatch the package creation command & send the result to the console.
