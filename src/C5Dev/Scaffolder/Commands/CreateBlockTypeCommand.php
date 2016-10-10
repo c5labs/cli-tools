@@ -54,7 +54,8 @@ class CreateBlockTypeCommand extends AbstractBusCommand
         }
 
         $substitutions = [
-            'author' => ['Oliver Green <oliver@c5dev.com>', $this->author],
+            'authorName' => ['Oliver Green', $this->author['name']],
+            'authorEmail' => ['oliver@c5dev.com', $this->author['email']],
             'name' => [
                 '$btName = \'Block Boilerplate\'',
                 '$btName = \''.$this->name.'\'',

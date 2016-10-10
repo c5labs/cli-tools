@@ -103,7 +103,8 @@ class AbstractConsoleCommand extends Command
         ->addOption('handle', null, InputOption::VALUE_OPTIONAL, sprintf('%s Handle', $this->getObjectName()))
         ->addOption('name', null, InputOption::VALUE_OPTIONAL, sprintf('%s Name', $this->getObjectName()))
         ->addOption('description', null, InputOption::VALUE_OPTIONAL, sprintf('%s Description', $this->getObjectName()))
-        ->addOption('author', null, InputOption::VALUE_OPTIONAL, sprintf('%s Author', $this->getObjectName()))
+        ->addOption('author-name', null, InputOption::VALUE_OPTIONAL, sprintf('%s Author', $this->getObjectName()))
+        ->addOption('author-email', null, InputOption::VALUE_OPTIONAL, sprintf('%s Author', $this->getObjectName()))
         ->addOption('uses-composer', null, InputOption::VALUE_OPTIONAL, sprintf('%s user composer', $this->getObjectName()), false)
         ->addOption('uses-providers', null, InputOption::VALUE_OPTIONAL, sprintf('%s user composer', $this->getObjectName()), false);
     }
@@ -259,15 +260,27 @@ class AbstractConsoleCommand extends Command
         }
 
         /*
-         * Package Author
+         * Package Author Name
          */
-        if (! $author = $input->getOption('author')) {
+        if (! $author['name'] = $input->getOption('author-name')) {
             $text = sprintf(
-                'Please enter the author of the %s [<comment>Unknown <unknown@unknown.com></comment>]:',
+                'Please enter the author of the %s [<comment>Unknown</comment>]:',
                 $this->getLowerCaseObjectName()
             );
-            $question = new Question($text, 'Unknown <unknown@unknown.com>');
-            $author = $helper->ask($input, $output, $question);
+            $question = new Question($text, 'Unknown');
+            $author['name'] = $helper->ask($input, $output, $question);
+        }
+
+        /*
+         * Package Author Email
+         */
+        if (! $author['email'] = $input->getOption('author-email')) {
+            $text = sprintf(
+                'Please enter the authors email of the %s [<comment>unknown@unknown.net</comment>]:',
+                $this->getLowerCaseObjectName()
+            );
+            $question = new Question($text, 'unknown@unknown.net');
+            $author['email'] = $helper->ask($input, $output, $question);
         }
 
         // Form the package path

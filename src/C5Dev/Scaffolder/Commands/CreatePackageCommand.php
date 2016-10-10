@@ -27,7 +27,8 @@ class CreatePackageCommand extends AbstractBusCommand
     public function handle(Application $app, FileExporter $exporter)
     {
         $substitutions = [
-            'author' => ['Oliver Green <oliver@c5dev.com>', $this->author],
+            'authorName' => ['Oliver Green', $this->author['name']],
+            'authorEmail' => ['oliver@c5dev.com', $this->author['email']],
             'name' => [
                 '$pkgName = \'Package Boilerplate\'',
                 '$pkgName = \''.$this->name.'\'',
@@ -49,6 +50,7 @@ class CreatePackageCommand extends AbstractBusCommand
                 'Start building standards complient concrete5 packages from me.',
                 $this->description,
             ],
+            'otherHandleInstances' => ['package-boilerplate', $this->handle]
         ];
 
         // Add any substitutions from the options array

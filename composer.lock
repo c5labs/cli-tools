@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c5labs/block-boilerplate.git",
-                "reference": "ba432efbcb64665439b3456dce562b439358d24f"
+                "reference": "db5d9c7afe95e8e840745c3965f0062e55e9c9a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/block-boilerplate/zipball/ba432efbcb64665439b3456dce562b439358d24f",
-                "reference": "ba432efbcb64665439b3456dce562b439358d24f",
+                "url": "https://api.github.com/repos/c5labs/block-boilerplate/zipball/db5d9c7afe95e8e840745c3965f0062e55e9c9a1",
+                "reference": "db5d9c7afe95e8e840745c3965f0062e55e9c9a1",
                 "shasum": ""
             },
             "require": {
@@ -36,7 +36,7 @@
                 }
             ],
             "description": "A block boilerplate to start building from.",
-            "time": "2016-10-01 13:09:32"
+            "time": "2016-10-03 14:03:49"
         },
         {
             "name": "c5dev/package-boilerplate",
@@ -44,12 +44,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c5labs/package-boilerplate.git",
-                "reference": "375c995c37aa5305b62dcd9aa941d0395a9a36dc"
+                "reference": "43287df94c766323be0fd4418c839cbd8e9fc32b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/package-boilerplate/zipball/375c995c37aa5305b62dcd9aa941d0395a9a36dc",
-                "reference": "375c995c37aa5305b62dcd9aa941d0395a9a36dc",
+                "url": "https://api.github.com/repos/c5labs/package-boilerplate/zipball/43287df94c766323be0fd4418c839cbd8e9fc32b",
+                "reference": "43287df94c766323be0fd4418c839cbd8e9fc32b",
                 "shasum": ""
             },
             "require": {
@@ -66,8 +66,8 @@
                     "email": "oliver@c5dev.com"
                 }
             ],
-            "description": "A collection of boilerplate code which can be used as a base to begin building concrete5 packages.",
-            "time": "2016-10-03 11:24:28"
+            "description": "Start building standards complient concrete5 packages from me.",
+            "time": "2016-10-10 10:15:55"
         },
         {
             "name": "c5dev/theme-boilerplate",
@@ -75,12 +75,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c5labs/theme-boilerplate.git",
-                "reference": "d91b3103d122a2b13b1f7fe3ee7a1a2f8095a3f6"
+                "reference": "5733db7aa8c5959c7fbedbe79baeee7918832479"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/theme-boilerplate/zipball/d91b3103d122a2b13b1f7fe3ee7a1a2f8095a3f6",
-                "reference": "d91b3103d122a2b13b1f7fe3ee7a1a2f8095a3f6",
+                "url": "https://api.github.com/repos/c5labs/theme-boilerplate/zipball/5733db7aa8c5959c7fbedbe79baeee7918832479",
+                "reference": "5733db7aa8c5959c7fbedbe79baeee7918832479",
                 "shasum": ""
             },
             "require": {
@@ -98,7 +98,7 @@
                 }
             ],
             "description": "A theme boilerplate to start building from.",
-            "time": "2016-10-03 11:37:09"
+            "time": "2016-10-05 17:12:27"
         },
         {
             "name": "composer/installers",
@@ -332,12 +332,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
-                "reference": "8fb00bd64a8a5ff00b9622faa7227e78e7c2b6ae"
+                "reference": "e4c0e7450e42c93459cb1eeecf1f0905656bec7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/container/zipball/8fb00bd64a8a5ff00b9622faa7227e78e7c2b6ae",
-                "reference": "8fb00bd64a8a5ff00b9622faa7227e78e7c2b6ae",
+                "url": "https://api.github.com/repos/illuminate/container/zipball/e4c0e7450e42c93459cb1eeecf1f0905656bec7a",
+                "reference": "e4c0e7450e42c93459cb1eeecf1f0905656bec7a",
                 "shasum": ""
             },
             "require": {
@@ -367,7 +367,7 @@
             ],
             "description": "The Illuminate Container package.",
             "homepage": "https://laravel.com",
-            "time": "2016-09-16 10:04:31"
+            "time": "2016-10-05 19:36:01"
         },
         {
             "name": "illuminate/contracts",
@@ -375,12 +375,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "e25f6ca62a6e0daf4a6cbbb80be84b57de74aafd"
+                "reference": "b021e7833c09227f42fd815b1a9786e6fd5305c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/e25f6ca62a6e0daf4a6cbbb80be84b57de74aafd",
-                "reference": "e25f6ca62a6e0daf4a6cbbb80be84b57de74aafd",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/b021e7833c09227f42fd815b1a9786e6fd5305c1",
+                "reference": "b021e7833c09227f42fd815b1a9786e6fd5305c1",
                 "shasum": ""
             },
             "require": {
@@ -409,7 +409,7 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2016-09-23 14:53:07"
+            "time": "2016-10-05 19:36:01"
         },
         {
             "name": "illuminate/filesystem",
@@ -511,12 +511,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "096a3e8467cea791cc189b31e8f89742e07fa159"
+                "reference": "7cc48a5a59ff651a886c44c2234df78cef493b7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/096a3e8467cea791cc189b31e8f89742e07fa159",
-                "reference": "096a3e8467cea791cc189b31e8f89742e07fa159",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/7cc48a5a59ff651a886c44c2234df78cef493b7c",
+                "reference": "7cc48a5a59ff651a886c44c2234df78cef493b7c",
                 "shasum": ""
             },
             "require": {
@@ -560,7 +560,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2016-09-21 16:44:56"
+            "time": "2016-10-05 19:36:01"
         },
         {
             "name": "paragonie/random_compat",
@@ -663,12 +663,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "03d010b5b2242ce065ffb0f3f15a218f8137eb4c"
+                "reference": "e12930d96cc0c15fd1de61d14a037c707baa901f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/03d010b5b2242ce065ffb0f3f15a218f8137eb4c",
-                "reference": "03d010b5b2242ce065ffb0f3f15a218f8137eb4c",
+                "url": "https://api.github.com/repos/symfony/console/zipball/e12930d96cc0c15fd1de61d14a037c707baa901f",
+                "reference": "e12930d96cc0c15fd1de61d14a037c707baa901f",
                 "shasum": ""
             },
             "require": {
@@ -718,7 +718,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2016-09-28 00:11:20"
+            "time": "2016-10-06 08:59:27"
         },
         {
             "name": "symfony/debug",
@@ -726,12 +726,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "767b64d3c3346136403a39fe5bfc037e1a85bee7"
+                "reference": "61de4883414e3a640ffac1798d411a37dc71bc20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/767b64d3c3346136403a39fe5bfc037e1a85bee7",
-                "reference": "767b64d3c3346136403a39fe5bfc037e1a85bee7",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/61de4883414e3a640ffac1798d411a37dc71bc20",
+                "reference": "61de4883414e3a640ffac1798d411a37dc71bc20",
                 "shasum": ""
             },
             "require": {
@@ -775,7 +775,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2016-09-16 13:37:46"
+            "time": "2016-09-30 10:45:11"
         },
         {
             "name": "symfony/finder",

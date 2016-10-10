@@ -68,7 +68,7 @@ abstract class AbstractBusCommand
      * @param string $author
      * @param array $options
      */
-    public function __construct($path, $handle, $name, $description, $author, $options = null)
+    public function __construct($path, $handle, $name, $description, array $author, $options = null)
     {
         $this->handle = $handle;
 

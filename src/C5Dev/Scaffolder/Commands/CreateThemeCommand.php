@@ -54,7 +54,8 @@ class CreateThemeCommand extends AbstractBusCommand
         }
 
         $substitutions = [
-            'author' => ['Oliver Green <oliver@c5dev.com>', $this->author],
+            'authorName' => ['Oliver Green', $this->author['name']],
+            'authorEmail' => ['oliver@c5dev.com', $this->author['email']],
             'name' => [
                 '$pThemeName = \'Theme Boilerplate\'',
                 '$pThemeName = \''.$this->name.'\'',
@@ -71,9 +72,10 @@ class CreateThemeCommand extends AbstractBusCommand
                 'Concrete\\Theme\\ThemeBoilerplate',
                 $theme_namespace,
             ],
+            'otherHandleInstances' => ['theme-boilerplate', $this->handle],
             'otherNameInstances' => ['Theme Boilerplate', $this->name],
             'otherDescriptionInstances' => [
-                'Start building standards complient concrete5 themes from me.',
+                'A theme boilerplate to start building from.',
                 $this->description,
             ],
         ];
