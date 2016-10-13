@@ -77,7 +77,7 @@ class AbstractConsoleCommand extends Command
     protected $parameters = ['options' => []];
 
     /**
-     * Constructor
+     * Constructor.
      * 
      * @param string     $name  
      * @param \Illuminate\Filesystem\Filesystem $files 
@@ -222,7 +222,7 @@ class AbstractConsoleCommand extends Command
         if (preg_replace('/[a-z_-]/i', '', $handle)) {
             throw new InvalidArgumentException(
                 sprintf(
-                    'The handle [%s] is invalid, it must only contain letters, underscores and hypens.', 
+                    'The handle [%s] is invalid, it must only contain letters, underscores and hypens.',
                     $handle
                 )
             );
@@ -305,7 +305,7 @@ class AbstractConsoleCommand extends Command
     /**
      * Dispatches the create object command to the bus.
      * 
-     * @return boolean
+     * @return bool
      */
     protected function dispatchCreationCommand()
     {

@@ -291,15 +291,14 @@ class Application extends App implements ApplicationContract
         $path = $this->getConcretePath();
 
         if ($path && file_exists($path.'/config/'.$file)) {
-
-            $old_error_handler = set_error_handler(function($errno , $errstr) { 
-                /* Do nothing */ 
+            $old_error_handler = set_error_handler(function ($errno, $errstr) {
+                /* Do nothing */
             });
 
             $config = require $path.'/config/'.$file;
 
             set_error_handler($old_error_handler);
-            
+
             return $config;
         }
 

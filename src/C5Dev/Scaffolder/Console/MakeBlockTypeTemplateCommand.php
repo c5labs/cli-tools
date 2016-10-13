@@ -12,9 +12,7 @@
 namespace C5Dev\Scaffolder\Console;
 
 use C5Dev\Scaffolder\Commands\CreateBlockTypeTemplateCommand;
-use C5Dev\Scaffolder\Commands\CreateThemeCommand;
 use Illuminate\Support\Str;
-use Symfony\Component\Console\Helper\QuestionHelper as Helper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface as In;
 use Symfony\Component\Console\Input\InputOption;
@@ -54,7 +52,7 @@ class MakeBlockTypeTemplateCommand extends AbstractConsoleCommand
         ->addOption('block-type', null, InputOption::VALUE_OPTIONAL, 'Block type to create a template for.');
     }
 
-        /**
+    /**
      * The default set of questions to be asked.
      * 
      * @param  In     $input  
@@ -71,8 +69,8 @@ class MakeBlockTypeTemplateCommand extends AbstractConsoleCommand
 
             $output->writeln(
                 sprintf(
-                    "Using concrete5 [%s] core files at: %s\r\n", 
-                    isset($config['version']) ? $config['version'] : 'Unknown Version', 
+                    "Using concrete5 [%s] core files at: %s\r\n",
+                    isset($config['version']) ? $config['version'] : 'Unknown Version',
                     $concrete_path
                 )
             );
@@ -120,7 +118,7 @@ class MakeBlockTypeTemplateCommand extends AbstractConsoleCommand
 
         // If we're not in a block type directory...
         if ('block_type' !== $this->getApplication()->getWorkingDirectoryType()) {
-            /**
+            /*
              * Template Block Name
              */
             if (! $this->parameters['block_type'] = $input->getOption('block-type')) {
@@ -133,7 +131,7 @@ class MakeBlockTypeTemplateCommand extends AbstractConsoleCommand
 
                 $this->parameters['block_type'] = $helper->ask($input, $output, $question);
             }
-        } 
+        }
 
         // If we are in a block type directory we get the handle
         else {
@@ -150,7 +148,7 @@ class MakeBlockTypeTemplateCommand extends AbstractConsoleCommand
 
         // Add the block type path.
         $this->parameters['block_type_path'] = array_search($this->parameters['block_type'], $blocks);
-        
+
         /*
          * Template Name
          */
@@ -182,7 +180,7 @@ class MakeBlockTypeTemplateCommand extends AbstractConsoleCommand
     /**
      * Dispatches the create object command to the bus.
      * 
-     * @return boolean
+     * @return bool
      */
     protected function dispatchCreationCommand()
     {

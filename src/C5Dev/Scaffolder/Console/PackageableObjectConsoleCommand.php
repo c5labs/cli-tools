@@ -11,7 +11,6 @@
 
 namespace C5Dev\Scaffolder\Console;
 
-use Symfony\Component\Console\Helper\QuestionHelper as Helper;
 use Symfony\Component\Console\Input\InputInterface as In;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface as Out;

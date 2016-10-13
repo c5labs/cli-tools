@@ -14,7 +14,6 @@ namespace C5Dev\Scaffolder\Commands;
 use C5Dev\Scaffolder\FileExporter\FileExporter;
 use Illuminate\Contracts\Console\Application;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Str;
 
 class CreateBlockTypeTemplateCommand
 {

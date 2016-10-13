@@ -12,7 +12,6 @@
 namespace C5Dev\Scaffolder\Console;
 
 use C5Dev\Scaffolder\Commands\CreatePackageCommand;
-use Symfony\Component\Console\Helper\QuestionHelper as Helper;
 use Symfony\Component\Console\Input\InputInterface as In;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface as Out;
@@ -61,7 +60,7 @@ class MakePackageCommand extends AbstractConsoleCommand
     protected function askQuestions(In $input, Out $output)
     {
         parent::askQuestions($input, $output);
-        
+
         /*
          * Package Service Providers?
          */
