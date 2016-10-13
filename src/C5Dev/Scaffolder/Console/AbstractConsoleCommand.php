@@ -11,6 +11,8 @@
 
 namespace C5Dev\Scaffolder\Console;
 
+use Illuminate\Contracts\Bus\Dispatcher;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
@@ -24,6 +26,27 @@ use Symfony\Component\Console\Question\Question;
 
 class AbstractConsoleCommand extends Command
 {
+    /**
+     * Question helper instance.
+     * 
+     * @var QuestionHelper
+     */
+    protected $helper;
+
+    /**
+     * Bus instance.
+     * 
+     * @var \Illuminate\Contracts\Bus\Dispatcher
+     */
+    protected $bus;
+
+    /**
+     * File system instance.
+     * 
+     * @var \Illuminate\Filesystem\Filesystem
+     */
+    protected $files;
+
     /**
      * The name of the object that we are scaffolding.
      *
@@ -44,6 +67,29 @@ class AbstractConsoleCommand extends Command
      * @var string
      */
     protected $destination_path;
+
+    /**
+     * Parameters to be collected and passed to 
+     * the create object command.
+     * 
+     * @var array
+     */
+    protected $parameters = ['options' => []];
+
+    /**
+     * Constructor
+     * 
+     * @param string     $name  
+     * @param \Illuminate\Filesystem\Filesystem $files 
+     * @param \Illuminate\Contracts\Bus\Dispatcher $bus   
+     */
+    public function __construct($name = null, Filesystem $files, Dispatcher $bus)
+    {
+        $this->files = $files;
+        $this->bus = $bus;
+
+        parent::__construct($name);
+    }
 
     /**
      * Get the object name.
@@ -104,17 +150,109 @@ class AbstractConsoleCommand extends Command
     }
 
     /**
-     * Allows the implementation of custom questions for the object type we are creating.
-     *
-     * @param  InputInterface  $input
-     * @param  OutputInterface $output
-     * @param  QuestionHelper  $helper
-     * @param  array           $vars
-     * @return array
+     * Generates the destination path to be used 
+     * during object creation.
+     * 
+     * @return string
      */
-    protected function askCustomQuestions(In $input, Out $output, Helper $helper, array $vars)
+    protected function generateDestinationPath()
     {
-        return $vars;
+        return $this->destination_path.DIRECTORY_SEPARATOR.$this->parameters['handle'];
+    }
+
+    /**
+     * The default set of questions to be asked.
+     * 
+     * @param  In     $input  
+     * @param  Out    $output 
+     * @return void 
+     */
+    protected function askQuestions(In $input, Out $output)
+    {
+        /*
+         * Package Handle
+         */
+        if (! $this->parameters['handle'] = $input->getOption('handle')) {
+            $text = sprintf(
+                'Please enter the handle of the %s [<comment>my_%s_name</comment>]:',
+                $this->getLowerCaseObjectName(), $this->getSnakeCaseObjectName()
+            );
+            $question = new Question($text, sprintf('my_%s_name', $this->getSnakeCaseObjectName()));
+            $this->parameters['handle'] = $this->getHelper('question')->ask($input, $output, $question);
+        }
+
+        // Check the package handle conforms
+        if (preg_replace('/[a-z_-]/i', '', $this->parameters['handle'])) {
+            throw new \RuntimeException(
+                'The handle must only contain letters, underscores and hypens.'
+            );
+        }
+
+        /*
+         * Package Name
+         */
+        if (! $this->parameters['name'] = $input->getOption('name')) {
+            $text = sprintf(
+                'Please enter the name of the %s [<comment>My %s Name</comment>]:',
+                $this->getLowerCaseObjectName(), $this->getObjectName()
+            );
+            $question = new Question($text, sprintf('My %s Name', $this->getObjectName()));
+            $this->parameters['name'] = $this->getHelper('question')->ask($input, $output, $question);
+        }
+
+        /*
+         * Package Description
+         */
+        if (! $this->parameters['description'] = $input->getOption('description')) {
+            $text = sprintf(
+                'Please enter a description for the %s [<comment>A scaffolded %s.</comment>]:',
+                $this->getLowerCaseObjectName(), $this->getLowerCaseObjectName()
+            );
+            $question = new Question($text, sprintf('A scaffolded %s.', $this->getLowerCaseObjectName()));
+            $this->parameters['description'] = $this->getHelper('question')->ask($input, $output, $question);
+        }
+
+        /*
+         * Package Author Name
+         */
+        if (! $this->parameters['author']['name'] = $input->getOption('author-name')) {
+            $text = sprintf(
+                'Please enter the author of the %s [<comment>Unknown</comment>]:',
+                $this->getLowerCaseObjectName()
+            );
+            $question = new Question($text, 'Unknown');
+            $this->parameters['author']['name'] = $this->getHelper('question')->ask($input, $output, $question);
+        }
+
+        /*
+         * Package Author Email
+         */
+        if (! $this->parameters['author']['email'] = $input->getOption('author-email')) {
+            $text = sprintf(
+                'Please enter the authors email of the %s [<comment>unknown@unknown.net</comment>]:',
+                $this->getLowerCaseObjectName()
+            );
+            $question = new Question($text, 'unknown@unknown.net');
+            $this->parameters['author']['email'] = $this->getHelper('question')->ask($input, $output, $question);
+        }
+    }
+
+    /**
+     * Dispatches the create object command to the bus.
+     * 
+     * @return boolean
+     */
+    protected function dispatchCreationCommand()
+    {
+        /*
+         * Dispatch the package creation command & send the result to the console.
+         */
+        $this->bus->dispatch(new $this->command_name(
+            $this->destination_path, $this->parameters['handle'], $this->parameters['name'],
+            $this->parameters['description'], $this->parameters['author'], $this->parameters['options']
+        ));
+
+        return file_exists($this->destination_path);
     }
 
     /**
@@ -139,15 +277,10 @@ class AbstractConsoleCommand extends Command
         // Show the application banners.
         $output->write($this->getApplication()->getHelp()."\n");
 
-        // Pipework
-        $options = [];
-        $helper = $this->getHelper('question');
-        $app = $this->getApplication();
-        $bus = $app->make(\Illuminate\Contracts\Bus\Dispatcher::class);
-
         // Set the destination path
         if (($path = $input->getArgument('path')) && ! empty($path)) {
             $this->destination_path = realpath($path);
+            $this->getApplication()->setWorkingDirectoryType('generic');
         } else {
             $this->destination_path = $this->getApplication()->getObjectInstallPath(
                 $this->getSnakeCaseObjectName()
@@ -158,81 +291,11 @@ class AbstractConsoleCommand extends Command
             throw new InvalidArgumentException("The path [$this->destination_path] is not writable.");
         }
 
-        /*
-         * Package Handle
-         */
-        if (! $handle = $input->getOption('handle')) {
-            $text = sprintf(
-                'Please enter the handle of the %s [<comment>my_%s_name</comment>]:',
-                $this->getLowerCaseObjectName(), $this->getSnakeCaseObjectName()
-            );
-            $question = new Question($text, sprintf('my_%s_name', $this->getSnakeCaseObjectName()));
-            $handle = $helper->ask($input, $output, $question);
-        }
+        // Ask the questions.
+        $this->askQuestions($input, $output);
 
-        // Check the package handle conforms
-        if (preg_replace('/[a-z_-]/i', '', $handle)) {
-            throw new \RuntimeException(
-                'The handle must only contain letters, underscores and hypens.'
-            );
-        }
-
-        /*
-         * Package Name
-         */
-        if (! $name = $input->getOption('name')) {
-            $text = sprintf(
-                'Please enter the name of the %s [<comment>My %s Name</comment>]:',
-                $this->getLowerCaseObjectName(), $this->getObjectName()
-            );
-            $question = new Question($text, sprintf('My %s Name', $this->getObjectName()));
-            $name = $helper->ask($input, $output, $question);
-        }
-
-        /*
-         * Package Description
-         */
-        if (! $description = $input->getOption('description')) {
-            $text = sprintf(
-                'Please enter a description for the %s [<comment>A scaffolded %s.</comment>]:',
-                $this->getLowerCaseObjectName(), $this->getLowerCaseObjectName()
-            );
-            $question = new Question($text, sprintf('A scaffolded %s.', $this->getLowerCaseObjectName()));
-            $description = $helper->ask($input, $output, $question);
-        }
-
-        /*
-         * Package Author Name
-         */
-        if (! $author['name'] = $input->getOption('author-name')) {
-            $text = sprintf(
-                'Please enter the author of the %s [<comment>Unknown</comment>]:',
-                $this->getLowerCaseObjectName()
-            );
-            $question = new Question($text, 'Unknown');
-            $author['name'] = $helper->ask($input, $output, $question);
-        }
-
-        /*
-         * Package Author Email
-         */
-        if (! $author['email'] = $input->getOption('author-email')) {
-            $text = sprintf(
-                'Please enter the authors email of the %s [<comment>unknown@unknown.net</comment>]:',
-                $this->getLowerCaseObjectName()
-            );
-            $question = new Question($text, 'unknown@unknown.net');
-            $author['email'] = $helper->ask($input, $output, $question);
-        }
-
-        // Form the package path
-        $this->destination_path = $this->destination_path.DIRECTORY_SEPARATOR.$handle;
-
-        /*
-         * Run any custom creation logic.
-         */
-        $vars = compact('handle', 'name', 'description', 'author', 'options');
-        $vars = $this->askCustomQuestions($input, $output, $helper, $vars);
+        // Form the path
+        $this->destination_path = $this->generateDestinationPath();
 
         /*
          * Confirm destination overwrite
@@ -243,22 +306,14 @@ class AbstractConsoleCommand extends Command
                 false
             );
 
-            if ($helper->ask($input, $output, $question)) {
-                $app->make('files')->deleteDirectory(realpath($this->destination_path));
+            if ($this->getHelper('question')->ask($input, $output, $question)) {
+                $this->files->deleteDirectory(realpath($this->destination_path));
             } else {
                 throw new \Exception('Cannot continue as output directory already exsits.');
             }
         }
 
-        /*
-         * Dispatch the package creation command & send the result to the console.
-         */
-        $bus->dispatch(new $this->command_name(
-            $this->destination_path, $vars['handle'], $vars['name'],
-            $vars['description'], $vars['author'], $vars['options']
-        ));
-
-        if (file_exists($this->destination_path)) {
+        if ($this->dispatchCreationCommand()) {
             $path = realpath($this->destination_path);
             $output->writeln(sprintf(
                 "\n<fg=green>The %s was created at %s.</>\n",

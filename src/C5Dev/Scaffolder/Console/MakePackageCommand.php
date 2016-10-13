@@ -55,34 +55,33 @@ class MakePackageCommand extends AbstractConsoleCommand
      *
      * @param  InputInterface  $input
      * @param  OutputInterface $output
-     * @param  QuestionHelper  $helper
-     * @param  array           $vars
+     * 
      * @return array
      */
-    protected function askCustomQuestions(In $input, Out $output, Helper $helper, array $vars)
+    protected function askQuestions(In $input, Out $output)
     {
+        parent::askQuestions($input, $output);
+        
         /*
          * Package Service Providers?
          */
-        if (! $vars['options']['uses_service_providers'] = $input->getOption('uses-providers')) {
+        if (! $this->parameters['options']['uses_service_providers'] = $input->getOption('uses-providers')) {
             $question = new ConfirmationQuestion(
                 'Will this package expose any services via service providers to the core? [Y/N]:',
                 false
             );
-            $vars['options']['uses_service_providers'] = $helper->ask($input, $output, $question);
+            $this->parameters['options']['uses_service_providers'] = $this->getHelper('question')->ask($input, $output, $question);
         }
 
         /*
          * Composer compatibility?
          */
-        if (! $vars['options']['uses_composer'] = $input->getOption('uses-composer')) {
+        if (! $this->parameters['options']['uses_composer'] = $input->getOption('uses-composer')) {
             $question = new ConfirmationQuestion(
                 'Will you use composer to manage this packages dependencies? [Y/N]:',
                 false
             );
-            $vars['options']['uses_composer'] = $helper->ask($input, $output, $question);
+            $this->parameters['options']['uses_composer'] = $this->getHelper('question')->ask($input, $output, $question);
         }
-
-        return $vars;
     }
 }

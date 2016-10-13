@@ -35,11 +35,10 @@ abstract class PackageableObjectConsoleCommand extends AbstractConsoleCommand
      *
      * @param  InputInterface  $input
      * @param  OutputInterface $output
-     * @param  QuestionHelper  $helper
-     * @param  array           $vars
+     * 
      * @return array
      */
-    protected function askWhetherToPackageObject(In $input, Out $output, Helper $helper, array $vars)
+    protected function askWhetherToPackageObject(In $input, Out $output)
     {
         global $argv;
 
@@ -51,24 +50,26 @@ abstract class PackageableObjectConsoleCommand extends AbstractConsoleCommand
                 sprintf('Do you want to package the %s? [Y/N]:', $this->getLowerCaseObjectName()),
                 false
             );
-            $vars['options']['package_object'] = $helper->ask($input, $output, $question);
+            $this->parameters['options']['package_object'] = $this->getHelper('question')->ask($input, $output, $question);
         } else {
-            $vars['options']['package_object'] = true;
+            $this->parameters['options']['package_object'] = true;
         }
+    }
 
+    protected function generateDestinationPath()
+    {
         /*
          * Set the destrination path.
          */
-        if (true === $vars['options']['package_object']) {
-            if ('concrete' !== $this->getApplication()->getWorkingDirectoryType() || ($path = $input->getArgument('path')) && ! empty($path)) {
-                $this->destination_path = $this->destination_path.'_package';
+        if (true === $this->parameters['options']['package_object']) {
+            if ('concrete' === $this->getApplication()->getWorkingDirectoryType()) {
+                return $this->getApplication()->getObjectInstallPath('package').DIRECTORY_SEPARATOR.$this->parameters['handle'].'_package';
             } else {
-                $this->destination_path = $this->getApplication()->getObjectInstallPath('package');
-                $this->destination_path .= DIRECTORY_SEPARATOR.$vars['handle'].'_package';
+                return $this->destination_path.DIRECTORY_SEPARATOR.$this->parameters['handle'].'_package';
             }
         }
 
-        return $vars;
+        return $this->destination_path.DIRECTORY_SEPARATOR.$this->parameters['handle'];
     }
 
     /**
@@ -76,18 +77,17 @@ abstract class PackageableObjectConsoleCommand extends AbstractConsoleCommand
      *
      * @param  InputInterface  $input
      * @param  OutputInterface $output
-     * @param  QuestionHelper  $helper
-     * @param  array           $vars
+     * 
      * @return array
      */
-    protected function askCustomQuestions(In $input, Out $output, Helper $helper, array $vars)
+    protected function askQuestions(In $input, Out $output)
     {
-        if (in_array($this->getApplication()->getWorkingDirectoryType(), ['generic', 'concrete'])) {
-            return $this->askWhetherToPackageObject($input, $output, $helper, $vars);
-        } else {
-            $vars['options']['package_object'] = false;
+        parent::askQuestions($input, $output);
 
-            return $vars;
+        if (in_array($this->getApplication()->getWorkingDirectoryType(), ['generic', 'concrete'])) {
+            $this->askWhetherToPackageObject($input, $output);
+        } else {
+            $this->parameters['options']['package_object'] = false;
         }
     }
 }

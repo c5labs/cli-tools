@@ -23,13 +23,13 @@ class CommandServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->add(new \C5Dev\Scaffolder\Console\MakePackageCommand());
-        $this->app->add(new \C5Dev\Scaffolder\Console\MakeThemeCommand());
-        $this->app->add(new \C5Dev\Scaffolder\Console\MakeBlockTypeCommand());
+        $this->app->addCommand(\C5Dev\Scaffolder\Console\MakePackageCommand::class);
+        $this->app->addCommand(\C5Dev\Scaffolder\Console\MakeThemeCommand::class);
+        $this->app->addCommand(\C5Dev\Scaffolder\Console\MakeBlockTypeCommand::class);
 
         // Add the pharize command if we're not already running as one.
         if (empty(Phar::running())) {
-            $this->app->add(new \C5Dev\Scaffolder\Console\CompilePharCommand());
+            $this->app->addCommand(new \C5Dev\Scaffolder\Console\CompilePharCommand());
         }
     }
 }

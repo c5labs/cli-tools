@@ -42,6 +42,7 @@ class Application extends App implements ApplicationContract
         'package' => 'packages',
         'theme' => 'themes',
         'block_type' => 'blocks',
+        'block_type_template' => 'templates',
     ];
 
     /**
@@ -155,6 +156,16 @@ class Application extends App implements ApplicationContract
     public function getWorkingDirectoryType()
     {
         return $this->working_directory_type;
+    }
+
+    /**
+     * Set the current working directory type.
+     * 
+     * @param string $type
+     */
+    public function setWorkingDirectoryType($type)
+    {
+        $this->working_directory_type = $type;
     }
 
     /**
@@ -299,6 +310,25 @@ class Application extends App implements ApplicationContract
     }
 
     /**
+     * Adds a command object.
+     *
+     * If a command with the same name already exists, it will be overridden.
+     * If the command is not enabled it will not be added.
+     *
+     * @param Command|string $command A Command object
+     *
+     * @return Command|null The registered command if enabled or null
+     */
+    public function addCommand($command)
+    {
+        if (is_string($command)) {
+            $command = $this->make($command);
+        }
+
+        return parent::add($command);
+    }
+
+    /**
      * Runs the current application.
      *
      * {@inheritdoc}
@@ -342,6 +372,11 @@ class Application extends App implements ApplicationContract
 
             // Package Directory Blocks & themes
             elseif (in_array($object_type, ['block_type', 'theme']) && 'package' === $this->getWorkingDirectoryType()) {
+                return $destination_path.'/'.$path;
+            }
+
+            // Block Directory Templates
+            elseif ('block_type_template' === $object_type && 'block' === $this->getWorkingDirectoryType()) {
                 return $destination_path.'/'.$path;
             }
 
