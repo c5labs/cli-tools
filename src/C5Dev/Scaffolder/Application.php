@@ -169,6 +169,84 @@ class Application extends App implements ApplicationContract
     }
 
     /**
+     * Load the build data from the meta file.
+     * 
+     * @return array
+     */
+    public function getBuildData()
+    {
+        if (file_exists($this->getAppBasePath().'/build.json')) {
+            return json_decode(file_get_contents($this->getAppBasePath().'/build.json'), true);
+        }
+    }
+
+    /**
+     * Get the applications version.
+     * 
+     * @return string
+     */
+    public function getVersion()
+    {
+        if ($data = $this->getBuildData()) {
+            return $data['version'];
+        }
+
+        return parent::getVersion();
+    }
+
+    /**
+     * Get the application long version.
+     * 
+     * @return string
+     */
+    public function getLongVersion()
+    {
+        return parent::getLongVersion().' ['.$this->getBuild().']';
+    }
+
+    /**
+     * Get long build reference.
+     * 
+     * @return string
+     */
+    public function getLongBuild()
+    {
+        if ($data = $this->getBuildData()) {
+            return $data['build'];
+        }
+
+        return 'dev';
+    }
+
+    /**
+     * Get the short build reference.
+     * 
+     * @return string
+     */
+    public function getBuild()
+    {
+        $build = $this->getLongBuild();
+
+        if (strlen($build) > 7) {
+            return substr($build, -7);
+        }
+
+        return $build;
+    }
+
+    /**
+     * Get the build date.
+     * 
+     * @return string
+     */
+    public function getBuildDate()
+    {
+        if ($data = $this->getBuildData()) {
+            return $data['date'];
+        }
+    }
+
+    /**
      * Set the application base paths.
      *
      * @return  void
