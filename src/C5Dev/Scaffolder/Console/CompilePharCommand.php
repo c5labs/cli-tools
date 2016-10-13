@@ -51,19 +51,24 @@ class CompilePharCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $path = $this->getApplication()->getAppBasePath();
+        $fs = $this->getApplication()->make('files');
+
+        // Cleanup
+        $fs->delete([$path.'/scaffolder.phar']);
 
         // Show the application banners.
         $output->write($this->getApplication()->getHelp()."\n");
 
         $output->writeln('Standby, creating PHAR...');
-
         $phar = new Phar('scaffolder.phar', 0, 'scaffolder.phar');
         $phar->startBuffering();
         $phar->buildFromDirectory($path);
-        $default_stub = $phar->createDefaultStub('bootstraps/start.php');
-        $stub = "#!/usr/bin/php \n".$default_stub;
+        $default_stub = $phar->createDefaultStub();
+        $stub = "#!/usr/bin/env php\n".$default_stub;
         $phar->setStub($stub);
         $phar->stopBuffering();
+
+        @chmod($path.'/scaffolder.phar', 0755);
 
         $output->writeln(sprintf('<fg=green>Done! PHAR created at %s', $path.DIRECTORY_SEPARATOR.'scaffolder.phar</>'));
     }
