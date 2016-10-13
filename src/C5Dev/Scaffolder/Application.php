@@ -73,7 +73,7 @@ class Application extends App implements ApplicationContract
      * generic - We're not at any special path
      * concrete - We're at the root of a concrete5 installation 
      * package - We're at the root of a package 
-     * block - We're at the root of a blook.
+     * block_type - We're at the root of a block.
      * 
      * @var string
      */
@@ -281,6 +281,32 @@ class Application extends App implements ApplicationContract
     }
 
     /**
+     * Load a config file from the current concrete core path.
+     * 
+     * @param  string $file
+     * @return array
+     */
+    public function getConcreteConfig($file = 'concrete.php')
+    {
+        $path = $this->getConcretePath();
+
+        if ($path && file_exists($path.'/config/'.$file)) {
+
+            $old_error_handler = set_error_handler(function($errno , $errstr) { 
+                /* Do nothing */ 
+            });
+
+            $config = require $path.'/config/'.$file;
+
+            set_error_handler($old_error_handler);
+            
+            return $config;
+        }
+
+        return [];
+    }
+
+    /**
      * Determine whether we are at the root of an object directory.
      * 
      * @return string
@@ -302,7 +328,7 @@ class Application extends App implements ApplicationContract
 
         // We're at a block root.
         elseif ('blocks' === basename(realpath($cwd.'/../')) && $this->getConcretePath()) {
-            return 'block';
+            return 'block_type';
         }
 
         // We are not anywhere special.
@@ -350,40 +376,6 @@ class Application extends App implements ApplicationContract
     {
         if (array_key_exists($object_type, $this->default_install_paths)) {
             return $this->default_install_paths[$object_type];
-        }
-    }
-
-    public function getObjectInstallPath($object_type, $destination_path = null)
-    {
-        if (! $destination_path) {
-            $destination_path = $this->getCurrentWorkingDirectory();
-        }
-
-        if ($path = $this->getDefaultInstallPath($object_type)) {
-            // Concrete Base Directory Blocks & Themes
-            if (in_array($object_type, ['block_type', 'theme']) && 'concrete' === $this->getWorkingDirectoryType()) {
-                return $destination_path.'/application/'.$path;
-            }
-
-            // Concrete Base Directory Pachages
-            elseif ('package' === $object_type && 'concrete' === $this->getWorkingDirectoryType()) {
-                return $destination_path.'/'.$path;
-            }
-
-            // Package Directory Blocks & themes
-            elseif (in_array($object_type, ['block_type', 'theme']) && 'package' === $this->getWorkingDirectoryType()) {
-                return $destination_path.'/'.$path;
-            }
-
-            // Block Directory Templates
-            elseif ('block_type_template' === $object_type && 'block' === $this->getWorkingDirectoryType()) {
-                return $destination_path.'/'.$path;
-            }
-
-            // Everywhere else
-            else {
-                return $destination_path;
-            }
         }
     }
 

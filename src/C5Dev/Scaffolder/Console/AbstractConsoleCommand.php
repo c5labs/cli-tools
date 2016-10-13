@@ -161,6 +161,75 @@ class AbstractConsoleCommand extends Command
     }
 
     /**
+     * Determine where a specific object type should be installed.
+     * 
+     * @param  string $object_type      
+     * @param  string $destination_path 
+     * @return string                   
+     */
+    public function getObjectInstallPath($object_type, $destination_path = null)
+    {
+        $working_directory_type = $this->getApplication()->getWorkingDirectoryType();
+
+        if (! $destination_path) {
+            $destination_path = $this->getApplication()->getCurrentWorkingDirectory();
+        }
+
+        if ($path = $this->getApplication()->getDefaultInstallPath($object_type)) {
+            // Concrete Base Directory Blocks & Themes
+            if (in_array($object_type, ['block_type', 'theme']) && 'concrete' === $working_directory_type) {
+                return $destination_path.'/application/'.$path;
+            }
+
+            // Concrete Pacakge & Base Directory Blocks Templates
+            if (in_array($object_type, ['block_type_template']) && in_array($working_directory_type, ['concrete', 'package'])) {
+                return $this->getObjectInstallPath('block_type');
+            }
+
+            // Concrete Base Directory Packages
+            elseif ('package' === $object_type && 'concrete' === $working_directory_type) {
+                return $destination_path.'/'.$path;
+            }
+
+            // Package Directory Blocks & themes
+            elseif (in_array($object_type, ['block_type', 'theme']) && 'package' === $working_directory_type) {
+                return $destination_path.'/'.$path;
+            }
+
+            // Block Directory Templates
+            elseif ('block_type_template' === $object_type && 'block_type' === $working_directory_type) {
+                return realpath($destination_path.'/../');
+            }
+
+            // Everywhere else
+            else {
+                return $destination_path;
+            }
+        }
+    }
+
+    /**
+     * Checks whether a string conforms to the handle specification 
+     * and throws an exception is it does not.
+     * 
+     * @param  string $handle
+     *
+     * @throws InvalidArgumentException
+     * @return void
+     */
+    protected function checkHandle($handle)
+    {
+        if (preg_replace('/[a-z_-]/i', '', $handle)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The handle [%s] is invalid, it must only contain letters, underscores and hypens.', 
+                    $handle
+                )
+            );
+        }
+    }
+
+    /**
      * The default set of questions to be asked.
      * 
      * @param  In     $input  
@@ -182,11 +251,7 @@ class AbstractConsoleCommand extends Command
         }
 
         // Check the package handle conforms
-        if (preg_replace('/[a-z_-]/i', '', $this->parameters['handle'])) {
-            throw new \RuntimeException(
-                'The handle must only contain letters, underscores and hypens.'
-            );
-        }
+        $this->checkHandle($this->parameters['handle']);
 
         /*
          * Package Name
@@ -277,12 +342,15 @@ class AbstractConsoleCommand extends Command
         // Show the application banners.
         $output->write($this->getApplication()->getHelp()."\n");
 
+        // Ask the questions.
+        $this->askQuestions($input, $output);
+
         // Set the destination path
         if (($path = $input->getArgument('path')) && ! empty($path)) {
             $this->destination_path = realpath($path);
             $this->getApplication()->setWorkingDirectoryType('generic');
         } else {
-            $this->destination_path = $this->getApplication()->getObjectInstallPath(
+            $this->destination_path = $this->getObjectInstallPath(
                 $this->getSnakeCaseObjectName()
             );
         }
@@ -290,9 +358,6 @@ class AbstractConsoleCommand extends Command
         if (! is_writable($this->destination_path)) {
             throw new InvalidArgumentException("The path [$this->destination_path] is not writable.");
         }
-
-        // Ask the questions.
-        $this->askQuestions($input, $output);
 
         // Form the path
         $this->destination_path = $this->generateDestinationPath();

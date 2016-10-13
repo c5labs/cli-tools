@@ -26,6 +26,7 @@ class CommandServiceProvider extends ServiceProvider
         $this->app->addCommand(\C5Dev\Scaffolder\Console\MakePackageCommand::class);
         $this->app->addCommand(\C5Dev\Scaffolder\Console\MakeThemeCommand::class);
         $this->app->addCommand(\C5Dev\Scaffolder\Console\MakeBlockTypeCommand::class);
+        $this->app->addCommand(\C5Dev\Scaffolder\Console\MakeBlockTypeTemplateCommand::class);
 
         // Add the pharize command if we're not already running as one.
         if (empty(Phar::running())) {

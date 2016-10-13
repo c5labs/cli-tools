@@ -63,7 +63,7 @@ abstract class PackageableObjectConsoleCommand extends AbstractConsoleCommand
          */
         if (true === $this->parameters['options']['package_object']) {
             if ('concrete' === $this->getApplication()->getWorkingDirectoryType()) {
-                return $this->getApplication()->getObjectInstallPath('package').DIRECTORY_SEPARATOR.$this->parameters['handle'].'_package';
+                return $this->getObjectInstallPath('package').DIRECTORY_SEPARATOR.$this->parameters['handle'].'_package';
             } else {
                 return $this->destination_path.DIRECTORY_SEPARATOR.$this->parameters['handle'].'_package';
             }
