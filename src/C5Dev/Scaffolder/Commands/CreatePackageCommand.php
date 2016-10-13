@@ -61,7 +61,7 @@ class CreatePackageCommand extends AbstractBusCommand
         // Remove uneeded composer lines from the contoller file.
         if (! isset($this->options['uses_composer']) || false === $this->options['uses_composer']) {
             $exporter->setExclusions([
-                'controller.php' => [[115, 15], [151, 3]],
+                'controller.php' => [[115, 15], [155, 3]],
             ]);
         }
 
@@ -71,8 +71,8 @@ class CreatePackageCommand extends AbstractBusCommand
             $exporter->setExclusion('src/Providers/DemoHelperServiceProvider.php', true);
             $exporter->setExclusion('controller.php', [
                 [105, 10],
-                [130, 14],
-                [154, 3],
+                [130, 18],
+                [158, 3],
             ]);
         }
 

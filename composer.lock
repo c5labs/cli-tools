@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c5labs/block-boilerplate.git",
-                "reference": "db5d9c7afe95e8e840745c3965f0062e55e9c9a1"
+                "reference": "ed433c2971ec4662c05ef9ebfc97c3e237e0a0f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/block-boilerplate/zipball/db5d9c7afe95e8e840745c3965f0062e55e9c9a1",
-                "reference": "db5d9c7afe95e8e840745c3965f0062e55e9c9a1",
+                "url": "https://api.github.com/repos/c5labs/block-boilerplate/zipball/ed433c2971ec4662c05ef9ebfc97c3e237e0a0f8",
+                "reference": "ed433c2971ec4662c05ef9ebfc97c3e237e0a0f8",
                 "shasum": ""
             },
             "require": {
@@ -36,7 +36,7 @@
                 }
             ],
             "description": "A block boilerplate to start building from.",
-            "time": "2016-10-03 14:03:49"
+            "time": "2016-10-11 20:00:09"
         },
         {
             "name": "c5dev/package-boilerplate",
@@ -44,12 +44,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c5labs/package-boilerplate.git",
-                "reference": "43287df94c766323be0fd4418c839cbd8e9fc32b"
+                "reference": "abb484f9ee0e8d3df5748c260226ac17f4866ec6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/package-boilerplate/zipball/43287df94c766323be0fd4418c839cbd8e9fc32b",
-                "reference": "43287df94c766323be0fd4418c839cbd8e9fc32b",
+                "url": "https://api.github.com/repos/c5labs/package-boilerplate/zipball/abb484f9ee0e8d3df5748c260226ac17f4866ec6",
+                "reference": "abb484f9ee0e8d3df5748c260226ac17f4866ec6",
                 "shasum": ""
             },
             "require": {
@@ -67,7 +67,7 @@
                 }
             ],
             "description": "Start building standards complient concrete5 packages from me.",
-            "time": "2016-10-10 10:15:55"
+            "time": "2016-10-13 09:44:43"
         },
         {
             "name": "c5dev/theme-boilerplate",
@@ -287,12 +287,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/bus.git",
-                "reference": "9ffdf313991d064a5ba0698960df4afac66875c7"
+                "reference": "390cd1c84681677fc55f92a86d4489ff2e57fc3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/bus/zipball/9ffdf313991d064a5ba0698960df4afac66875c7",
-                "reference": "9ffdf313991d064a5ba0698960df4afac66875c7",
+                "url": "https://api.github.com/repos/illuminate/bus/zipball/390cd1c84681677fc55f92a86d4489ff2e57fc3d",
+                "reference": "390cd1c84681677fc55f92a86d4489ff2e57fc3d",
                 "shasum": ""
             },
             "require": {
@@ -324,7 +324,7 @@
             ],
             "description": "The Illuminate Bus package.",
             "homepage": "https://laravel.com",
-            "time": "2016-08-19 15:15:57"
+            "time": "2016-10-12 18:04:56"
         },
         {
             "name": "illuminate/container",
@@ -375,12 +375,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "b021e7833c09227f42fd815b1a9786e6fd5305c1"
+                "reference": "de13c1dcbb5bb1d8146bdbe4c700cc491b2501ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/b021e7833c09227f42fd815b1a9786e6fd5305c1",
-                "reference": "b021e7833c09227f42fd815b1a9786e6fd5305c1",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/de13c1dcbb5bb1d8146bdbe4c700cc491b2501ee",
+                "reference": "de13c1dcbb5bb1d8146bdbe4c700cc491b2501ee",
                 "shasum": ""
             },
             "require": {
@@ -409,7 +409,7 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2016-10-05 19:36:01"
+            "time": "2016-10-09 13:50:03"
         },
         {
             "name": "illuminate/filesystem",
@@ -511,12 +511,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "7cc48a5a59ff651a886c44c2234df78cef493b7c"
+                "reference": "0bbe596001cf29cd384fb745f5613c1063ecccce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/7cc48a5a59ff651a886c44c2234df78cef493b7c",
-                "reference": "7cc48a5a59ff651a886c44c2234df78cef493b7c",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/0bbe596001cf29cd384fb745f5613c1063ecccce",
+                "reference": "0bbe596001cf29cd384fb745f5613c1063ecccce",
                 "shasum": ""
             },
             "require": {
@@ -560,7 +560,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2016-10-05 19:36:01"
+            "time": "2016-10-11 13:20:37"
         },
         {
             "name": "paragonie/random_compat",
@@ -616,12 +616,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "607ce1d4005af32dd866c4a402459494c168d555"
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/607ce1d4005af32dd866c4a402459494c168d555",
-                "reference": "607ce1d4005af32dd866c4a402459494c168d555",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
                 "shasum": ""
             },
             "require": {
@@ -655,7 +655,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-09-25 13:41:54"
+            "time": "2016-10-10 12:19:37"
         },
         {
             "name": "symfony/console",
