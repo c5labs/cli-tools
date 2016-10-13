@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
-class ConcreteConfigurationCommand extends Command
+class ConcreteConfigurationCommand extends ConcreteCoreCommand
 {
     /**
      * Configure the command.
@@ -54,18 +54,7 @@ class ConcreteConfigurationCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // List concrete5 installation location & version
-        if ($concrete_path = $this->getApplication()->getConcretePath()) {
-            $config = $this->getApplication()->getConcreteConfig();
-
-            $output->writeln(
-                sprintf(
-                    "\r\nUsing concrete5 [<fg=green>%s</>] core files at: <fg=green>%s</>\r\n",
-                    isset($config['version']) ? $config['version'] : 'Unknown Version',
-                    $concrete_path
-                )
-            );
-        }
+        parent::execute($input, $output);
 
         $data = Arr::dot($this->getApplication()->getConcreteConfig());
 
