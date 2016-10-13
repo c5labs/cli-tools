@@ -359,21 +359,20 @@ class Application extends App implements ApplicationContract
     }
 
     /**
-     * Load a config file from the current concrete core path.
+     * Load a concrete5 configuration file by path.
      * 
-     * @param  string $file
-     * @return array
+     * @param  string $file 
+     * @return array       
      */
-    public function getConcreteConfig($file = 'concrete.php')
+    protected function loadConcreteConfigFile($file)
     {
-        $path = $this->getConcretePath();
+        if (file_exists($file)) {
 
-        if ($path && file_exists($path.'/config/'.$file)) {
             $old_error_handler = set_error_handler(function ($errno, $errstr) {
                 /* Do nothing */
             });
 
-            $config = require $path.'/config/'.$file;
+            $config = require $file;
 
             set_error_handler($old_error_handler);
 
@@ -381,6 +380,30 @@ class Application extends App implements ApplicationContract
         }
 
         return [];
+    }
+
+    /**
+     * Load a config file from the current concrete core path.
+     * 
+     * @param  string $name
+     * @return array
+     */
+    public function getConcreteConfig($name = 'concrete')
+    {
+        $path = $this->getConcretePath();
+    
+        $config = [];
+        $files = [
+            realpath($path.'/config/'.$name.'.php'),
+            realpath($path.'/../application/config/generated_overrides/'.$name.'.php'),
+            realpath($path.'/../application/config/'.$name.'.php'),
+        ];
+
+        foreach($files as $file) {
+            $config = array_merge_recursive($config, $this->loadConcreteConfigFile($file));
+        }
+
+        return $config;
     }
 
     /**
