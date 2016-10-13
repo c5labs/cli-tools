@@ -40,9 +40,43 @@ class Application extends App implements ApplicationContract
      */
     protected $default_install_paths = [
         'package' => 'packages',
-        'theme' => 'application/themes',
-        'block_type' => 'application/blocks',
+        'theme' => 'themes',
+        'block_type' => 'blocks',
     ];
+
+    /**
+     * Base path to this applications files.
+     * 
+     * @var string
+     */
+    protected $app_base_path;
+
+    /**
+     * The current working directory.
+     * 
+     * @var string
+     */
+    protected $current_working_directory;
+
+    /**
+     * Path to concrete5.
+     * 
+     * @var string
+     */
+    protected $concrete_path = null;
+
+    /**
+     * Tracks where the application is being run from so that we know where to place files. 
+     * 
+     * Possible values are:
+     * generic - We're not at any special path
+     * concrete - We're at the root of a concrete5 installation 
+     * package - We're at the root of a package 
+     * block - We're at the root of a blook.
+     * 
+     * @var string
+     */
+    protected $working_directory_type = 'generic';
 
     /**
      * Constructor.
@@ -84,20 +118,63 @@ class Application extends App implements ApplicationContract
     }
 
     /**
+     * Get the applications base path.
+     * 
+     * @return string
+     */
+    public function getAppBasePath()
+    {
+        return $this->app_base_path;
+    }
+
+    /**
+     * Get the path to the current working directory.
+     * 
+     * @return string
+     */
+    public function getCurrentWorkingDirectory()
+    {
+        return $this->current_working_directory;
+    }
+
+    /**
+     * Get the path to the core concrete5 path.
+     * 
+     * @return null|string
+     */
+    public function getConcretePath()
+    {
+        return $this->concrete_path;
+    }
+
+    /**
+     * Get the current working paths type.
+     * 
+     * @return string
+     */
+    public function getWorkingDirectoryType()
+    {
+        return $this->working_directory_type;
+    }
+
+    /**
      * Set the application base paths.
      *
      * @return  void
      */
     protected function setBasePaths()
     {
-        $this->container['export_path']
-            = $this->container['base_path']
+        $this->current_working_directory
+            = $this->app_base_path
             = realpath(__DIR__.'/../../../');
 
         if (! empty(Phar::running())) {
-            $this->container['base_path'] = Phar::running();
-            $this->container['export_path'] = getcwd();
+            $this->app_base_path = Phar::running();
+            $this->current_working_directory = getcwd();
         }
+
+        $this->concrete_path = $this->determineConcreteCorePath();
+        $this->working_directory_type = $this->determineWorkingDirectoryType();
     }
 
     /**
@@ -155,6 +232,73 @@ class Application extends App implements ApplicationContract
     }
 
     /**
+     * Find the path to concrete5s core files.
+     * 
+     * @return null|string
+     */
+    public function determineConcreteCorePath()
+    {
+        $cwd = $this->getCurrentWorkingDirectory();
+
+        $search_paths = [
+            // at concrete5 root
+            '/concrete',
+            '/vendor/concrete5/concrete5',
+
+            // in packages/package_name 
+            '/../../concrete',
+            '/../../vendor/concrete5/concrete5',
+
+            // in packages/package_name/blocks/block_name
+            '/../../../../concrete',
+            '/../../../../vendor/concrete5/concrete5',
+
+            // in application/blocks/block_name
+            '/../../../concrete',
+            '/../../../vendor/concrete5/concrete5',
+        ];
+
+        // Search for a concrete5 installation
+        foreach ($search_paths as $path) {
+            if (is_dir(realpath($cwd.$path))) {
+                // Set the path tot the core conrete installation.
+                return realpath($cwd.$path);
+            }
+        }
+
+        return;
+    }
+
+    /**
+     * Determine whether we are at the root of an object directory.
+     * 
+     * @return string
+     */
+    public function determineWorkingDirectoryType()
+    {
+        $working_directory_type = null;
+        $cwd = $this->getCurrentWorkingDirectory();
+
+        // If we're at the root of an installation, mark it.
+        if (is_dir($cwd.'/concrete') || is_dir($cwd.'/vendor/concrete5/concrete5')) {
+            return 'concrete';
+        }
+
+        // We're at a package root.
+        elseif ('packages' === basename(realpath($cwd.'/../')) && $this->getConcretePath()) {
+            return 'package';
+        }
+
+        // We're at a block root.
+        elseif ('blocks' === basename(realpath($cwd.'/../')) && $this->getConcretePath()) {
+            return 'block';
+        }
+
+        // We are not anywhere special.
+        return 'generic';
+    }
+
+    /**
      * Runs the current application.
      *
      * {@inheritdoc}
@@ -176,6 +320,35 @@ class Application extends App implements ApplicationContract
     {
         if (array_key_exists($object_type, $this->default_install_paths)) {
             return $this->default_install_paths[$object_type];
+        }
+    }
+
+    public function getObjectInstallPath($object_type, $destination_path = null)
+    {
+        if (! $destination_path) {
+            $destination_path = $this->getCurrentWorkingDirectory();
+        }
+
+        if ($path = $this->getDefaultInstallPath($object_type)) {
+            // Concrete Base Directory Blocks & Themes
+            if (in_array($object_type, ['block_type', 'theme']) && 'concrete' === $this->getWorkingDirectoryType()) {
+                return $destination_path.'/application/'.$path;
+            }
+
+            // Concrete Base Directory Pachages
+            elseif ('package' === $object_type && 'concrete' === $this->getWorkingDirectoryType()) {
+                return $destination_path.'/'.$path;
+            }
+
+            // Package Directory Blocks & themes
+            elseif (in_array($object_type, ['block_type', 'theme']) && 'package' === $this->getWorkingDirectoryType()) {
+                return $destination_path.'/'.$path;
+            }
+
+            // Everywhere else
+            else {
+                return $destination_path;
+            }
         }
     }
 

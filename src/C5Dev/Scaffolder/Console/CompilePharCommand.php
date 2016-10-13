@@ -50,7 +50,7 @@ class CompilePharCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $path = $this->getApplication()->make('base_path');
+        $path = $this->getApplication()->getAppBasePath();
 
         // Show the application banners.
         $output->write($this->getApplication()->getHelp()."\n");

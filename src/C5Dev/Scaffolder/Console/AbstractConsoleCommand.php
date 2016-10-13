@@ -46,12 +46,6 @@ class AbstractConsoleCommand extends Command
     protected $destination_path;
 
     /**
-     * Indicates whether we are operating within a concrete5 installation.
-     * @var bool
-     */
-    protected $at_concrete_root = false;
-
-    /**
      * Get the object name.
      *
      * @return string
@@ -124,47 +118,6 @@ class AbstractConsoleCommand extends Command
     }
 
     /**
-     * Asks whether to package the current object we are creating (for themes, block types, etc).
-     *
-     * @param  InputInterface  $input
-     * @param  OutputInterface $output
-     * @param  QuestionHelper  $helper
-     * @param  array           $vars
-     * @return array
-     */
-    protected function askWhetherToPackageObject(In $input, Out $output, Helper $helper, array $vars)
-    {
-        global $argv;
-
-        /*
-         * Should we package the object?
-         */
-        if (! in_array('--package', $argv)) {
-            $question = new ConfirmationQuestion(
-                sprintf('Do you want to package the %s? [Y/N]:', $this->getLowerCaseObjectName()),
-                false
-            );
-            $vars['options']['package_object'] = $helper->ask($input, $output, $question);
-        } else {
-            $vars['options']['package_object'] = true;
-        }
-
-        /*
-         * Set the destrination path.
-         */
-        if (true === $vars['options']['package_object']) {
-            if (! $this->at_concrete_root || ($path = $input->getArgument('path')) && ! empty($path)) {
-                $this->destination_path = $this->destination_path.'_package';
-            } else {
-                $package_install_path = $this->getApplication()->getDefaultInstallPath('package');
-                $this->destination_path = $this->getApplication()->make('export_path').DIRECTORY_SEPARATOR.$package_install_path.DIRECTORY_SEPARATOR.$vars['handle'].'_package';
-            }
-        }
-
-        return $vars;
-    }
-
-    /**
      * Executes the current command.
      *
      * This method is not abstract because you can use this class
@@ -196,20 +149,9 @@ class AbstractConsoleCommand extends Command
         if (($path = $input->getArgument('path')) && ! empty($path)) {
             $this->destination_path = realpath($path);
         } else {
-            $destination_path = $this->getApplication()->make('export_path');
-
-            // Determine whether we're in a concrete installation or not, if we are we can 
-            // put the object into the right location.
-            $default_install_path = $app->getDefaultInstallPath($this->getSnakeCaseObjectName());
-
-            $this->at_concrete_root = (is_dir($destination_path.'/concrete') || is_dir($destination_path.'/vendor/concrete5/concrete5'));
-
-            if ($this->at_concrete_root && ! empty($default_install_path)) {
-                $this->at_concrete_root = true;
-                $this->destination_path = $destination_path.DIRECTORY_SEPARATOR.$default_install_path;
-            } else {
-                $this->destination_path = realpath($destination_path);
-            }
+            $this->destination_path = $this->getApplication()->getObjectInstallPath(
+                $this->getSnakeCaseObjectName()
+            );
         }
 
         if (! is_writable($this->destination_path)) {

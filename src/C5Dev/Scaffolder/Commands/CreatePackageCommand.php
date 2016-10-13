@@ -50,7 +50,7 @@ class CreatePackageCommand extends AbstractBusCommand
                 'Start building standards complient concrete5 packages from me.',
                 $this->description,
             ],
-            'otherHandleInstances' => ['package-boilerplate', $this->handle]
+            'otherHandleInstances' => ['package-boilerplate', $this->handle],
         ];
 
         // Add any substitutions from the options array
@@ -77,7 +77,7 @@ class CreatePackageCommand extends AbstractBusCommand
         }
 
         // Export the files
-        $source = $this->makePath([$app->make('base_path'), 'packages', 'package-boilerplate']);
+        $source = $this->makePath([$app->getAppBasePath(), 'packages', 'package-boilerplate']);
         $exporter->setSubstitutions($substitutions);
         $exporter->export($source, $this->path);
 

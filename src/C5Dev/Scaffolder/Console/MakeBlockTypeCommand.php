@@ -12,12 +12,8 @@
 namespace C5Dev\Scaffolder\Console;
 
 use C5Dev\Scaffolder\Commands\CreateBlockTypeCommand;
-use Symfony\Component\Console\Helper\QuestionHelper as Helper;
-use Symfony\Component\Console\Input\InputInterface as In;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface as Out;
 
-class MakeBlockTypeCommand extends AbstractConsoleCommand
+class MakeBlockTypeCommand extends PackageableObjectConsoleCommand
 {
     /**
      * The name of the object that we are scaffolding.
@@ -44,21 +40,6 @@ class MakeBlockTypeCommand extends AbstractConsoleCommand
         ->setName('make:block')
         ->setDescription('Generates boilerplate block type code.')
         ->setHelp('This command allows you to create block type.')
-        ->addDefaultArguments()
-        ->addOption('package', null, InputOption::VALUE_OPTIONAL, 'Package the block type?', false);
-    }
-
-    /**
-     * Custom questions for Package creation.
-     *
-     * @param  InputInterface  $input
-     * @param  OutputInterface $output
-     * @param  QuestionHelper  $helper
-     * @param  array           $vars
-     * @return array
-     */
-    protected function askCustomQuestions(In $input, Out $output, Helper $helper, array $vars)
-    {
-        return $this->askWhetherToPackageObject($input, $output, $helper, $vars);
+        ->addDefaultArguments();
     }
 }
