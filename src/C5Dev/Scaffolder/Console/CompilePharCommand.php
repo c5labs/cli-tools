@@ -55,9 +55,10 @@ class CompilePharCommand extends Command
 
         $path = $this->getApplication()->getAppBasePath();
         $fs = $this->getApplication()->make('files');
+        $phar_path = $path.'/bin/scaffolder.phar';
 
         // Cleanup
-        $fs->delete([$path.'/scaffolder.phar', $path.'/build.json']);
+        $fs->delete([$phar_path, $path.'/build.json']);
 
         // Show the application banners.
         $output->write($this->getApplication()->getHelp()."\r\n\r\n");
@@ -77,7 +78,7 @@ class CompilePharCommand extends Command
         file_put_contents($path.'/build.json', json_encode($build_meta));
 
         $output->writeln("Standby, creating PHAR...\r\n");
-        $phar = new Phar('scaffolder.phar', 0, 'scaffolder.phar');
+        $phar = new Phar($phar_path, 0, 'scaffolder.phar');
         $phar->startBuffering();
         $phar->buildFromDirectory($path);
         $default_stub = $phar->createDefaultStub('bootstraps/start.php');
@@ -85,7 +86,7 @@ class CompilePharCommand extends Command
         $phar->setStub($stub);
         $phar->stopBuffering();
 
-        @chmod($path.'/scaffolder.phar', 0755);
+        @chmod($phar_path, 0755);
 
         $fs->delete($path.'/build.json');
 

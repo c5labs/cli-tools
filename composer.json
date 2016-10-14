@@ -28,6 +28,7 @@
     }
     ],
     "autoload": { "psr-4": {"C5Dev\\Scaffolder\\": "src/C5Dev/Scaffolder"}},
+    "bin": ["bin/scaffolder"],
     "minimum-stability": "dev",
     "config": {
         "preferred-install": "dist"
