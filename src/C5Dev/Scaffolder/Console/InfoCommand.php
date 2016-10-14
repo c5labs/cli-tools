@@ -18,7 +18,7 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ConcreteConfigurationCommand extends ConcreteCoreCommand
+class InfoCommand extends ConcreteCoreCommand
 {
     /**
      * Configure the command.
@@ -28,9 +28,9 @@ class ConcreteConfigurationCommand extends ConcreteCoreCommand
     protected function configure()
     {
         $this
-        ->setName('concrete:config')
-        ->setDescription('Shows configuration of the loaded concrete5 core.')
-        ->setHelp('Shows configuration of the loaded concrete5 core.');
+        ->setName('info')
+        ->setDescription('Shows info about the applications configuration, build, etc.')
+        ->setHelp('Shows info about the applications configuration, build, etc.');
     }
 
     /**
@@ -54,23 +54,29 @@ class ConcreteConfigurationCommand extends ConcreteCoreCommand
     {
         parent::execute($input, $output);
 
-        $data = Arr::dot($this->getApplication()->getConcreteConfig());
+        $app = $this->getApplication();
 
-        // Format the data for the Table helper.
-        foreach ($data as $key => $value) {
-            if (is_string($value)) {
-                $data[$key] = [$key, Str::limit($value, 70)];
-            } else {
-                unset($data[$key]);
-            }
-        }
+        // Paths
+        $output->writeln('<fg=yellow>Paths</>');
+        $output->writeln('<fg=yellow>--------------------</>');
+        $output->writeln('Application Path: '.$app->getAppBasePath());
+        $output->writeln('Current Working Directory: '.$app->getCurrentWorkingDirectory());
+        $output->writeln('Current Working Type: '.$app->getWorkingDirectoryType());
 
-        // Render the table.
-        $table = new Table($output);
-        $table
-            ->setHeaders(['Key', 'Value'])
-            ->setRows($data);
-        $table->render();
+        // Build
+        $output->writeln("\r\n<fg=yellow>Build</>");
+        $output->writeln('<fg=yellow>--------------------</>');
+        $output->writeln('Date: '.$app->getBuildDate());
+        $output->writeln('Version: '.$app->getVersion());
+        $output->writeln('Commit: '.$app->getLongbuild());
+
+        // Concrete5 Path
+        $config = $this->getApplication()->getConcreteConfig();
+        $output->writeln("\r\n<fg=yellow>concrete5 Core</>");
+        $output->writeln('<fg=yellow>--------------------</>');
+        $output->writeln('Auto Discovered Path: '.$app->getConcretePath());
+        $output->writeln('Site Name: '.$config['site']);
+        $output->writeln('Version: '.$config['version']);
 
         $output->writeln("\r\n<fg=green>Command complete.</>\r\n");
     }

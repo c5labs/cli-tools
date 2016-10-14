@@ -407,7 +407,7 @@ class Application extends App implements ApplicationContract
         ];
 
         foreach ($files as $file) {
-            $config = array_merge_recursive($config, $this->loadConcreteConfigFile($file));
+            $config = array_replace_recursive($config, $this->loadConcreteConfigFile($file));
         }
 
         return $config;
