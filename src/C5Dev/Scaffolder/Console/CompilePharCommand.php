@@ -89,8 +89,8 @@ class CompilePharCommand extends Command
 
         $fs->delete($path.'/build.json');
 
-        $output->writeln("Version: ".$build_meta['version']);
-        $output->writeln("Build: ".$build_meta['build']."\r\n");
+        $output->writeln('Version: '.$build_meta['version']);
+        $output->writeln('Build: '.$build_meta['build']."\r\n");
 
         $output->writeln(sprintf('<fg=green>Done! PHAR created at %s', $path.DIRECTORY_SEPARATOR.'scaffolder.phar</>'));
     }

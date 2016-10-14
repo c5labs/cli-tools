@@ -3,15 +3,16 @@
     "description": "A package, theme & block scaffolder for concrete5.",
     "require": {
         "symfony/console": "~3.0",
-        "illuminate/bus": "^5.3",
-        "illuminate/container": "^5.3",
-        "illuminate/support": "^5.3",
-        "illuminate/filesystem": "^5.3",
+        "illuminate/bus": "5.1.*",
+        "illuminate/container": "5.1.*",
+        "illuminate/support": "5.1.*",
+        "illuminate/filesystem": "5.1.*",
+        "illuminate/contracts": "5.1.*",
         "c5dev/package-boilerplate": "dev-master",
         "c5dev/theme-boilerplate": "dev-master",
         "c5dev/block-boilerplate": "dev-master",
-        "illuminate/contracts": "^5.3",
-        "symfony/process": "^3.1"
+        "symfony/process": "^3.1",
+        "psy/psysh": "@stable"
     },
     "license": "MIT",
     "authors": [
