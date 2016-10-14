@@ -13,8 +13,9 @@ namespace C5Dev\Scaffolder\Commands;
 
 use Illuminate\Contracts\Console\Application;
 use C5Dev\Scaffolder\FileExporter\FileExporter;
+use Illuminate\Contracts\Bus\SelfHandling;
 
-abstract class AbstractBusCommand
+abstract class AbstractBusCommand implements SelfHandling
 {
     /**
      * Handle.

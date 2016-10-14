@@ -14,8 +14,9 @@ namespace C5Dev\Scaffolder\Commands;
 use C5Dev\Scaffolder\FileExporter\FileExporter;
 use Illuminate\Contracts\Console\Application;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Contracts\Bus\SelfHandling;
 
-class CreateBlockTypeTemplateCommand
+class CreateBlockTypeTemplateCommand implements SelfHandling
 {
     public function __construct($path, $block_type, $block_type_path, $name)
     {
