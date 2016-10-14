@@ -205,6 +205,22 @@ class Application extends App implements ApplicationContract
     }
 
     /**
+     * Get the short build reference.
+     * 
+     * @return string
+     */
+    public function getBuild()
+    {
+        $build = $this->getLongBuild();
+
+        if (strlen($build) > 7) {
+            return substr($build, 0, 7);
+        }
+
+        return $build;
+    }
+
+    /**
      * Get long build reference.
      * 
      * @return string
@@ -216,22 +232,6 @@ class Application extends App implements ApplicationContract
         }
 
         return 'dev';
-    }
-
-    /**
-     * Get the short build reference.
-     * 
-     * @return string
-     */
-    public function getBuild()
-    {
-        $build = $this->getLongBuild();
-
-        if (strlen($build) > 7) {
-            return substr($build, -7);
-        }
-
-        return $build;
     }
 
     /**

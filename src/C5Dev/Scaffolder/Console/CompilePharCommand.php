@@ -68,11 +68,13 @@ class CompilePharCommand extends Command
             throw new \RuntimeException('Can\'t run git log. You must ensure to run compile from git repository clone and that git binary is available.');
         }
 
-        file_put_contents($path.'/build.json', json_encode([
+        $build_meta = [
             'date' => (new \DateTime())->format('r'),
             'version' => $this->getApplication()->getVersion(),
             'build' => trim($process->getOutput()),
-        ]));
+        ];
+
+        file_put_contents($path.'/build.json', json_encode($build_meta));
 
         $output->writeln("Standby, creating PHAR...\r\n");
         $phar = new Phar('scaffolder.phar', 0, 'scaffolder.phar');
@@ -86,6 +88,9 @@ class CompilePharCommand extends Command
         @chmod($path.'/scaffolder.phar', 0755);
 
         $fs->delete($path.'/build.json');
+
+        $output->writeln("Version: ".$build_meta['version']);
+        $output->writeln("Build: ".$build_meta['build']."\r\n");
 
         $output->writeln(sprintf('<fg=green>Done! PHAR created at %s', $path.DIRECTORY_SEPARATOR.'scaffolder.phar</>'));
     }
