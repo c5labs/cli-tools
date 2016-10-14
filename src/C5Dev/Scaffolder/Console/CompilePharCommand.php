@@ -60,7 +60,7 @@ class CompilePharCommand extends Command
         $fs->delete([$path.'/scaffolder.phar', $path.'/build.json']);
 
         // Show the application banners.
-        $output->write($this->getApplication()->getHelp()."\n");
+        $output->write($this->getApplication()->getHelp()."\r\n\r\n");
 
         // Set build information.
         $process = new Process('git log --pretty="%H" -n1 HEAD', __DIR__);
@@ -74,7 +74,7 @@ class CompilePharCommand extends Command
             'build' => trim($process->getOutput()),
         ]));
 
-        $output->writeln('Standby, creating PHAR...');
+        $output->writeln("Standby, creating PHAR...\r\n");
         $phar = new Phar('scaffolder.phar', 0, 'scaffolder.phar');
         $phar->startBuffering();
         $phar->buildFromDirectory($path);

@@ -340,7 +340,7 @@ class AbstractConsoleCommand extends Command
     protected function execute(In $input, Out $output)
     {
         // Show the application banners.
-        $output->write($this->getApplication()->getHelp()."\n");
+        $output->write($this->getApplication()->getHelp()."\r\n\r\n");
 
         // Ask the questions.
         $this->askQuestions($input, $output);

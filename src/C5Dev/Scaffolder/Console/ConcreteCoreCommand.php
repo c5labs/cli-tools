@@ -22,7 +22,7 @@ abstract class ConcreteCoreCommand extends Command
     protected function execute(In $input, Out $output)
     {
         // Show the application banners.
-        $output->write($this->getApplication()->getHelp());
+        $output->write($this->getApplication()->getHelp()."\r\n");
 
         // List concrete5 installation location & version
         if ($concrete_path = $this->getApplication()->getConcretePath()) {

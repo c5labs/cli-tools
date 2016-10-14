@@ -492,7 +492,7 @@ class Application extends App implements ApplicationContract
         $help .=  '<fg=yellow>/ /______/ /  </>(__  ) /__/ /_/ / __/ __/ /_/ / / /_/ /  __/ /    '.PHP_EOL;
         $help .=  '<fg=yellow>\___/_____/  </>/____/\___/\__,_/_/ /_/  \____/_/\__,_/\___/_/     '.PHP_EOL;
         $help .= ''.PHP_EOL;
-        $help .= '<fg=green>'.$this->getLongVersion().'</>'.PHP_EOL;
+        $help .= '<fg=green>'.$this->getLongVersion().'</>';
 
         return $help;
     }
