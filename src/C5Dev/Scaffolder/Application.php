@@ -253,17 +253,25 @@ class Application extends App implements ApplicationContract
      */
     protected function setBasePaths()
     {
+        // Called from /bin
         $this->current_working_directory
             = $this->app_base_path
             = realpath(__DIR__.'/../../../');
 
+        // Called as a PHAR.
         if (! empty(Phar::running())) {
             $this->app_base_path = Phar::running();
             $this->current_working_directory = getcwd();
         }
 
+        // Called as a dependency
+        elseif (file_exists(realpath(__DIR__.'/../../../../../../vendor'))) {
+            $this->current_working_directory = getcwd();
+        }
+
         $this->concrete_path = $this->determineConcreteCorePath();
         $this->working_directory_type = $this->determineWorkingDirectoryType();
+
     }
 
     /**

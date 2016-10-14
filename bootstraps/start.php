@@ -9,8 +9,16 @@
  * file that was distributed with this source code.
  */
 
-require __DIR__.'/../vendor/autoload.php';
-require __DIR__.'/../vendor/illuminate/support/helpers.php';
+if (file_exists(__DIR__.'/../vendor/autoload.php')) {
+    $path = __DIR__.'/..';
+} elseif (file_exists(__DIR__.'/../../../../vendor/autoload.php')) {
+    $path = __DIR__.'/../../../..';
+} else {
+    throw new Exception('Please ensure you have installed this packages depencencies via composer install.');
+}
+
+require $path.'/vendor/autoload.php';
+require $path.'/vendor/illuminate/support/helpers.php';
 
 $console = new \C5Dev\Scaffolder\Application();
 $console->run();
