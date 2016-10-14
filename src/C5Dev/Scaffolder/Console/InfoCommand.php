@@ -75,7 +75,7 @@ class InfoCommand extends ConcreteCoreCommand
         $output->writeln("\r\n<fg=yellow>concrete5 Core</>");
         $output->writeln('<fg=yellow>--------------------</>');
         $output->writeln('Auto Discovered Path: '.$app->getConcretePath());
-        $output->writeln('Site Name: '.$config['site']);
+        $output->writeln('Site Name: '.isset($config['site']) ? $config['site'] : 'Unknown');
         $output->writeln('Version: '.$config['version']);
 
         $output->writeln("\r\n<fg=green>Command complete.</>\r\n");
