@@ -11,15 +11,10 @@
 
 namespace C5Dev\Scaffolder\Console;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Phar;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 class ConcreteClearCacheCommand extends ConcreteCoreCommand
 {

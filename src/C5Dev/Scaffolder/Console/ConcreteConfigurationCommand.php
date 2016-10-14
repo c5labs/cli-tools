@@ -13,12 +13,10 @@ namespace C5Dev\Scaffolder\Console;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Phar;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 class ConcreteConfigurationCommand extends ConcreteCoreCommand
 {
@@ -70,9 +68,8 @@ class ConcreteConfigurationCommand extends ConcreteCoreCommand
         // Render the table.
         $table = new Table($output);
         $table
-            ->setHeaders(array('Key', 'Value'))
-            ->setRows($data)
-        ;
+            ->setHeaders(['Key', 'Value'])
+            ->setRows($data);
         $table->render();
     }
 }

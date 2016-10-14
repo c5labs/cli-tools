@@ -13,9 +13,7 @@ namespace C5Dev\Scaffolder\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface as In;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface as Out;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 abstract class ConcreteCoreCommand extends Command
 {

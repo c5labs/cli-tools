@@ -367,7 +367,6 @@ class Application extends App implements ApplicationContract
     protected function loadConcreteConfigFile($file)
     {
         if (file_exists($file)) {
-
             $old_error_handler = set_error_handler(function ($errno, $errstr) {
                 /* Do nothing */
             });
@@ -391,7 +390,7 @@ class Application extends App implements ApplicationContract
     public function getConcreteConfig($name = 'concrete')
     {
         $path = $this->getConcretePath();
-    
+
         $config = [];
         $files = [
             realpath($path.'/config/'.$name.'.php'),
@@ -399,7 +398,7 @@ class Application extends App implements ApplicationContract
             realpath($path.'/../application/config/'.$name.'.php'),
         ];
 
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $config = array_merge_recursive($config, $this->loadConcreteConfigFile($file));
         }
 
