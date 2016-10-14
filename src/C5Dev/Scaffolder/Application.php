@@ -88,7 +88,7 @@ class Application extends App implements ApplicationContract
     {
         $this->setContainer(new Container());
 
-        parent::__construct('c5 Scaffolder', '0.1.0');
+        parent::__construct('c5 Scaffolder', '0.2.1');
 
         $this->registerProviders();
     }
