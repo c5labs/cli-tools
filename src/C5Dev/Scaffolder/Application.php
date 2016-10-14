@@ -175,8 +175,8 @@ class Application extends App implements ApplicationContract
      */
     public function getBuildData()
     {
-        if (file_exists($this->getAppBasePath().'/build.json')) {
-            return json_decode(file_get_contents($this->getAppBasePath().'/build.json'), true);
+        if (file_exists($this->getAppBasePath().'/bin/build.json')) {
+            return json_decode(file_get_contents($this->getAppBasePath().'/bin/build.json'), true);
         }
     }
 

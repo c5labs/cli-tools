@@ -56,9 +56,10 @@ class CompilePharCommand extends Command
         $path = $this->getApplication()->getAppBasePath();
         $fs = $this->getApplication()->make('files');
         $phar_path = $path.'/bin/scaffolder.phar';
+        $build_json = $path.'/bin/build.json';
 
         // Cleanup
-        $fs->delete([$phar_path, $path.'/build.json']);
+        $fs->delete([$phar_path, $build_json]);
 
         // Show the application banners.
         $output->write($this->getApplication()->getHelp()."\r\n\r\n");
@@ -75,7 +76,7 @@ class CompilePharCommand extends Command
             'build' => trim($process->getOutput()),
         ];
 
-        file_put_contents($path.'/build.json', json_encode($build_meta));
+        file_put_contents($build_json, json_encode($build_meta));
 
         $output->writeln("Standby, creating PHAR...\r\n");
         $phar = new Phar($phar_path, 0, 'scaffolder.phar');
@@ -87,8 +88,6 @@ class CompilePharCommand extends Command
         $phar->stopBuffering();
 
         @chmod($phar_path, 0755);
-
-        $fs->delete($path.'/build.json');
 
         $output->writeln('Version: '.$build_meta['version']);
         $output->writeln('Build: '.$build_meta['build']."\r\n");
