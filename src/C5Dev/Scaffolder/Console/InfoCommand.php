@@ -60,6 +60,7 @@ class InfoCommand extends ConcreteCoreCommand
         $output->writeln('<fg=yellow>Paths</>');
         $output->writeln('<fg=yellow>--------------------</>');
         $output->writeln('Application Path: '.$app->getAppBasePath());
+        $output->writeln('Composer Application Base Path: '.$app->getComposerAppBasePath());
         $output->writeln('Current Working Directory: '.$app->getCurrentWorkingDirectory());
         $output->writeln('Current Working Type: '.$app->getWorkingDirectoryType());
 
