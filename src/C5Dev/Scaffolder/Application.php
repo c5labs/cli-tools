@@ -53,6 +53,14 @@ class Application extends App implements ApplicationContract
     protected $app_base_path;
 
     /**
+     * The path composer sees as the apps base path. 
+     * (The directory where composer.json is located)
+     * 
+     * @var string
+     */
+    protected $composer_app_base_path;
+
+    /**
      * The current working directory.
      * 
      * @var string
@@ -126,6 +134,17 @@ class Application extends App implements ApplicationContract
     public function getAppBasePath()
     {
         return $this->app_base_path;
+    }
+
+    /**
+     * Get the path composer sees as the apps base path. 
+     * (The directory where composer.json is located)
+     * 
+     * @return string
+     */
+    public function getComposerAppBasePath()
+    {
+        return $this->composer_app_base_path;
     }
 
     /**
@@ -255,18 +274,22 @@ class Application extends App implements ApplicationContract
     {
         // Called from /bin
         $this->current_working_directory
+            = $this->composer_app_base_path
             = $this->app_base_path
             = realpath(__DIR__.'/../../../');
 
         // Called as a PHAR.
         if (! empty(Phar::running())) {
-            $this->app_base_path = Phar::running();
+            $this->app_base_path 
+                = $this->composer_app_base_path 
+                = Phar::running();
             $this->current_working_directory = getcwd();
         }
 
         // Called as a dependency
         elseif (file_exists(realpath(__DIR__.'/../../../../../../vendor'))) {
             $this->current_working_directory = getcwd();
+            $this->composer_app_base_path = realpath(__DIR__.'/../../../../../../');
         }
 
         $this->concrete_path = $this->determineConcreteCorePath();

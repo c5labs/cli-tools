@@ -81,7 +81,7 @@ class CreateThemeCommand extends AbstractBusCommand
         ];
 
         // Export the files
-        $source = $this->makePath([$app->getAppBasePath(), 'application', 'themes', 'theme-boilerplate']);
+        $source = $this->makePath([$app->getComposerAppBasePath(), 'application', 'themes', 'theme-boilerplate']);
         $exporter->setSubstitutions($substitutions);
         $exporter->export($source, $this->path);
 

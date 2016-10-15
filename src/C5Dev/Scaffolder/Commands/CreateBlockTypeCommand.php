@@ -80,7 +80,7 @@ class CreateBlockTypeCommand extends AbstractBusCommand
         ];
 
         // Export the files
-        $source = $this->makePath([$app->getAppBasePath(), 'application', 'blocks', 'block-boilerplate']);
+        $source = $this->makePath([$app->getComposerAppBasePath(), 'application', 'blocks', 'block-boilerplate']);
         $exporter->setSubstitutions($substitutions);
         $exporter->export($source, $this->path);
 
