@@ -68,6 +68,10 @@ class CreateBlockTypeCommand extends AbstractBusCommand
                 '$btHandle = \'block-boilerplate\'',
                 '$btHandle = \''.$this->handle.'\'',
             ],
+            'tableName' => [
+                'btBlockBoilerplate',
+                Str::camel('bt_'.$this->handle),
+            ],
             'namespace' => [
                 'Application\\Block\\BlockBoilerplate',
                 $block_namespace,
