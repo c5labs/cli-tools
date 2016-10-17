@@ -1,5 +1,5 @@
 {
-    "name": "c5dev/scaffolder",
+    "name": "c5labs/scaffolder",
     "description": "A package, theme & block scaffolder for concrete5.",
     "require": {
         "symfony/console": "~3.0",
@@ -8,9 +8,9 @@
         "illuminate/support": "5.1.*",
         "illuminate/filesystem": "5.1.*",
         "illuminate/contracts": "5.1.*",
-        "c5dev/package-boilerplate": "dev-master",
-        "c5dev/theme-boilerplate": "dev-master",
-        "c5dev/block-boilerplate": "dev-master",
+        "c5labs/package-boilerplate": "dev-master",
+        "c5labs/theme-boilerplate": "dev-master",
+        "c5labs/block-boilerplate": "dev-master",
         "symfony/process": "^3.1",
         "psy/psysh": "@stable"
     },
@@ -18,7 +18,7 @@
     "authors": [
         {
             "name": "Oliver Green",
-            "email": "oliver@c5dev.com"
+            "email": "oliver@c5labs.com"
         }
     ],
     "repositories": [
@@ -27,7 +27,7 @@
         "url": "https://github.com/olsgreen/installers.git"
     }
     ],
-    "autoload": { "psr-4": {"C5Dev\\Scaffolder\\": "src/C5Dev/Scaffolder"}},
+    "autoload": { "psr-4": {"C5Labs\\Scaffolder\\": "src/C5Labs/Scaffolder"}},
     "bin": ["bin/scaffolder"],
     "minimum-stability": "dev",
     "config": {

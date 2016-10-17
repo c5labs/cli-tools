@@ -3,13 +3,13 @@
 /*
  * This file is part of Scaffolder.
  *
- * (c) Oliver Green <oliver@c5dev.com>
+ * (c) Oliver Green <oliver@c5labs.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace C5Dev\Scaffolder;
+namespace C5Labs\Scaffolder;
 
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Console\Application as ApplicationContract;
@@ -29,8 +29,8 @@ class Application extends App implements ApplicationContract
     protected $providers = [
         \Illuminate\Bus\BusServiceProvider::class,
         \Illuminate\Filesystem\FilesystemServiceProvider::class,
-        \C5Dev\Scaffolder\CommandServiceProvider::class,
-        \C5Dev\Scaffolder\FileExporter\FileExporterServiceProvider::class,
+        \C5Labs\Scaffolder\CommandServiceProvider::class,
+        \C5Labs\Scaffolder\FileExporter\FileExporterServiceProvider::class,
     ];
 
     /**

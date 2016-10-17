@@ -3,31 +3,31 @@
 /*
  * This file is part of Scaffolder.
  *
- * (c) Oliver Green <oliver@c5dev.com>
+ * (c) Oliver Green <oliver@c5labs.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace C5Dev\Scaffolder\Console;
+namespace C5Labs\Scaffolder\Console;
 
-use C5Dev\Scaffolder\Commands\CreateThemeCommand;
+use C5Labs\Scaffolder\Commands\CreateBlockTypeCommand;
 
-class MakeThemeCommand extends PackageableObjectConsoleCommand
+class MakeBlockTypeCommand extends PackageableObjectConsoleCommand
 {
     /**
      * The name of the object that we are scaffolding.
      *
      * @var string
      */
-    protected $object_name = 'Theme';
+    protected $object_name = 'Block Type';
 
     /**
      * The name of the command to dispatch to create the object.
      * 
      * @var string
      */
-    protected $command_name = CreateThemeCommand::class;
+    protected $command_name = CreateBlockTypeCommand::class;
 
     /**
      * Configure the command.
@@ -37,9 +37,9 @@ class MakeThemeCommand extends PackageableObjectConsoleCommand
     protected function configure()
     {
         $this
-        ->setName('make:theme')
-        ->setDescription('Generates boilerplate theme code.')
-        ->setHelp('This command allows you to create themes.')
+        ->setName('make:block')
+        ->setDescription('Generates boilerplate block type code.')
+        ->setHelp('This command allows you to create block type.')
         ->addDefaultArguments();
     }
 }

@@ -8,7 +8,7 @@
     "content-hash": "995a515e388ddcef4f55ba31afb9675f",
     "packages": [
         {
-            "name": "c5dev/block-boilerplate",
+            "name": "c5labs/block-boilerplate",
             "version": "dev-master",
             "source": {
                 "type": "git",
@@ -32,14 +32,14 @@
             "authors": [
                 {
                     "name": "Oliver Green",
-                    "email": "oliver@c5dev.com"
+                    "email": "oliver@c5labs.com"
                 }
             ],
             "description": "A block boilerplate to start building from.",
             "time": "2016-10-11 20:00:09"
         },
         {
-            "name": "c5dev/package-boilerplate",
+            "name": "c5labs/package-boilerplate",
             "version": "dev-master",
             "source": {
                 "type": "git",
@@ -63,14 +63,14 @@
             "authors": [
                 {
                     "name": "Oliver Green",
-                    "email": "oliver@c5dev.com"
+                    "email": "oliver@c5labs.com"
                 }
             ],
             "description": "Start building standards complient concrete5 packages from me.",
             "time": "2016-10-13 09:44:43"
         },
         {
-            "name": "c5dev/theme-boilerplate",
+            "name": "c5labs/theme-boilerplate",
             "version": "dev-master",
             "source": {
                 "type": "git",
@@ -94,7 +94,7 @@
             "authors": [
                 {
                     "name": "Oliver Green",
-                    "email": "oliver@c5dev.com"
+                    "email": "oliver@c5labs.com"
                 }
             ],
             "description": "A theme boilerplate to start building from.",
@@ -1298,9 +1298,9 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "c5dev/package-boilerplate": 20,
-        "c5dev/theme-boilerplate": 20,
-        "c5dev/block-boilerplate": 20,
+        "c5labs/package-boilerplate": 20,
+        "c5labs/theme-boilerplate": 20,
+        "c5labs/block-boilerplate": 20,
         "psy/psysh": 0
     },
     "prefer-stable": false,

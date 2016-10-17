@@ -3,7 +3,7 @@
 /*
  * This file is part of Scaffolder.
  *
- * (c) Oliver Green <oliver@c5dev.com>
+ * (c) Oliver Green <oliver@c5labs.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,5 +20,5 @@ if (file_exists(__DIR__.'/../vendor/autoload.php')) {
 require $path.'/vendor/autoload.php';
 require $path.'/vendor/illuminate/support/helpers.php';
 
-$console = new \C5Dev\Scaffolder\Application();
+$console = new \C5Labs\Scaffolder\Application();
 $console->run();

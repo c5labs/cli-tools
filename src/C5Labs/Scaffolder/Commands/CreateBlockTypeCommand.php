@@ -3,19 +3,19 @@
 /*
  * This file is part of Scaffolder.
  *
- * (c) Oliver Green <oliver@c5dev.com>
+ * (c) Oliver Green <oliver@c5labs.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace C5Dev\Scaffolder\Commands;
+namespace C5Labs\Scaffolder\Commands;
 
 use Illuminate\Contracts\Console\Application;
-use C5Dev\Scaffolder\FileExporter\FileExporter;
+use C5Labs\Scaffolder\FileExporter\FileExporter;
 use Illuminate\Support\Str;
 
-class CreateThemeCommand extends AbstractBusCommand
+class CreateBlockTypeCommand extends AbstractBusCommand
 {
     /**
      * Handle the command.
@@ -26,7 +26,7 @@ class CreateThemeCommand extends AbstractBusCommand
      */
     public function handle(Application $app, FileExporter $exporter)
     {
-        $theme_namespace = 'Concrete\\Theme\\'.Str::studly($this->handle);
+        $block_namespace = 'Application\\Block\\'.Str::studly($this->handle);
 
         // Create a package for the theme if requested
         if (true === $this->options['package_object']) {
@@ -38,50 +38,53 @@ class CreateThemeCommand extends AbstractBusCommand
                     'controller.php' => [
                         [
                             "\$pkg = parent::install();\n",
-                            "\$pkg = parent::install();\n\n        \$theme = Theme::add('".$this->handle."', \$pkg);\n",
+                            "\$pkg = parent::install();\n\n        \$theme = BlockType::installBlockType('".$this->handle."', \$pkg);\n",
                         ],
                         [
                             $package_namespace.";\n",
-                            $package_namespace.";\n\nuse Concrete\Core\Page\Theme\Theme;",
+                            $package_namespace.";\n\nuse Concrete\Core\Block\BlockType\BlockType;",
                         ],
                     ],
                 ],
             ];
 
             $package_handle = $this->createPackage($app, $package_handle, $options);
-            $this->path = $this->makePath([$this->path, 'themes', $this->handle]);
-            $theme_namespace = 'Concrete\\Package\\'.Str::studly($package_handle).'\\Theme\\'.Str::studly($this->handle);
+            $this->path = $this->makePath([$this->path, 'blocks', $this->handle]);
+            $block_namespace = 'Concrete\\Package\\'.Str::studly($package_handle).'\\Block\\'.Str::studly($this->handle);
         }
 
         $substitutions = [
             'authorName' => ['Oliver Green', $this->author['name']],
-            'authorEmail' => ['oliver@c5dev.com', $this->author['email']],
+            'authorEmail' => ['oliver@c5labs.com', $this->author['email']],
             'name' => [
-                '$pThemeName = \'Theme Boilerplate\'',
-                '$pThemeName = \''.$this->name.'\'',
+                '$btName = \'Block Boilerplate\'',
+                '$btName = \''.$this->name.'\'',
             ],
             'description' => [
-                '$pThemeDescription = \'A theme boilerplate to start building from.\'',
-                '$pThemeDescription = \''.$this->description.'\'',
+                '$btDescription = \'A block boilerplate to start building from.\'',
+                '$btDescription = \''.$this->description.'\'',
             ],
             'handle' => [
-                '$pThemeHandle = \'theme-boilerplate\'',
-                '$pThemeHandle = \''.$this->handle.'\'',
+                '$btHandle = \'block-boilerplate\'',
+                '$btHandle = \''.$this->handle.'\'',
+            ],
+            'tableName' => [
+                'btBlockBoilerplate',
+                Str::camel('bt_'.$this->handle),
             ],
             'namespace' => [
-                'Concrete\\Theme\\ThemeBoilerplate',
-                $theme_namespace,
+                'Application\\Block\\BlockBoilerplate',
+                $block_namespace,
             ],
-            'otherHandleInstances' => ['theme-boilerplate', $this->handle],
-            'otherNameInstances' => ['Theme Boilerplate', $this->name],
+            'otherNameInstances' => ['Block Boilerplate', $this->name],
             'otherDescriptionInstances' => [
-                'A theme boilerplate to start building from.',
+                'Start building standards complient concrete5 blocks from me.',
                 $this->description,
             ],
         ];
 
         // Export the files
-        $source = $this->makePath([$app->getComposerAppBasePath(), 'application', 'themes', 'theme-boilerplate']);
+        $source = $this->makePath([$app->getComposerAppBasePath(), 'application', 'blocks', 'block-boilerplate']);
         $exporter->setSubstitutions($substitutions);
         $exporter->export($source, $this->path);
 
