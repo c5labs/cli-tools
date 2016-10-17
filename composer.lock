@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "da147a303d409dde884a79664dbdb932",
-    "content-hash": "995a515e388ddcef4f55ba31afb9675f",
+    "hash": "ef0974378c4d1ce2f5be40c7e83a6019",
+    "content-hash": "8a20de26bd2cb1c3df20d1d72bc0153b",
     "packages": [
         {
             "name": "c5labs/block-boilerplate",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c5labs/block-boilerplate.git",
-                "reference": "ed433c2971ec4662c05ef9ebfc97c3e237e0a0f8"
+                "reference": "c3180164252fe36e0558864cfc833197cfbc1231"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/block-boilerplate/zipball/ed433c2971ec4662c05ef9ebfc97c3e237e0a0f8",
-                "reference": "ed433c2971ec4662c05ef9ebfc97c3e237e0a0f8",
+                "url": "https://api.github.com/repos/c5labs/block-boilerplate/zipball/c3180164252fe36e0558864cfc833197cfbc1231",
+                "reference": "c3180164252fe36e0558864cfc833197cfbc1231",
                 "shasum": ""
             },
             "require": {
@@ -36,7 +36,7 @@
                 }
             ],
             "description": "A block boilerplate to start building from.",
-            "time": "2016-10-11 20:00:09"
+            "time": "2016-10-17 19:19:23"
         },
         {
             "name": "c5labs/package-boilerplate",
@@ -44,12 +44,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c5labs/package-boilerplate.git",
-                "reference": "abb484f9ee0e8d3df5748c260226ac17f4866ec6"
+                "reference": "3cbfb8568d151e54e18bc8b065b6f0605a7f1b02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/package-boilerplate/zipball/abb484f9ee0e8d3df5748c260226ac17f4866ec6",
-                "reference": "abb484f9ee0e8d3df5748c260226ac17f4866ec6",
+                "url": "https://api.github.com/repos/c5labs/package-boilerplate/zipball/3cbfb8568d151e54e18bc8b065b6f0605a7f1b02",
+                "reference": "3cbfb8568d151e54e18bc8b065b6f0605a7f1b02",
                 "shasum": ""
             },
             "require": {
@@ -67,7 +67,7 @@
                 }
             ],
             "description": "Start building standards complient concrete5 packages from me.",
-            "time": "2016-10-13 09:44:43"
+            "time": "2016-10-17 19:30:21"
         },
         {
             "name": "c5labs/theme-boilerplate",
@@ -75,12 +75,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c5labs/theme-boilerplate.git",
-                "reference": "5733db7aa8c5959c7fbedbe79baeee7918832479"
+                "reference": "8681c595a98cd243e9bc61f0c2ba26e9968b8b8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/theme-boilerplate/zipball/5733db7aa8c5959c7fbedbe79baeee7918832479",
-                "reference": "5733db7aa8c5959c7fbedbe79baeee7918832479",
+                "url": "https://api.github.com/repos/c5labs/theme-boilerplate/zipball/8681c595a98cd243e9bc61f0c2ba26e9968b8b8e",
+                "reference": "8681c595a98cd243e9bc61f0c2ba26e9968b8b8e",
                 "shasum": ""
             },
             "require": {
@@ -98,7 +98,7 @@
                 }
             ],
             "description": "A theme boilerplate to start building from.",
-            "time": "2016-10-05 17:12:27"
+            "time": "2016-10-17 19:32:12"
         },
         {
             "name": "composer/installers",

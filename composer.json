@@ -2,7 +2,8 @@
     "name": "c5labs/scaffolder",
     "description": "A package, theme & block scaffolder for concrete5.",
     "require": {
-        "symfony/console": "~3.0",
+        "symfony/console": "~2.0|~3.0",
+        "symfony/process": "~2.0|~3.0",
         "illuminate/bus": "5.1.*",
         "illuminate/container": "5.1.*",
         "illuminate/support": "5.1.*",
@@ -11,7 +12,6 @@
         "c5labs/package-boilerplate": "dev-master",
         "c5labs/theme-boilerplate": "dev-master",
         "c5labs/block-boilerplate": "dev-master",
-        "symfony/process": "^3.1",
         "psy/psysh": "@stable"
     },
     "license": "MIT",
