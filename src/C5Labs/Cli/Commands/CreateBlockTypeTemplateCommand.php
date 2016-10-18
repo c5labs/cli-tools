@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Scaffolder.
+ * This file is part of Cli.
  *
  * (c) Oliver Green <oliver@c5labs.com>
  *
@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace C5Labs\Scaffolder\Commands;
+namespace C5Labs\Cli\Commands;
 
-use C5Labs\Scaffolder\FileExporter\FileExporter;
+use C5Labs\Cli\FileExporter\FileExporter;
 use Illuminate\Contracts\Console\Application;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\Bus\SelfHandling;

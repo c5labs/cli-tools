@@ -1,6 +1,6 @@
 {
-    "name": "c5labs/scaffolder",
-    "description": "A package, theme & block scaffolder for concrete5.",
+    "name": "c5labs/cli-tools",
+    "description": "Command line tools & scaffolding generator for concrete5.",
     "require": {
         "symfony/console": "~2.0|~3.0",
         "symfony/process": "~2.0|~3.0",
@@ -27,8 +27,8 @@
         "url": "https://github.com/olsgreen/installers.git"
     }
     ],
-    "autoload": { "psr-4": {"C5Labs\\Scaffolder\\": "src/C5Labs/Scaffolder"}},
-    "bin": ["bin/scaffolder"],
+    "autoload": { "psr-4": {"C5Labs\\Cli\\": "src/C5Labs/Cli"}},
+    "bin": ["bin/concrete"],
     "minimum-stability": "dev",
     "config": {
         "preferred-install": "dist"

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Scaffolder.
+ * This file is part of Cli.
  *
  * (c) Oliver Green <oliver@c5labs.com>
  *
@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace C5Labs\Scaffolder\Console;
+namespace C5Labs\Cli\Console;
 
-use C5Labs\Scaffolder\Commands\CreateBlockTypeCommand;
+use C5Labs\Cli\Commands\CreateBlockTypeCommand;
 
 class MakeBlockTypeCommand extends PackageableObjectConsoleCommand
 {

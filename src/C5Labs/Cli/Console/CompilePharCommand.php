@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Scaffolder.
+ * This file is part of Cli.
  *
  * (c) Oliver Green <oliver@c5labs.com>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace C5Labs\Scaffolder\Console;
+namespace C5Labs\Cli\Console;
 
 use Phar;
 use Symfony\Component\Console\Command\Command;
@@ -55,7 +55,7 @@ class CompilePharCommand extends Command
 
         $path = $this->getApplication()->getAppBasePath();
         $fs = $this->getApplication()->make('files');
-        $phar_path = $path.'/bin/scaffolder.phar';
+        $phar_path = $path.'/bin/concrete.phar';
         $build_json = $path.'/bin/build.json';
 
         // Cleanup
@@ -79,7 +79,7 @@ class CompilePharCommand extends Command
         file_put_contents($build_json, json_encode($build_meta));
 
         $output->writeln("Standby, creating PHAR...\r\n");
-        $phar = new Phar($phar_path, 0, 'scaffolder.phar');
+        $phar = new Phar($phar_path, 0, 'concrete.phar');
         $phar->startBuffering();
         $phar->buildFromDirectory($path);
         $default_stub = $phar->createDefaultStub('bootstraps/start.php');

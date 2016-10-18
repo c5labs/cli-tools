@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Scaffolder.
+ * This file is part of Cli.
  *
  * (c) Oliver Green <oliver@c5labs.com>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace C5Labs\Scaffolder;
+namespace C5Labs\Cli;
 
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Console\Application as ApplicationContract;
@@ -29,8 +29,8 @@ class Application extends App implements ApplicationContract
     protected $providers = [
         \Illuminate\Bus\BusServiceProvider::class,
         \Illuminate\Filesystem\FilesystemServiceProvider::class,
-        \C5Labs\Scaffolder\CommandServiceProvider::class,
-        \C5Labs\Scaffolder\FileExporter\FileExporterServiceProvider::class,
+        \C5Labs\Cli\CommandServiceProvider::class,
+        \C5Labs\Cli\FileExporter\FileExporterServiceProvider::class,
     ];
 
     /**
@@ -96,7 +96,7 @@ class Application extends App implements ApplicationContract
     {
         $this->setContainer(new Container());
 
-        parent::__construct('c5 Scaffolder', '0.2.2');
+        parent::__construct('c5 cli-tools', '0.3.0');
 
         $this->registerProviders();
     }
@@ -516,11 +516,11 @@ class Application extends App implements ApplicationContract
      */
     public function getBanner()
     {
-        $help = '<fg=yellow>        ______</>                   ________      __    __         '.PHP_EOL;
-        $help .=  '<fg=yellow>  _____/ ____/</>  ______________ _/ __/ __/___  / /___/ /__  _____'.PHP_EOL;
-        $help .=  '<fg=yellow> / ___/___ \  </> / ___/ ___/ __  / /_/ /_/ __ \/ / __  / _ \/ ___/'.PHP_EOL;
-        $help .=  '<fg=yellow>/ /______/ /  </>(__  ) /__/ /_/ / __/ __/ /_/ / / /_/ /  __/ /    '.PHP_EOL;
-        $help .=  '<fg=yellow>\___/_____/  </>/____/\___/\__,_/_/ /_/  \____/_/\__,_/\___/_/     '.PHP_EOL;
+        $help = '<fg=yellow>        ______</>   __              __    '.PHP_EOL;
+        $help .= '<fg=yellow>  _____/ ____/</>  / /_____  ____  / /____'.PHP_EOL;
+        $help .= '<fg=yellow> / ___/___ \  </> / __/ __ \/ __ \/ / ___/'.PHP_EOL;
+        $help .= '<fg=yellow>/ /______/ /  </>/ /_/ /_/ / /_/ / (__  ) '.PHP_EOL;
+        $help .= '<fg=yellow>\___/_____/   </>\__/\____/\____/_/____/  '.PHP_EOL;
         $help .= ''.PHP_EOL;
         $help .= '<fg=green>'.$this->getLongVersion().'</>';
 

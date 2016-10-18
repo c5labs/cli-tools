@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Scaffolder.
+ * This file is part of Cli.
  *
  * (c) Oliver Green <oliver@c5labs.com>
  *
@@ -20,5 +20,5 @@ if (file_exists(__DIR__.'/../vendor/autoload.php')) {
 require $path.'/vendor/autoload.php';
 require $path.'/vendor/illuminate/support/helpers.php';
 
-$console = new \C5Labs\Scaffolder\Application();
+$console = new \C5Labs\Cli\Application();
 $console->run();
