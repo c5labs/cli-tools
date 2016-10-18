@@ -27,9 +27,9 @@ class CommandServiceProvider extends ServiceProvider
         $this->app->addCommand(\C5Labs\Cli\Console\MakeThemeCommand::class);
         $this->app->addCommand(\C5Labs\Cli\Console\MakeBlockTypeCommand::class);
         $this->app->addCommand(\C5Labs\Cli\Console\MakeBlockTypeTemplateCommand::class);
-        $this->app->addCommand(\C5Labs\Cli\Console\ConcreteConfigurationCommand::class);
-        $this->app->addCommand(\C5Labs\Cli\Console\ConcreteClearCacheCommand::class);
-        $this->app->addCommand(\C5Labs\Cli\Console\ConcreteShellCommand::class);
+        $this->app->addCommand(\C5Labs\Cli\Console\ConfigCommand::class);
+        $this->app->addCommand(\C5Labs\Cli\Console\ClearCacheCommand::class);
+        $this->app->addCommand(\C5Labs\Cli\Console\ShellCommand::class);
         $this->app->addCommand(\C5Labs\Cli\Console\InfoCommand::class);
 
         // Add the pharize command if we're not already running as one.

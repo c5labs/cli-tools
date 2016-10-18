@@ -11,14 +11,12 @@
 
 namespace C5Labs\Cli\Console;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ConcreteConfigurationCommand extends ConcreteCoreCommand
+class ClearCacheCommand extends ConcreteCoreCommand
 {
     /**
      * Configure the command.
@@ -28,9 +26,9 @@ class ConcreteConfigurationCommand extends ConcreteCoreCommand
     protected function configure()
     {
         $this
-        ->setName('concrete:config')
-        ->setDescription('Shows configuration of the loaded concrete5 core.')
-        ->setHelp('Shows configuration of the loaded concrete5 core.');
+        ->setName('clear-cache')
+        ->setDescription('Clears the cache of the loaded concrete5 core.')
+        ->setHelp('Clears the cache of the loaded concrete5 core.');
     }
 
     /**
@@ -54,24 +52,24 @@ class ConcreteConfigurationCommand extends ConcreteCoreCommand
     {
         parent::execute($input, $output);
 
-        $data = Arr::dot($this->getApplication()->getConcreteConfig());
+        $cache_path = realpath($this->getApplication()->getConcretePath().'/../application/files/cache');
 
-        // Format the data for the Table helper.
-        foreach ($data as $key => $value) {
-            if (is_string($value)) {
-                $data[$key] = [$key, Str::limit($value, 70)];
-            } else {
-                unset($data[$key]);
-            }
+        $output->writeln(sprintf("Removing cache files at <fg=green>%s</>\r\n", $cache_path));
+
+        // Build a manifest
+        $fs = $this->getApplication()->make('files');
+        $manifest = $fs->allFiles($cache_path);
+
+        $progress = new ProgressBar($output, count($manifest));
+        $progress->start();
+
+        foreach ($manifest as $file) {
+            unlink($file->getRealPath());
+            $progress->advance();
         }
 
-        // Render the table.
-        $table = new Table($output);
-        $table
-            ->setHeaders(['Key', 'Value'])
-            ->setRows($data);
-        $table->render();
+        $progress->finish();
 
-        $output->writeln("\r\n<fg=green>Command complete.</>\r\n");
+        $output->writeln("\r\n\r\n<fg=green>Cache removed.</>");
     }
 }

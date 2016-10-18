@@ -18,16 +18,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ConcreteShellCommand extends ConcreteCoreCommand
+class ShellCommand extends ConcreteCoreCommand
 {
     /**
-     * artisan commands to include in the tinker shell.
+     * commands to include in the shell.
      *
      * @var array
      */
-    protected $commandWhitelist = [
-        'concrete:config', 'concrete:clear-cache',
-    ];
+    protected $commandWhitelist = [];
 
     /**
      * Configure the command.
@@ -37,7 +35,7 @@ class ConcreteShellCommand extends ConcreteCoreCommand
     protected function configure()
     {
         $this
-        ->setName('concrete:shell')
+        ->setName('shell')
         ->setDescription('An interactive shell to tinker with your concrete5 installation.')
         ->setHelp('An interactive shell to tinker with your concrete5. installation')
         ->addOption('debug-boot', null, InputOption::VALUE_OPTIONAL, 'Enable error reporting during concrete5 boot.');
