@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConfigCommand extends ConcreteCoreCommand
@@ -30,7 +31,8 @@ class ConfigCommand extends ConcreteCoreCommand
         $this
         ->setName('config')
         ->setDescription('Shows configuration of the loaded concrete5 core.')
-        ->setHelp('Shows configuration of the loaded concrete5 core.');
+        ->setHelp('Shows configuration of the loaded concrete5 core.')
+        ->addOption('type', null, InputOption::VALUE_OPTIONAL, false);
     }
 
     /**
@@ -54,23 +56,38 @@ class ConfigCommand extends ConcreteCoreCommand
     {
         parent::execute($input, $output);
 
-        $data = Arr::dot($this->getCliApplication()->getConcreteConfig());
+        $this->getCliApplication()->bootConcreteInstance();
 
-        // Format the data for the Table helper.
-        foreach ($data as $key => $value) {
-            if (is_string($value)) {
-                $data[$key] = [$key, Str::limit($value, 70)];
+        $types = ['app', 'concrete', 'database', 'conversations'];
+
+        if ($type = $input->getOption('type')) {
+            if (in_array($type, $types)) {
+                $types = [$type];
             } else {
-                unset($data[$key]);
+                throw new \InvalidArgumentException(
+                    sprintf('The configuration section [%s] does not exist.', $type)
+                );
             }
         }
 
-        // Render the table.
-        $table = new Table($output);
-        $table
-            ->setHeaders(['Key', 'Value'])
-            ->setRows($data);
-        $table->render();
+        foreach ($types as $type) {
+            $this->outputTitle($output, ucwords($type));
+            $data = $this->getCliApplication()->getConcreteConfig($type);
+
+            $data = Arr::dot($data);
+
+            // Format the data for the Table helper.
+            foreach ($data as $key => $value) {
+                $data[$key] = [$key, Str::limit((string) $value, 70)];
+            }
+
+            // Render the table.
+            $table = new Table($output);
+            $table
+                ->setHeaders(['Key', 'Value'])
+                ->setRows($data);
+            $table->render();
+        }
 
         $output->writeln("\r\n<fg=green>Command complete.</>\r\n");
     }

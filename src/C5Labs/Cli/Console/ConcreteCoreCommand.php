@@ -37,6 +37,19 @@ abstract class ConcreteCoreCommand extends Command
     }
 
     /**
+     * Output a formatted title.
+     * 
+     * @param  Out    $output 
+     * @param  string $title  
+     * @return void
+     */
+    protected function outputTitle(Out $output, $title)
+    {
+        $output->writeln(sprintf("\r\n<fg=yellow>%s</>", $title));
+        $output->writeln('<fg=yellow>--------------------</>');
+    }
+
+    /**
      * Executes the current command.
      *
      * This method is not abstract because you can use this class

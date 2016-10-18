@@ -57,24 +57,21 @@ class InfoCommand extends ConcreteCoreCommand
         $app = $this->getCliApplication();
 
         // Paths
-        $output->writeln('<fg=yellow>Paths</>');
-        $output->writeln('<fg=yellow>--------------------</>');
+        $this->outputTitle($output, 'Paths');
         $output->writeln('Application Path: '.$app->getAppBasePath());
         $output->writeln('Composer Application Base Path: '.$app->getComposerAppBasePath());
         $output->writeln('Current Working Directory: '.$app->getCurrentWorkingDirectory());
         $output->writeln('Current Working Type: '.$app->getWorkingDirectoryType());
 
         // Build
-        $output->writeln("\r\n<fg=yellow>Build</>");
-        $output->writeln('<fg=yellow>--------------------</>');
+        $this->outputTitle($output, 'Build');
         $output->writeln('Date: '.$app->getBuildDate());
         $output->writeln('Version: '.$app->getVersion());
         $output->writeln('Commit: '.$app->getLongbuild());
 
         // Concrete5 Path
         $config = $app->getConcreteConfig();
-        $output->writeln("\r\n<fg=yellow>concrete5 Core</>");
-        $output->writeln('<fg=yellow>--------------------</>');
+        $this->outputTitle($output, 'concrete5 Core');
         $output->writeln('Auto Discovered Path: '.$app->getConcretePath());
         $output->writeln('Site Name: '.isset($config['site']) ? $config['site'] : 'Unknown');
         $output->writeln('Version: '.$config['version']);

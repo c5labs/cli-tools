@@ -398,13 +398,13 @@ class Application extends App implements ApplicationContract
     protected function loadConcreteConfigFile($file)
     {
         if (file_exists($file)) {
-            $old_error_handler = set_error_handler(function ($errno, $errstr) {
+            set_error_handler(function ($errno, $errstr) {
                 /* Do nothing */
             });
 
             $config = require $file;
 
-            set_error_handler($old_error_handler);
+            restore_error_handler();
 
             return $config;
         }
@@ -535,6 +535,60 @@ class Application extends App implements ApplicationContract
     public function getHelp()
     {
         return $this->getBanner();
+    }
+
+    public function bootConcreteInstance($debug = false)
+    {
+         // Set the base paths.
+        $__DIR__ = $this->getConcretePath();
+        define('DIR_BASE', realpath($__DIR__.'/../'));
+
+        try {
+
+            // Set the handler so that we can control and hide error messages.
+            set_error_handler(function ($errno, $errstr, $errfile, $errline) use ($debug) {
+                if ($debug) {
+                    // Bubble errors up to exceptions.
+                    throw new \ErrorException($errstr, $errno, E_ERROR, $errfile, $errline);
+                }
+            });
+
+            /**
+             * ----------------------------------------------------------------------------
+             * Set required constants, including directory names, attempt to include site configuration file with database
+             * information, attempt to determine if we ought to skip to an updated core, etc...
+             * ----------------------------------------------------------------------------.
+             */
+            require $__DIR__.'/bootstrap/configure.php';
+
+            /**
+             * ----------------------------------------------------------------------------
+             * Include all autoloaders
+             * ----------------------------------------------------------------------------.
+             */
+            require $__DIR__.'/bootstrap/autoload.php';
+
+            /*
+             * ----------------------------------------------------------------------------
+             * Begin concrete5 startup.
+             * ----------------------------------------------------------------------------
+             */
+            $cms = require $__DIR__.'/bootstrap/start.php';
+        } catch (\Exception $ex) {
+            // If we're in debug rethrow any exceptions.
+            if ($debug) {
+                throw $ex;
+            }
+        } finally {
+            restore_error_handler();
+        }
+
+        // We can't continue without a valid  reference to the CMS.
+        if (! isset($cms) || ! is_object($cms)) {
+            throw new \Exception('Failed to boot concrete, please verify your installation in your browser.');
+        }
+
+        return $cms;
     }
 
     /**

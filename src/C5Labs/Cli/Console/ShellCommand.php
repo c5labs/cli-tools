@@ -62,51 +62,8 @@ class ShellCommand extends ConcreteCoreCommand
     {
         parent::execute($input, $output);
 
-        // Set the base paths.
-        $__DIR__ = $this->getCliApplication()->getConcretePath();
-        define('DIR_BASE', realpath($__DIR__.'/../'));
-
-        // Set the handler so that we can control and hide error messages.
-        $old_error_handler = set_error_handler(function ($errno, $errstr, $errfile, $errline) use ($input) {
-            if ($input->getOption('debug-boot')) {
-                // Bubble errors up to exceptions.
-                throw new \ErrorException($errstr, $errno, E_ERROR, $errfile, $errline);
-            }
-        });
-
-        try {
-            /**
-             * ----------------------------------------------------------------------------
-             * Set required constants, including directory names, attempt to include site configuration file with database
-             * information, attempt to determine if we ought to skip to an updated core, etc...
-             * ----------------------------------------------------------------------------.
-             */
-            require $__DIR__.'/bootstrap/configure.php';
-
-            /**
-             * ----------------------------------------------------------------------------
-             * Include all autoloaders
-             * ----------------------------------------------------------------------------.
-             */
-            require $__DIR__.'/bootstrap/autoload.php';
-
-            /*
-             * ----------------------------------------------------------------------------
-             * Begin concrete5 startup.
-             * ----------------------------------------------------------------------------
-             */
-            $cms = require $__DIR__.'/bootstrap/start.php';
-        } catch (\Exception $ex) {
-            // If we're in debug rethrow any exceptions.
-            if ($input->getOption('debug-boot')) {
-                throw $ex;
-            }
-        }
-
-        // We can't continue without a valid  reference to the CMS.
-        if (! isset($cms) || ! is_object($cms)) {
-            throw new \Exception('Failed to boot concrete, please verify your installation in your browser.');
-        }
+        $cms = $this->getApplication()
+            ->bootConcreteInstance($input->getOption('debug-boot'));
 
         // Setup the shell.
         $config = new Configuration;
