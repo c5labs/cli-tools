@@ -17,14 +17,52 @@ use Symfony\Component\Console\Output\OutputInterface as Out;
 
 abstract class ConcreteCoreCommand extends Command
 {
+    /**
+     * Get the instance of the current CLI app.
+     * 
+     * We use this accessor to maintain access to the correct 
+     * application instance while in the Psy shell.
+     * 
+     * @return Application
+     */
+    public function getCliApplication()
+    {
+        $app = parent::getApplication();
+
+        if (! ($app instanceof \C5Labs\Cli\Application)) {
+            $app = $app->getScopeVariable('app');
+        }
+
+        return $app;
+    }
+
+    /**
+     * Executes the current command.
+     *
+     * This method is not abstract because you can use this class
+     * as a concrete class. In this case, instead of defining the
+     * execute() method, you set the code to execute by passing
+     * a Closure to the setCode() method.
+     *
+     * @param InputInterface  $input  An InputInterface instance
+     * @param OutputInterface $output An OutputInterface instance
+     *
+     * @return null|int null or 0 if everything went fine, or an error code
+     *
+     * @throws LogicException When this abstract method is not implemented
+     *
+     * @see setCode()
+     */
     protected function execute(In $input, Out $output)
     {
+        $app = $this->getCliApplication();
+
         // Show the application banners.
-        $output->write($this->getApplication()->getHelp()."\r\n");
+        $output->write($app->getHelp()."\r\n");
 
         // List concrete5 installation location & version
-        if ($concrete_path = $this->getApplication()->getConcretePath()) {
-            $config = $this->getApplication()->getConcreteConfig();
+        if ($concrete_path = $app->getConcretePath()) {
+            $config = $app->getConcreteConfig();
 
             $output->writeln(
                 sprintf(

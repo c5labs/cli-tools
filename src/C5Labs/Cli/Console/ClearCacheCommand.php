@@ -52,12 +52,14 @@ class ClearCacheCommand extends ConcreteCoreCommand
     {
         parent::execute($input, $output);
 
-        $cache_path = realpath($this->getApplication()->getConcretePath().'/../application/files/cache');
+        $app = $this->getCliApplication();
+
+        $cache_path = realpath($app->getConcretePath().'/../application/files/cache');
 
         $output->writeln(sprintf("Removing cache files at <fg=green>%s</>\r\n", $cache_path));
 
         // Build a manifest
-        $fs = $this->getApplication()->make('files');
+        $fs = $app->make('files');
         $manifest = $fs->allFiles($cache_path);
 
         $progress = new ProgressBar($output, count($manifest));

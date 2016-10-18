@@ -54,7 +54,7 @@ class InfoCommand extends ConcreteCoreCommand
     {
         parent::execute($input, $output);
 
-        $app = $this->getApplication();
+        $app = $this->getCliApplication();
 
         // Paths
         $output->writeln('<fg=yellow>Paths</>');
@@ -72,7 +72,7 @@ class InfoCommand extends ConcreteCoreCommand
         $output->writeln('Commit: '.$app->getLongbuild());
 
         // Concrete5 Path
-        $config = $this->getApplication()->getConcreteConfig();
+        $config = $app->getConcreteConfig();
         $output->writeln("\r\n<fg=yellow>concrete5 Core</>");
         $output->writeln('<fg=yellow>--------------------</>');
         $output->writeln('Auto Discovered Path: '.$app->getConcretePath());

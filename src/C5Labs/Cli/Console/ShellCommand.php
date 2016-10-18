@@ -25,7 +25,7 @@ class ShellCommand extends ConcreteCoreCommand
      *
      * @var array
      */
-    protected $commandWhitelist = [];
+    protected $commandWhitelist = ['config', 'info', 'clear-cache'];
 
     /**
      * Configure the command.
@@ -63,7 +63,7 @@ class ShellCommand extends ConcreteCoreCommand
         parent::execute($input, $output);
 
         // Set the base paths.
-        $__DIR__ = $this->getApplication()->getConcretePath();
+        $__DIR__ = $this->getCliApplication()->getConcretePath();
         define('DIR_BASE', realpath($__DIR__.'/../'));
 
         // Set the handler so that we can control and hide error messages.
@@ -111,11 +111,12 @@ class ShellCommand extends ConcreteCoreCommand
         // Setup the shell.
         $config = new Configuration;
         /*$config->getPresenter()->addCasters(
+            // We could cast C5 object types here.
             $this->getCasters()
         );*/
         $shell = new Shell($config);
         $shell->addCommands($this->getCommands());
-        //$shell->setIncludes($this->argument('include'));
+        $shell->setScopeVariables(['app' => $this->getCliApplication()]);
         $shell->run();
     }
 
@@ -127,7 +128,7 @@ class ShellCommand extends ConcreteCoreCommand
     protected function getCommands()
     {
         $commands = [];
-        foreach ($this->getApplication()->all() as $name => $command) {
+        foreach ($this->getCliApplication()->all() as $name => $command) {
             if (in_array($name, $this->commandWhitelist)) {
                 $commands[] = $command;
             }

@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
-class CompilePharCommand extends Command
+class PharCommand extends Command
 {
     /**
      * Configure the command.

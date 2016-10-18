@@ -34,7 +34,7 @@ class CommandServiceProvider extends ServiceProvider
 
         // Add the pharize command if we're not already running as one.
         if (empty(Phar::running())) {
-            $this->app->addCommand(new \C5Labs\Cli\Console\CompilePharCommand());
+            $this->app->addCommand(new \C5Labs\Cli\Console\PharCommand());
         }
     }
 }

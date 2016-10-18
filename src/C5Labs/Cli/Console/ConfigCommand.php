@@ -18,7 +18,7 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ConfigurationCommand extends ConcreteCoreCommand
+class ConfigCommand extends ConcreteCoreCommand
 {
     /**
      * Configure the command.
@@ -54,7 +54,7 @@ class ConfigurationCommand extends ConcreteCoreCommand
     {
         parent::execute($input, $output);
 
-        $data = Arr::dot($this->getApplication()->getConcreteConfig());
+        $data = Arr::dot($this->getCliApplication()->getConcreteConfig());
 
         // Format the data for the Table helper.
         foreach ($data as $key => $value) {
