@@ -44,10 +44,10 @@ class FileExporter
 
     /**
      * File content mutators.
-     * 
+     *
      * @var array
      */
-    protected $mutators = ['processLineExclusions', 'substitute'];
+    protected $mutators = ['processExclusionTags', 'substitute', 'removeTemplateTags'];
 
     /**
      * Constructor.
@@ -129,29 +129,59 @@ class FileExporter
     }
 
     /**
-     * Process line exlusions for a given path on the given content.
+     * Remove any remaining template tags from the code.
      *
      * @param  string $pathname
      * @param  string $contents
      * @return string
      */
-    protected function processLineExclusions($pathname, $contents)
+    protected function removeTemplateTags($pathname, $contents)
+    {
+        $tagPattern = '/[\s]*\/\*[\s]*@section[\s]*([a-z-_]*)[\s]*\*\/';
+        $tagPattern .= '|[\s]*\/\*[\s]*@endsection[\s]*[a-z-_]*[\s]*\*\//';
+        return preg_replace($tagPattern, '', $contents);
+    }
+
+    /**
+     * Remove the template tag sections scheduled for removal.
+     *
+     * @param  string $pathname
+     * @param  string $contents
+     * @return string
+     */
+    public function processExclusionTags($pathname, $contents)
     {
         if (! empty($this->exclusions[$pathname]) && is_array($this->exclusions[$pathname])) {
-            $line_exclusions = $this->exclusions[$pathname];
-            uasort($line_exclusions, function ($a, $b) {
-                return $a[0] > $b[0];
-            });
 
-            $lines = explode("\n", $contents);
-            $count = 0;
+            $tagPattern = '/([\s]*\/\*[\s]*@section[\s]*([a-z-_]*)[\s]*\*\/)';
+            $tagPattern .= '[\S\s]*?';
+            $tagPattern .= '(=?\/\*[\s]*@endsection[\s]*[a-z-_]*[\s]*\*\/)/im';
 
-            foreach ($line_exclusions as $range) {
-                array_splice($lines, ($range[0] - $count) - 1, $range[1]);
-                $count += $range[1];
+            $exclusions = $this->exclusions[$pathname];
+            $offsets = [];
+            $position = 0;
+
+            // Match ALL template tags.
+            if (preg_match_all($tagPattern, $contents, $matches, PREG_SET_ORDER|PREG_OFFSET_CAPTURE)) {
+                foreach ($matches as $match) {
+                    // Check that the template tags name parameter is in the exclusion
+                    // list that we have been asked to remove.
+                    if (in_array($match[2][0], $exclusions)) {
+                        // Add the start & end byte offsets to an array for removal later.
+                        $offsets[] = [$match[1][1], $match[3][1] + strlen($match[3][0])];
+                    }
+                }
             }
 
-            $contents = implode("\n", $lines);
+            // Remove the calculated offsets from the document.
+            foreach ($offsets as $offset) {
+                $str = substr($contents, 0, $offset[0] - $position);
+                $str .= substr($contents, $offset[1] - $position);
+                $position += ($offset[1] - $offset[0]);
+                $contents = $str;
+                $str = null;
+            }
+
         }
 
         return $contents;

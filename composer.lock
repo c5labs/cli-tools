@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ef0974378c4d1ce2f5be40c7e83a6019",
-    "content-hash": "8a20de26bd2cb1c3df20d1d72bc0153b",
+    "hash": "14c11b5062ad324b5725b70af9e39dbb",
+    "content-hash": "d47b1099a7796943091e5c75f4a99775",
     "packages": [
         {
             "name": "c5labs/block-boilerplate",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c5labs/block-boilerplate.git",
-                "reference": "c3180164252fe36e0558864cfc833197cfbc1231"
+                "reference": "9f69fd8da856d74c3a061be46988bd0caf616d9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/block-boilerplate/zipball/c3180164252fe36e0558864cfc833197cfbc1231",
-                "reference": "c3180164252fe36e0558864cfc833197cfbc1231",
+                "url": "https://api.github.com/repos/c5labs/block-boilerplate/zipball/9f69fd8da856d74c3a061be46988bd0caf616d9d",
+                "reference": "9f69fd8da856d74c3a061be46988bd0caf616d9d",
                 "shasum": ""
             },
             "require": {
@@ -36,7 +36,7 @@
                 }
             ],
             "description": "A block boilerplate to start building from.",
-            "time": "2016-10-17 19:19:23"
+            "time": "2016-10-18 18:15:32"
         },
         {
             "name": "c5labs/package-boilerplate",
@@ -44,12 +44,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c5labs/package-boilerplate.git",
-                "reference": "3cbfb8568d151e54e18bc8b065b6f0605a7f1b02"
+                "reference": "6022d4050bc3e93638737da72ce55b5f5242c5a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/package-boilerplate/zipball/3cbfb8568d151e54e18bc8b065b6f0605a7f1b02",
-                "reference": "3cbfb8568d151e54e18bc8b065b6f0605a7f1b02",
+                "url": "https://api.github.com/repos/c5labs/package-boilerplate/zipball/6022d4050bc3e93638737da72ce55b5f5242c5a5",
+                "reference": "6022d4050bc3e93638737da72ce55b5f5242c5a5",
                 "shasum": ""
             },
             "require": {
@@ -67,7 +67,7 @@
                 }
             ],
             "description": "Start building standards complient concrete5 packages from me.",
-            "time": "2016-10-17 19:30:21"
+            "time": "2016-10-18 21:02:46"
         },
         {
             "name": "c5labs/theme-boilerplate",
@@ -75,12 +75,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/c5labs/theme-boilerplate.git",
-                "reference": "8681c595a98cd243e9bc61f0c2ba26e9968b8b8e"
+                "reference": "ebbf0a56a2661144c0f20d2b3e2fa346e9b07b54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c5labs/theme-boilerplate/zipball/8681c595a98cd243e9bc61f0c2ba26e9968b8b8e",
-                "reference": "8681c595a98cd243e9bc61f0c2ba26e9968b8b8e",
+                "url": "https://api.github.com/repos/c5labs/theme-boilerplate/zipball/ebbf0a56a2661144c0f20d2b3e2fa346e9b07b54",
+                "reference": "ebbf0a56a2661144c0f20d2b3e2fa346e9b07b54",
                 "shasum": ""
             },
             "require": {
@@ -98,7 +98,7 @@
                 }
             ],
             "description": "A theme boilerplate to start building from.",
-            "time": "2016-10-17 19:32:12"
+            "time": "2016-10-18 16:30:49"
         },
         {
             "name": "composer/installers",
@@ -1236,12 +1236,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "f5156e90c29a17f1b4f00570d2df9e8e003e16e5"
+                "reference": "b818b7d822aa659690ca47efe6476563cd73307b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/f5156e90c29a17f1b4f00570d2df9e8e003e16e5",
-                "reference": "f5156e90c29a17f1b4f00570d2df9e8e003e16e5",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/b818b7d822aa659690ca47efe6476563cd73307b",
+                "reference": "b818b7d822aa659690ca47efe6476563cd73307b",
                 "shasum": ""
             },
             "require": {
@@ -1291,7 +1291,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2016-10-06 08:59:27"
+            "time": "2016-10-18 16:01:03"
         }
     ],
     "packages-dev": [],
