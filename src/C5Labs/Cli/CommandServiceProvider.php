@@ -31,6 +31,7 @@ class CommandServiceProvider extends ServiceProvider
         $this->app->addCommand(\C5Labs\Cli\Console\ClearCacheCommand::class);
         $this->app->addCommand(\C5Labs\Cli\Console\ShellCommand::class);
         $this->app->addCommand(\C5Labs\Cli\Console\InfoCommand::class);
+        $this->app->addCommand(\C5Labs\Cli\Console\BackupCommand::class);
 
         // Add the pharize command if we're not already running as one.
         if (empty(Phar::running())) {
