@@ -27,8 +27,8 @@ class BackupCommand extends ConcreteCoreCommand
     {
         $this
         ->setName('backup')
-        ->setDescription('Clears the cache of the loaded concrete5 core.')
-        ->setHelp('Clears the cache of the loaded concrete5 core.');
+        ->setDescription('Backs the current site up.')
+        ->setHelp('Backs the current site up.');
     }
 
     /**
@@ -58,7 +58,7 @@ class BackupCommand extends ConcreteCoreCommand
         $output_file = $app->getCurrentWorkingDirectory().'/backup-'.time().'.zip';
 
         $output->writeln(sprintf(
-            "Starting backup of <fg=green>%s</> from %s\r\n", 
+            "Starting backup of <fg=green>%s</> from %s\r\n",
             (isset($config['site']) ? $config['site'] : 'Unknown'),
             $path
         ));
@@ -77,8 +77,8 @@ class BackupCommand extends ConcreteCoreCommand
         $progress->start();
 
         // Create the ZIP
-        $z = new \ZipArchive(); 
-        $z->open($output_file, \ZIPARCHIVE::CREATE); 
+        $z = new \ZipArchive();
+        $z->open($output_file, \ZIPARCHIVE::CREATE);
 
         // Add each file to the ZIP
         foreach ($manifest as $file) {
@@ -100,24 +100,29 @@ class BackupCommand extends ConcreteCoreCommand
 
         $z->close();
 
-        $output->writeln(sprintf("\r\n<fg=green>Backup ZIP created at %s.</>\r\n", $output_file));
+        $output->writeln(sprintf(
+            "\r\n<fg=green>Backup ZIP created at %s.</>\r\n", $output_file)
+        );
     }
 
     /* backup the db OR just a table
      * See original: https://davidwalsh.name/backup-mysql-database-php
      */
-     
+
     function backup_tables($output, $tables = '*')
     {
         $config = $this->getApplication()->getConcreteConfig('database');
         $connection = $config['connections'][$config['default-connection']];
         extract($connection);
 
-        $output->writeln(sprintf("\r\n\r\nBacking up database '<fg=green>%s</>' from <fg=green>%s</>\r\n", $database, $server));
+        $output->writeln(sprintf(
+            "\r\n\r\nBacking up database '<fg=green>%s</>' from <fg=green>%s</>\r\n",
+            $database, $server
+        ));
 
         $link = mysqli_connect($server,$username,$password,$database);
         $return = '';
-        
+
         //get all of the tables
         if($tables == '*')
         {
@@ -136,24 +141,24 @@ class BackupCommand extends ConcreteCoreCommand
 
         $progress = new ProgressBar($output, count($tables));
         $progress->start();
-        
+
         //cycle through
         foreach($tables as $table)
         {
             $result = $link->query('SELECT * FROM '.$table);
             $num_fields = $result->field_count;
-            
+
             $return.= 'DROP TABLE '.$table.';';
             $row2 = $link->query('SHOW CREATE TABLE '.$table);
             $row2 = $row2->fetch_array();
             $return.= "\n\n".$row2[1].";\n\n";
-            
-            for ($i = 0; $i < $num_fields; $i++) 
+
+            for ($i = 0; $i < $num_fields; $i++)
             {
                 while($row = $result->fetch_array())
                 {
                     $return.= 'INSERT INTO '.$table.' VALUES(';
-                    for($j=0; $j < $num_fields; $j++) 
+                    for($j=0; $j < $num_fields; $j++)
                     {
                         $row[$j] = addslashes($row[$j]);
                         $row[$j] = str_replace("\n","\\n",$row[$j]);
@@ -168,7 +173,7 @@ class BackupCommand extends ConcreteCoreCommand
         }
 
         $progress->finish();
-        
+
         return $return;
     }
 }
