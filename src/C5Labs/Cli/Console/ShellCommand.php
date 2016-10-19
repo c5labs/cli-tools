@@ -73,7 +73,7 @@ class ShellCommand extends ConcreteCoreCommand
         );*/
         $shell = new Shell($config);
         $shell->addCommands($this->getCommands());
-        $shell->setScopeVariables(['app' => $this->getCliApplication()]);
+        $shell->setScopeVariables(['app' => $this->getCliApplication(), 'cms' => $cms]);
         $shell->run();
     }
 

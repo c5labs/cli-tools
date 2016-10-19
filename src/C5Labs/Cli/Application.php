@@ -568,12 +568,27 @@ class Application extends App implements ApplicationContract
              */
             require $__DIR__.'/bootstrap/autoload.php';
 
+            $r = new \Concrete\Core\Http\Request(
+                array(),
+                array(),
+                array(),
+                array(),
+                array(),
+                array('HTTP_HOST' => 'www.requestdomain.com', 'SCRIPT_NAME' => '/path/to/server/index.php')
+            );
+            define('BASE_URL', 'http://www.dummyco.com/path/to/server');
+            \Concrete\Core\Http\Request::setInstance($r);
+
             /*
              * ----------------------------------------------------------------------------
              * Begin concrete5 startup.
              * ----------------------------------------------------------------------------
              */
             $cms = require $__DIR__.'/bootstrap/start.php';
+
+            $cms->setupPackageAutoloaders();
+
+            $cms->setupPackages();
         } catch (\Exception $ex) {
             // If we're in debug rethrow any exceptions.
             if ($debug) {
