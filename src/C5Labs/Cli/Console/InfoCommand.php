@@ -52,9 +52,10 @@ class InfoCommand extends ConcreteCoreCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        parent::execute($input, $output);
-
         $app = $this->getCliApplication();
+
+        // Show the application banners.
+        $output->write($app->getHelp()."\r\n");
 
         // Paths
         $this->outputTitle($output, 'Paths');
@@ -69,12 +70,16 @@ class InfoCommand extends ConcreteCoreCommand
         $output->writeln('Version: '.$app->getVersion());
         $output->writeln('Commit: '.$app->getLongbuild());
 
-        // Concrete5 Path
+        // Concrete5
+        $path = $app->getConcretePath();
         $config = $app->getConcreteConfig('concrete');
         $this->outputTitle($output, 'concrete5 Core');
-        $output->writeln('Auto Discovered Path: '.$app->getConcretePath());
-        $output->writeln('Site Name: '.(isset($config['site']) ? $config['site'] : 'Unknown'));
-        $output->writeln('Version: '.$config['version']);
+        $output->writeln('Auto Discovered Path: '.(empty($path) ? 'Not found' : ''));
+
+        if (! empty($path)) {
+            $output->writeln('Site Name: '.(isset($config['site']) ? $config['site'] : 'Unknown'));
+            $output->writeln('Version: '.(isset($config['version']) ? $config['version'] : 'Unknown'));
+        }
 
         $output->writeln("\r\n<fg=green>Command complete.</>\r\n");
     }
