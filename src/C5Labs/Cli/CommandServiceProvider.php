@@ -49,6 +49,26 @@ class CommandServiceProvider extends ServiceProvider
     ];
 
     /**
+     * Aliases for the core commands.
+     * 
+     * @var array
+     */
+    protected $command_aliases = [
+        'ClearCacheCommand' => 'clear-cache',
+        'ConfigCommand' => 'core-config',
+        'ExecCommand' => 'exec',
+        'GenerateIDESymbolsCommand' => 'ide-symbols',
+        'InstallCommand' => 'install',
+        'JobCommand' => 'job',
+        'ResetCommand' => 'reset',
+        'InstallPackageCommand' => 'package:install',
+        'PackPackageCommand' => 'package:pack',
+        'TranslatePackageCommand' => 'package:translate',
+        'UninstallPackageCommand' => 'package:uninstall',
+        'UpdatePackageCommand' => 'package:update',
+    ];
+
+    /**
      * Register the service provider.
      *
      * @return void
@@ -75,15 +95,22 @@ class CommandServiceProvider extends ServiceProvider
         // Add all of the queued commands.
         foreach ($this->commands as $command) {
             $reflect = new \ReflectionClass($command);
+            $class_name = $reflect->getShortName();
+
             $require_cms_installed = in_array(
-                $reflect->getShortName(), $this->command_restrictions['require_installed']
+                $class_name, $this->command_restrictions['require_installed']
             );
 
             if ($require_cms_installed && (! isset($cms) || ! $cms->isInstalled())) {
                 continue;
             }
+            
+            if (isset($this->command_aliases[$class_name])) {
+                $command = $this->app->make($command);
+                $command->setName($this->command_aliases[$class_name]);
+            }            
 
-            $this->app->addCommand($command);
+            $command = $this->app->addCommand($command);
         }
     }
 }
