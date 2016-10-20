@@ -45,7 +45,7 @@ class CommandServiceProvider extends ServiceProvider
             'UninstallPackageCommand',
             'UpdatePackageCommand',
             'JobCommand',
-        ]
+        ],
     ];
 
     /**
@@ -86,7 +86,7 @@ class CommandServiceProvider extends ServiceProvider
             $files = $finder->files()->in($path.'/src/Console/Command');
 
             foreach ($finder as $file) {
-                $this->commands[] = "Concrete\\Core\\Console\\Command\\".$file->getBasename('.php');
+                $this->commands[] = 'Concrete\\Core\\Console\\Command\\'.$file->getBasename('.php');
             }
 
             $cms = $this->app->make('concrete');
@@ -104,11 +104,11 @@ class CommandServiceProvider extends ServiceProvider
             if ($require_cms_installed && (! isset($cms) || ! $cms->isInstalled())) {
                 continue;
             }
-            
+
             if (isset($this->command_aliases[$class_name])) {
                 $command = $this->app->make($command);
                 $command->setName($this->command_aliases[$class_name]);
-            }            
+            }
 
             $command = $this->app->addCommand($command);
         }

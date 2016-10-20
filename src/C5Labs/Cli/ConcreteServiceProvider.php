@@ -17,7 +17,7 @@ class ConcreteServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->singleton('concrete', function() {
+        $this->app->singleton('concrete', function () {
             return $this->bootConcreteInstance();
         });
     }

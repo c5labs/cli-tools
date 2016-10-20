@@ -139,6 +139,7 @@ class FileExporter
     {
         $tagPattern = '/[\s]*\/\*[\s]*@section[\s]*([a-z-_]*)[\s]*\*\/';
         $tagPattern .= '|[\s]*\/\*[\s]*@endsection[\s]*[a-z-_]*[\s]*\*\//';
+
         return preg_replace($tagPattern, '', $contents);
     }
 
@@ -152,7 +153,6 @@ class FileExporter
     public function processExclusionTags($pathname, $contents)
     {
         if (! empty($this->exclusions[$pathname]) && is_array($this->exclusions[$pathname])) {
-
             $tagPattern = '/([\s]*\/\*[\s]*@section[\s]*([a-z-_]*)[\s]*\*\/)';
             $tagPattern .= '[\S\s]*?';
             $tagPattern .= '(=?\/\*[\s]*@endsection[\s]*[a-z-_]*[\s]*\*\/)/im';
@@ -162,7 +162,7 @@ class FileExporter
             $position = 0;
 
             // Match ALL template tags.
-            if (preg_match_all($tagPattern, $contents, $matches, PREG_SET_ORDER|PREG_OFFSET_CAPTURE)) {
+            if (preg_match_all($tagPattern, $contents, $matches, PREG_SET_ORDER | PREG_OFFSET_CAPTURE)) {
                 foreach ($matches as $match) {
                     // Check that the template tags name parameter is in the exclusion
                     // list that we have been asked to remove.
@@ -181,7 +181,6 @@ class FileExporter
                 $contents = $str;
                 $str = null;
             }
-
         }
 
         return $contents;

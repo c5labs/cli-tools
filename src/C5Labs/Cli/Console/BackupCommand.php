@@ -109,7 +109,7 @@ class BackupCommand extends ConcreteCoreCommand
      * See original: https://davidwalsh.name/backup-mysql-database-php
      */
 
-    function backup_tables($output, $tables = '*')
+    public function backup_tables($output, $tables = '*')
     {
         $config = $this->getApplication()->getConcreteConfig('database');
         $connection = $config['connections'][$config['default-connection']];
@@ -120,55 +120,52 @@ class BackupCommand extends ConcreteCoreCommand
             $database, $server
         ));
 
-        $link = mysqli_connect($server,$username,$password,$database);
+        $link = mysqli_connect($server, $username, $password, $database);
         $return = '';
 
         //get all of the tables
-        if($tables == '*')
-        {
-            $tables = array();
+        if ($tables == '*') {
+            $tables = [];
             $result = $link->query('SHOW TABLES');
-            while($row = $result->fetch_row())
-            {
+            while ($row = $result->fetch_row()) {
                 $tables[] = $row[0];
             }
+        } else {
+            $tables = is_array($tables) ? $tables : explode(',', $tables);
         }
-        else
-        {
-            $tables = is_array($tables) ? $tables : explode(',',$tables);
-        }
-
 
         $progress = new ProgressBar($output, count($tables));
         $progress->start();
 
         //cycle through
-        foreach($tables as $table)
-        {
+        foreach ($tables as $table) {
             $result = $link->query('SELECT * FROM '.$table);
             $num_fields = $result->field_count;
 
-            $return.= 'DROP TABLE '.$table.';';
+            $return .= 'DROP TABLE '.$table.';';
             $row2 = $link->query('SHOW CREATE TABLE '.$table);
             $row2 = $row2->fetch_array();
-            $return.= "\n\n".$row2[1].";\n\n";
+            $return .= "\n\n".$row2[1].";\n\n";
 
-            for ($i = 0; $i < $num_fields; $i++)
-            {
-                while($row = $result->fetch_array())
-                {
-                    $return.= 'INSERT INTO '.$table.' VALUES(';
-                    for($j=0; $j < $num_fields; $j++)
-                    {
+            for ($i = 0; $i < $num_fields; $i++) {
+                while ($row = $result->fetch_array()) {
+                    $return .= 'INSERT INTO '.$table.' VALUES(';
+                    for ($j = 0; $j < $num_fields; $j++) {
                         $row[$j] = addslashes($row[$j]);
-                        $row[$j] = str_replace("\n","\\n",$row[$j]);
-                        if (isset($row[$j])) { $return.= '"'.$row[$j].'"' ; } else { $return.= '""'; }
-                        if ($j < ($num_fields-1)) { $return.= ','; }
+                        $row[$j] = str_replace("\n", '\\n', $row[$j]);
+                        if (isset($row[$j])) {
+                            $return .= '"'.$row[$j].'"';
+                        } else {
+                            $return .= '""';
+                        }
+                        if ($j < ($num_fields - 1)) {
+                            $return .= ',';
+                        }
                     }
-                    $return.= ");\n";
+                    $return .= ");\n";
                 }
             }
-            $return.="\n\n\n";
+            $return .= "\n\n\n";
             $progress->advance();
         }
 
