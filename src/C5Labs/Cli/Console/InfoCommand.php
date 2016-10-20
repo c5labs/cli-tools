@@ -74,7 +74,7 @@ class InfoCommand extends ConcreteCoreCommand
         $path = $app->getConcretePath();
         $config = $app->getConcreteConfig('concrete');
         $this->outputTitle($output, 'concrete5 Core');
-        $output->writeln('Auto Discovered Path: '.(empty($path) ? 'Not found' : ''));
+        $output->writeln('Auto Discovered Path: '.(empty($path) ? 'Not found' : $path));
 
         if (! empty($path)) {
             $output->writeln('Site Name: '.(isset($config['site']) ? $config['site'] : 'Unknown'));

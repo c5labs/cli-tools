@@ -37,8 +37,7 @@ class ShellCommand extends ConcreteCoreCommand
         $this
         ->setName('shell')
         ->setDescription('An interactive shell to tinker with your concrete5 installation.')
-        ->setHelp('An interactive shell to tinker with your concrete5. installation')
-        ->addOption('debug-boot', null, InputOption::VALUE_OPTIONAL, 'Enable error reporting during concrete5 boot.');
+        ->setHelp('An interactive shell to tinker with your concrete5. installation');
     }
 
     /**
@@ -62,8 +61,7 @@ class ShellCommand extends ConcreteCoreCommand
     {
         parent::execute($input, $output);
 
-        $cms = $this->getApplication()
-            ->bootConcreteInstance($input->getOption('debug-boot'));
+        $cms = $this->getApplication()->make('concrete');
 
         // Setup the shell.
         $config = new Configuration;

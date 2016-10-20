@@ -29,6 +29,7 @@ class Application extends App implements ApplicationContract
     protected $providers = [
         \Illuminate\Bus\BusServiceProvider::class,
         \Illuminate\Filesystem\FilesystemServiceProvider::class,
+        \C5Labs\Cli\ConcreteServiceProvider::class,
         \C5Labs\Cli\CommandServiceProvider::class,
         \C5Labs\Cli\FileExporter\FileExporterServiceProvider::class,
     ];
@@ -535,75 +536,6 @@ class Application extends App implements ApplicationContract
     public function getHelp()
     {
         return $this->getBanner();
-    }
-
-    public function bootConcreteInstance($debug = false)
-    {
-         // Set the base paths.
-        $__DIR__ = $this->getConcretePath();
-        define('DIR_BASE', realpath($__DIR__.'/../'));
-
-        try {
-
-            // Set the handler so that we can control and hide error messages.
-            set_error_handler(function ($errno, $errstr, $errfile, $errline) use ($debug) {
-                if ($debug) {
-                    // Bubble errors up to exceptions.
-                    throw new \ErrorException($errstr, $errno, E_ERROR, $errfile, $errline);
-                }
-            });
-
-            /**
-             * ----------------------------------------------------------------------------
-             * Set required constants, including directory names, attempt to include site configuration file with database
-             * information, attempt to determine if we ought to skip to an updated core, etc...
-             * ----------------------------------------------------------------------------.
-             */
-            require $__DIR__.'/bootstrap/configure.php';
-
-            /**
-             * ----------------------------------------------------------------------------
-             * Include all autoloaders
-             * ----------------------------------------------------------------------------.
-             */
-            require $__DIR__.'/bootstrap/autoload.php';
-
-            $r = new \Concrete\Core\Http\Request(
-                array(),
-                array(),
-                array(),
-                array(),
-                array(),
-                array('HTTP_HOST' => 'www.requestdomain.com', 'SCRIPT_NAME' => '/path/to/server/index.php')
-            );
-            define('BASE_URL', 'http://www.dummyco.com/path/to/server');
-            \Concrete\Core\Http\Request::setInstance($r);
-
-            /*
-             * ----------------------------------------------------------------------------
-             * Begin concrete5 startup.
-             * ----------------------------------------------------------------------------
-             */
-            $cms = require $__DIR__.'/bootstrap/start.php';
-
-            $cms->setupPackageAutoloaders();
-
-            $cms->setupPackages();
-        } catch (\Exception $ex) {
-            // If we're in debug rethrow any exceptions.
-            if ($debug) {
-                throw $ex;
-            }
-        } finally {
-            restore_error_handler();
-        }
-
-        // We can't continue without a valid  reference to the CMS.
-        if (! isset($cms) || ! is_object($cms)) {
-            throw new \Exception('Failed to boot concrete, please verify your installation in your browser.');
-        }
-
-        return $cms;
     }
 
     /**

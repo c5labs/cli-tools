@@ -56,8 +56,6 @@ class ConfigCommand extends ConcreteCoreCommand
     {
         parent::execute($input, $output);
 
-        $this->getCliApplication()->bootConcreteInstance();
-
         $types = ['app', 'concrete', 'database', 'conversations'];
 
         if ($type = $input->getOption('type')) {
