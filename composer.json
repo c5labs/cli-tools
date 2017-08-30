@@ -21,12 +21,6 @@
             "email": "oliver@c5labs.com"
         }
     ],
-    "repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/olsgreen/installers.git"
-    }
-    ],
     "autoload": { "psr-4": {"C5Labs\\Cli\\": "src/C5Labs/Cli"}},
     "bin": ["bin/concrete"],
     "minimum-stability": "dev",
