@@ -86,7 +86,7 @@ class CreateBlockTypeCommand extends AbstractBusCommand
         $exporter->setExclusion('controller.php', ['advanced']);
 
         // Export the files
-        $source = $this->makePath([$app->getComposerAppBasePath(), 'application', 'blocks', 'block-boilerplate']);
+        $source = $this->makePath([$app->getComposerAppBasePath(), 'vendor', 'c5labs', 'block-boilerplate']);
         $exporter->setSubstitutions($substitutions);
         $exporter->export($source, $this->path);
 
