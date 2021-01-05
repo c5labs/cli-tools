@@ -97,7 +97,7 @@ class Application extends App implements ApplicationContract
     {
         $this->setContainer(new Container());
 
-        parent::__construct('c5 cli-tools', '0.3.2');
+        parent::__construct('c5 cli-tools', '0.3.3');
 
         $this->registerProviders();
     }

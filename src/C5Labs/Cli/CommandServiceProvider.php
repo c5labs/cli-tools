@@ -83,10 +83,17 @@ class CommandServiceProvider extends ServiceProvider
         // Add the loaded cores CLI commands
         if ($path = $this->app->getConcretePath()) {
             $finder = new \Symfony\Component\Finder\Finder();
-            $files = $finder->files()->in($path.'/src/Console/Command');
+            $searchPath = $path.'/src/Console/Command';
+            $files = $finder->files()->in($searchPath);
 
             foreach ($finder as $file) {
-                $this->commands[] = 'Concrete\\Core\\Console\\Command\\'.$file->getBasename('.php');
+                $namespace = substr(str_replace([$searchPath, '/'], ['', '\\'], $file->getPath()), 1);
+
+                if (strlen($namespace) > 0) {
+                    $namespace .= '\\';
+                }
+
+                $this->commands[] = 'Concrete\\Core\\Console\\Command\\'. $namespace . $file->getBasename('.php');
             }
 
             $cms = $this->app->make('concrete');
