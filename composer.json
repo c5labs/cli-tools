@@ -3,7 +3,7 @@
     "description": "Command line tools & scaffolding generator for concrete5.",
     "require": {
         "symfony/console": "~2.0|~3.0",
-        "symfony/process": "~2.0|~3.0",
+        "symfony/process": "^5.4.46",
         "illuminate/bus": "5.1.*|5.2.*",
         "illuminate/container": "5.1.*|5.2.*",
         "illuminate/support": "5.1.*|5.2.*",
